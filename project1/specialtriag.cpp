@@ -16,27 +16,19 @@ double *d = new double[n+1]; double *a = new double[n];
 double *b = new double[n+1];
 double *c = new double[n]; double *x = new double[n+1];
 
-
-
-double d_arg[n+1] = {2, 5, 7, 6};
-double a_arg[n] = {4, 5, 7};
-double c_arg[n] = {2, 9, 3};
-
-x[0] = 0; b[0] = 1; a[0] = 1; c[0] = 1; d[0] = d_arg[0];
+x[0] = h; b[0] = 2; a[0] = -1; c[0] = -1;
 
 for (int i = 1; i < n+1; i++){
   x[i] = x[i-1]+h;
   b[i] = hh*f(x[i]);
-}
-
-for (int i = 1; i < n+1; i++){
-  d[i] = d_arg[i] - a[i-1]/d[i-1];
-  b[i] = b[i] - b[i-1]/d[i-1];
+  a[i] = -1;
+  c[i] = -1;
+  d[i] = 2;
 }
 
 double *u = new double[n+1];
-for (int j = n; j > 0; j++){
-  ;
+for (int j = 0; j < n; j++){
+  u[j] = (1/b[j])*();
 }
 
 
