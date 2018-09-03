@@ -1,45 +1,44 @@
 import numpy as np
-import sys
+import matplotlib.pyplot as plt
+
+n = 100
+
+h = 1./n
+
+x = np.linspace(0, 1, n+1)
+
+def f_func(x):
+    f = 100.0*np.exp(-10*x)
+    return f
 
 
-# array = np.genfromtext("matrix.txt", "w+")
+f = f_func(x)
+f_hat = f*h**2
 
-d = np.array((1, 4, 6, 3))
-e = np.array((2, 4, 1))
-b = np.array((5, 6, 7, 9))
+b = np.ones(n)*(2)
+a = c = np.ones(n)*(-1)
 
-def Gaussian_elim(n, d, e, b):
+b_tilde = np.zeros(n+1)
+f_tilde = np.zeros(n+1)
 
-    d_new = np.zeros(n)
-    b_new = np.zeros(n)
+b_tilde[0] = b_tilde[n] = 2
 
+for i in range(0, n):
+    b_tilde[i] = b[i] - float((a[i-1]*c[i-1])/b_tilde[i-1])
+    f_tilde[i] = f_hat[i] - float((a[i-1]*f_tilde[i-1])/b_tilde[i-1])
 
-    d_new[0] = d[1]
-    for i in range(1, n):
-        d_new[i] = d[i] - float(e[i-1]/d[i-1])
-        b_new[i] = b[i] - float(b[i-1]/d[i-1])
+v = np.zeros(n+1)
 
-    return d_new, b_new
+v[0] = v[n] = 0
 
+for j in range(n-1, 0, -1):
+    v[j] = (f_tilde[j] - c[j]*v[j+1])/b_tilde[j]
 
+def closed_form(x):
+    return 1 - (1 - np.exp(-10))*x - np.exp(-10*x)
 
-d_new = (Gaussian_elim(4, d, e, b)[0])
-b_new = (Gaussian_elim(4, d, e, b)[1])
-
-print(d_new, b_new)
-
-u = b_new/d_new
-
-print (u)
-
-# def U(n, d_new, b_new):
-#     u = np.zeros(n+1)
 #
-#     for i in range(n, 1, -1):
-#         u[i] = float(b_new[i]/d_new[i])
 #
-#     return u
-
-
-
-# print (U(4, d_new, b_new))
+plt.plot(x, closed_form(x), x, v)
+plt.legend(["Analyical", "Numerical"])
+plt.show()

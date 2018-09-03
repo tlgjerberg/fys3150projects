@@ -17,7 +17,6 @@ double *b = new double[n+1];
 double *c = new double[n]; double *x = new double[n+1];
 
 
-
 double d_arg[n] = {2, 5, 7, 6};
 double a_arg[n-1] = {4, 5, 7};
 double c_arg[n-1] = {2, 9, 3};
@@ -29,17 +28,17 @@ for (int i = 1; i < n; i++){
   b[i] = hh*f(x[i]);
 }
 
-for (int i = 1; i < n+1; i++){
+for (int i = 1; i < n; i++){
   d[i] = d_arg[i] - (a[i-1]*c[i-1])/d[i-1];
-  b[i] = b[i] - (b[i-1]*e[i-1])/d[i-1];
+  b[i] = b[i] - (b[i-1]*a[i-1])/d[i-1];
 }
 
-double *u = new double[n+1];
+double *u = new double[n];
 
-u[n] = b[n]/d[n];
+u[0] = u[n] = 0;
 
 for (int j = n-1; j > 0; j++){
-  ;
+  u[j] = b[i]/d[i];
 }
 
 
