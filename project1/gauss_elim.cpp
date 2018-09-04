@@ -23,7 +23,7 @@ double hh = h*h;
 double *d = new double[n+1]; //Declare array for diagonal
 double *b = new double[n+1]; //Declare array for right-hand side
 double *x = new double[n+1]; //Declare array for x to be used in function f
-double *a = new double[n];
+double *a = new double[n]; //Declare array for elements directly below the diagonal
 double *c = new double[n];
 
 x[0] = x[n] = 0; b[0] = 1; a[0] = -1; c[0] = -1; d[0] = d[n] = 2;
@@ -48,11 +48,15 @@ double *u = new double[n+1];
 
 u[0] = u[n] = 0;
 
-ofile.open("sol_array");
-
 for (int j = n-1; j > 0; j--){
   u[j] = b[j] - (c[j]*u[j+1])/d[j];
-  ofile << u[j] << endl;
+}
+
+ofile.open("sol_array.txt");
+
+for (int i = 0; i < n+1; i++)
+{
+  ofile << u[i] << endl;
 }
 
 
