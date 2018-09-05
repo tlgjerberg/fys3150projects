@@ -1,44 +1,80 @@
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
+#include <fstream>
+#include <ctime>
+#include <iomanip>
+using namespace std;
 
 
-inline double f( double x){return 100.0*exp(-10*x);}
+inline double f( double x){return 100.0*exp(-10*x);} //Analyical function f(x)
 
-int main(int argc, char* argv[]) {
+//Closed form solution of f
+inline double closed_form(double x){return 1 - (1 - exp(-10))*x - exp(-10*x);}
+
+int main(int argc, char* argv[])
+{
+
+
 
 int n = atoi(argv[1]);
-double h = 1.0/(n);
+double h = 1.0/double (n+1);
 double hh = h*h;
 
 
-// No array a and c are necessary
-double *d = new double[n+1];
-double *b = new double[n+1]; double *x = new double[n+1];
+double *d = new double[n+2]; //Declare array for diagonal
+double *b = new double[n+2]; //Declare array for right-hand side
+double *x = new double[n+2]; //Declare array for x to be used in function f
+double *a = new double[n+1]; //Declare array for elements directly below the diagonal
+double *c = new double[n+1];
+double *f_cf = new double[n+2];
+double *u = new double[n+2];
+double temp;
 
 
+//Setting start and endpoints
+x[0] = 0; x[n+1] = 1; b[0] = b[n+2] = 0; a[0] = 0; c[0] = 0; d[0] = d[n+2] = 0;
+f_cf[0] = f_cf[n+2] = 0; u[0] = u[n+2] = 0;
 
-double d_arg[n] = {2, 5, 7, 6};
-double c_arg[n-1] = {2, 9, 3};
 
-x[0] = 0; b[0] = 1; d[0] = d_arg[0];
-
-for (int i = 1; i < n; i++){
-  x[i] = x[i-1]+h;
+// Compute arrays that have been declared.
+for (int i = 1; i < n+2; i++){
+  x[i] = i*h;
   b[i] = hh*f(x[i]);
+  f_cf[i] = closed_form(x[i]);
+  d[i] = 2;
+}
+clock_t c_start = clock(); //CPU time clock start
+//Gaussian elimination start
+for (int i = 2; i < n+2; i++){
+  temp = 1/d[i-1];
+  d[i] = d[i] - temp;
+  b[i] = b[i] + b[i-1]*temp;
 }
 
-for (int i = 1; i < n+1; i++){
-  d[i] = d_arg[i] - 1.0/d[i-1];
-  b[i] = b[i] - (b[i-1]*(-1))/d[i-1];
+for (int j = n; j > 0; j--){
+  u[j] = (b[j] - ((-1)*u[j+1]))/d[j];
+
 }
 
-double *u = new double[n+1];
+clock_t c_end = clock(); //CPU time clock stop
 
-u[n] = b[n]/d[n];
+cout << fixed << setprecision(2) << "CPU time used: "
+      << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
-for (int j = n-1; j > 0; j++){
-  ;
+// Printing arrays to file
+ofstream ofile;
+
+char *sol_array;
+
+ofile.open("sol_array.txt");
+
+for (int i = 0; i < n+2; i++)
+{
+  ofile << x[i] << " " << u[i] << " " << f_cf[i] << endl;
 }
 
+ofile.close();
+
+  return 0;
 }
