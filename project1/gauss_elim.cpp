@@ -15,9 +15,7 @@ inline double closed_form(double x){return 1 - (1 - exp(-10))*x - exp(-10*x);}
 int main(int argc, char* argv[])
 {
 
-ofstream ofile;
 
-char *sol_array;
 
 int n = atoi(argv[1]);
 double h = 1.0/double (n+1);
@@ -34,13 +32,13 @@ double *u = new double[n+2];
 
 
 //Setting start and endpoints
-x[0] = x[n+2] = 0; b[0] = b[n+2] = 0; a[0] = 0; c[0] = 0; d[0] = d[n+2] = 0;
+x[0] = 0; x[n+1] = 1; b[0] = b[n+2] = 0; a[0] = 0; c[0] = 0; d[0] = d[n+2] = 0;
 f_cf[0] = f_cf[n+2] = 0;
 
 
 // Compute arrays that have been declared.
 for (int i = 1; i < n+2; i++){
-  x[i] = x[i-1]+h;
+  x[i] = i*h;
   b[i] = hh*f(x[i]);
   f_cf[i] = closed_form(x[i]);
   a[i] = -1;
@@ -70,11 +68,15 @@ cout << fixed << setprecision(2) << "CPU time used: "
       << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms\n";
 
 // Printing arrays to file
+ofstream ofile;
+
+char *sol_array;
+
 ofile.open("sol_array.txt");
 
 for (int i = 0; i < n+2; i++)
 {
-  ofile << setprecision(3) << x[i] << " " << u[i] << " " << f_cf[i] << endl;
+  ofile << x[i] << " " << u[i] << " " << f_cf[i] << endl;
 }
 
 
