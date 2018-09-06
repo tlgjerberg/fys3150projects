@@ -3,22 +3,20 @@ import numpy as np
 
 file = open("sol_array.txt", "r")
 
+x_list = []
 num_list = []
 analyical_list = []
 
 for line in file:
     col = line.split()
-    num_list.append(float(col[0]))
-    analyical_list.append(float(col[1]))
+    x_list.append(col[0])
+    num_list.append(float(col[1]))
+    analyical_list.append(float(col[2]))
 
+x = np.array(x_list)
 num_array = np.array(num_list)
 analyical_array = np.array(analyical_list)
 
-
-n = len(num_array)
-
-x = np.linspace(0, 1, n)
-
-plt.plot(x, num_array, x, analyical_array)
+plt.plot(x, num_array, x,  analyical_array)
 plt.legend(["Numerical", "Analyical"])
 plt.show()
