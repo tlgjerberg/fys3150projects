@@ -15,8 +15,6 @@ inline double closed_form(double x){return 1 - (1 - exp(-10))*x - exp(-10*x);}
 int main(int argc, char* argv[])
 {
 
-
-
 int n = atoi(argv[1]);
 double h = 1.0/double (n+1);
 double hh = h*h;
@@ -59,10 +57,19 @@ for (int j = n; j > 0; j--){
 
 clock_t c_end = clock(); //CPU time clock stop
 
+ofstream tfile; //Setting up file for time output
+
+//Writing n and CPU-time in milliseconds to file for each run of the program
+tfile.open("time1b.txt", ofstream::app);
+
+tfile << n << " " << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << endl;
+
+tfile.close()
+
 cout << fixed << setprecision(2) << "CPU time used: "
       << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
-// Printing arrays to file
+// Printing x, numerical and analytical to file
 ofstream ofile;
 
 char *sol_array;
