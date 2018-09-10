@@ -36,7 +36,7 @@ x[0] = 0; x[n+1] = 1; b[0] = b[n+2] = 0; a[0] = 0; c[0] = 0; d[0] = d[n+2] = 0;
 f_cf[0] = f_cf[n+2] = 0;
 
 
-// Compute arrays that have been declared.
+// Compute array elements for arrays that have been declared.
 for (int i = 1; i < n+2; i++){
   x[i] = i*h;
   b[i] = hh*f(x[i]);
@@ -47,7 +47,8 @@ for (int i = 1; i < n+2; i++){
 }
 clock_t c_start = clock(); //CPU time clock start
 //Gaussian elimination start
-for (int i = 2; i < n+2; i++){
+for (int i = 2; i < n+2; i++)
+{
   temp = a[i-1]/d[i-1];
   d[i] = d[i] - c[i-1]*temp;
   b[i] = b[i] - b[i-1]*temp;
@@ -55,15 +56,26 @@ for (int i = 2; i < n+2; i++){
 
 u[0] = u[n+2] = 0;
 
-for (int j = n; j > 0; j--){
+for (int j = n; j > 0; j--)
+{
   u[j] = (b[j] - (c[j]*u[j+1]))/d[j];
-
 }
 
 clock_t c_end = clock(); //CPU time clock stop
 
+ofstream tfile; //Setting up file for time output
+
+//Writing n and CPU-time in milliseconds to file for each run of the program
+tfile.open("time1b.txt", ofstream::app);
+
+tfile << n << " " << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << endl;
+
+tfile.close()
+
 cout << fixed << setprecision(2) << "CPU time used: "
       << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
+
+
 
 // Printing arrays to file
 ofstream ofile;
