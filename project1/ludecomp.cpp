@@ -21,7 +21,7 @@ double h = 1.0/double (n+1);
 double hh = h*h;
 
 double *x = new double[n]; //Declare array for x to be used in function f
-x[0] = h; x[n] = 1;
+x[0] = 0; x[n] = 1;
 double *f_cf = new double[n];
 
 vec b = zeros(n);
@@ -39,15 +39,22 @@ A.diag() += 2;
 A.diag(1) += -1;
 A.diag(-1) += -1;
 
-cout << b;
-cout << A;
-
 clock_t c_start = clock(); //CPU time clock start
 
 vec v = solve(A, b);
 
 clock_t c_end = clock(); //CPU time clock stop
 
+ofstream tfile; //Setting up file for time output
+
+//Writing n and CPU-time in milliseconds to file for each run of the program
+tfile.open("CPUtime.txt", ofstream::app);
+
+tfile << n << " " << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << endl;
+
+tfile.close();
+
+//Output of CPU-time of the algorithm in milliseconds
 cout << fixed << setprecision(2) << "CPU time used: "
       << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
@@ -58,7 +65,7 @@ char *sol_array;
 
 ofile.open("sol_array.txt");
 
-for (int i = 0; i < n; i++)
+for (int i = 1; i < n; i++)
 {
   ofile << x[i] << " " << v[i] << " " << f_cf[i] << endl;
 }
