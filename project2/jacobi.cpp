@@ -1,25 +1,12 @@
+#include "jacobi.h"
 #include <armadillo>
 #include <cmath>
+#include <ctime>
 #include <iostream>
 using namespace std;
 using namespace arma;
 
-// -DARMA_DONT_USE_WRAPPER -llapack -lblas
-
-double maxoffdiag(mat A, int &k, int &l, int n) {
-  double max = 0.0;
-  for (int i = 0; i < n; i++) {
-    for (int j = i + 1; j < n; j++) {
-      double a_ij = fabs(A(i, j));
-      if (a_ij > max) {
-        max = a_ij;
-        k = i;
-        l = j;
-      }
-    }
-  }
-  return max;
-}
+// inline double analyical_eig(double j)
 
 void rotation(mat &A, int &k, int &l, int n) {
 
@@ -65,42 +52,4 @@ void rotation(mat &A, int &k, int &l, int n) {
     }
   }
   return;
-}
-
-int main(int argc, char const *argv[]) {
-
-  int n = atoi(argv[1]);
-  double rho_N = 1;
-  double rho_0 = 0;
-  double h = (rho_N - rho_0) / n;
-  double hh = h * h;
-
-  mat A = zeros(n, n);
-  A.diag() += 2 / hh;
-  A.diag(1) += -1 / hh;
-  A.diag(-1) += -1 / hh;
-
-  cout << A << endl;
-
-  vec eigval;
-  mat eigvec;
-
-  eig_sym(eigval, eigvec, A);
-
-  cout << eigval << eigvec << endl;
-  int k, l;
-  double eps = 1e-8;
-  double max = maxoffdiag(A, k, l, n);
-  int max_iter = (double)n * (double)n * (double)n;
-  int iter = 0;
-  while (max > eps && iter < max_iter) {
-    max = maxoffdiag(A, k, l, n);
-    rotation(A, k, l, n);
-    iter++;
-
-    // cout << max << endl;
-  }
-  cout << "Number of iterations: " << iter << endl;
-  cout << A << endl;
-  return 0;
 }
