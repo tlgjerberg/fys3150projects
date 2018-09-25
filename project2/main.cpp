@@ -1,10 +1,9 @@
 #include "jacobi.h"
-#include "maxoffdiag.h"
-#include "toeplitz.h"
 #include <armadillo>
 #include <cmath>
 #include <ctime>
 #include <iostream>
+
 using namespace std;
 using namespace arma;
 
@@ -17,8 +16,6 @@ int main(int argc, char const *argv[]) {
   double hh = h * h;
 
   mat A = toeplitz(n, hh);
-
-  // cout << A << endl;
 
   vec eigval;
   mat eigvec;

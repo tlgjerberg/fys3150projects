@@ -1,8 +1,6 @@
-#include "maxoffdiag.h"
+#include "jacobi.h"
 #include <armadillo>
 #include <cmath>
-#include <ctime>
-#include <iostream>
 
 using namespace std;
 using namespace arma;
