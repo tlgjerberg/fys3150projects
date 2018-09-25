@@ -1,14 +1,12 @@
 #include "jacobi.h"
 #include "maxoffdiag.h"
+#include "toeplitz.h"
 #include <armadillo>
 #include <cmath>
 #include <ctime>
 #include <iostream>
 using namespace std;
 using namespace arma;
-
-double maxoffdiag(mat A, int &k, int &l, int n);
-void rotation(mat &A, int &k, int &l, int n);
 
 int main(int argc, char const *argv[]) {
 
@@ -18,10 +16,7 @@ int main(int argc, char const *argv[]) {
   double h = (rho_N - rho_0) / n;
   double hh = h * h;
 
-  mat A = zeros(n, n);
-  A.diag() += 2 / hh;
-  A.diag(1) += -1 / hh;
-  A.diag(-1) += -1 / hh;
+  mat A = toeplitz(n, hh);
 
   // cout << A << endl;
 

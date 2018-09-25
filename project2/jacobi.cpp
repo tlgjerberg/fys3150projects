@@ -16,8 +16,6 @@ void rotation(mat &A, int &k, int &l, int n) {
   if (A(k, l) != 0.0) {
     tau = (A(l, l) - A(k, k)) / (2 * A(k, l));
     double t1, t2;
-    // t1 = -tau + sqrt(1 + tau * tau);
-    // t2 = -tau - sqrt(1 + tau * tau);
     t1 = 1 / (tau + sqrt(1 + tau * tau));
     t2 = -1 / (-tau + sqrt(1 + tau * tau));
 
