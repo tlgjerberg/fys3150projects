@@ -1,6 +1,4 @@
 #include "jacobi.h"
-#include <armadillo>
-#include <cmath>
 
 using namespace std;
 using namespace arma;

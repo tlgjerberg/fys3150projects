@@ -1,6 +1,4 @@
 #include "jacobi.h"
-#include "maxoffdiag.h"
-#include "toeplitz.h"
 #include <armadillo>
 // #include <catch2/catch.hpp>
 #include "catch.hpp"
