@@ -22,9 +22,11 @@ mat rand_toeplitz(int n, double hh) {
 mat HO_toeplitz(int n, double hh, vec rho) {
   mat A = zeros(n, n);
   // A.diag() += 2 / hh;
-  for (int i = 1; i < n; i++) {
+  for (int i = 1; i < n - 1; i++) {
     A.diag()[i] += 2 / hh + rho[i];
   }
+  A.diag()[0] = 0;
+  A.diag()[n] = 0;
   A.diag(1) += -1 / hh;
   A.diag(-1) += -1 / hh;
   return A;
