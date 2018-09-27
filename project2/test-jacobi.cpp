@@ -21,3 +21,10 @@ TEST_CASE("Testing the maximum off-diagonal element") {
   double max_A = maxoffdiag(A, k, l, n);
   REQUIRE(max_A == Approx(max_B));
 }
+
+TEST_CASE("Testing orthogonality of the eigenvectors") {
+  int k, l;
+  int n = 10;
+  double h = 1 / n;
+  double hh = h * h
+}

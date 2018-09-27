@@ -1,6 +1,6 @@
 #include "jacobi.h"
 
-void rotation(mat &A, int &k, int &l, int n) {
+void rotation(mat &A, mat &R, int &k, int &l, int n) {
 
   double c, s;
   double t, tau;
@@ -40,6 +40,10 @@ void rotation(mat &A, int &k, int &l, int n) {
       A(i, l) = ail * c + aik * s;
       A(l, i) = A(i, l);
     }
+    double rik = R(i, k);
+    double ril = R(i, l);
+    R(i, k) = c * rik - s * ril;
+    R(i, l) = c * ril + s * rik;
   }
   return;
 }
