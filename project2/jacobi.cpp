@@ -1,6 +1,4 @@
 #include "jacobi.h"
-#include <cmath>
-using namespace std;
 
 void rotation(mat &A, int &k, int &l, int n) {
 

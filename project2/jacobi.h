@@ -2,6 +2,7 @@
 #define JACOBI_H
 
 #include <armadillo>
+#include <cmath>
 #include <fstream>
 #include <iomanip>
 #include <iostream>

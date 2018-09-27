@@ -2,7 +2,8 @@
 
 mat toeplitz(int n, double hh) {
   mat A = zeros(n, n);
-  A.diag() += 2 / hh;
+  double d = 2 / hh;
+  A.diag() += d;
   A.diag(1) += -1 / hh;
   A.diag(-1) += -1 / hh;
 
@@ -21,13 +22,11 @@ mat rand_toeplitz(int n, double hh) {
 // Toeplitz matrix for a harmonic oscillator potential
 mat HO_toeplitz(int n, double hh, vec rho) {
   mat A = zeros(n, n);
-  // A.diag() += 2 / hh;
-  for (int i = 1; i < n - 1; i++) {
-    A.diag()[i] += 2 / hh + rho[i];
-  }
-  A.diag()[0] = 0;
-  A.diag()[n] = 0;
+  double d = 2 / hh;
+  A.diag() += (d + (rho % rho));
   A.diag(1) += -1 / hh;
   A.diag(-1) += -1 / hh;
+  // A(0, 0) = 0;
+  // A(n - 1, n - 1) = 0;
   return A;
 }
