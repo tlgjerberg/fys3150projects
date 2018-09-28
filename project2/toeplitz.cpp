@@ -33,7 +33,7 @@ mat HO_toeplitz(int n, double hh, vec rho) {
   return A;
 }
 
-mat HO_toeplitz_two_e(int n, double hh, vec rho, double omega_r) {
+mat HO_toeplitz_coulomb(int n, double hh, vec rho, double omega_r) {
   mat A = zeros(n, n);
   double d = 2 / hh;
   double s_d = 1 / hh;

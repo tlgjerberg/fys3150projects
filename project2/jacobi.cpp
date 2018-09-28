@@ -57,7 +57,7 @@ vec jacobi_method(mat A, mat &R, double eps, double max, int k, int l, int n) {
     iter++;
   }
   cout << "Number of iterations: " << iter << endl;
-  vec eigvals = sort(diagvec(A));
-  cout << R << endl;
+  vec eigvals = sort(diagvec(A), R);
+  // vec eigval_indices = sort_index(diagvec(A));
   return eigvals;
 }

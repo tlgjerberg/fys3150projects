@@ -1,8 +1,5 @@
 #include "jacobi.h"
 
-using namespace std;
-using namespace arma;
-
 double maxoffdiag(mat A, int &k, int &l, int n) {
   double max = 0.0;
   for (int i = 0; i < n; i++) {

@@ -1,5 +1,16 @@
 #include "jacobi.h"
 
+vec eigenpairs(mat A, mat &R, vec eigval_indices, int n) {
+  double eig = 0.0;
+  for (int i = 0; i < n; i++) {
+    for (int j = i; j < n; j++) {
+      if (A(i, j) > eig) {
+        eig = A(i, j);
+      }
+    }
+  }
+}
+
 int main(int argc, char const *argv[]) {
 
   int n = atoi(argv[1]);
@@ -11,7 +22,7 @@ int main(int argc, char const *argv[]) {
 
   vec rho = linspace(1, n, n) * h;
 
-  mat A = HO_toeplitz_two_e(n, hh, rho, omega_r);
+  mat A = HO_toeplitz_coulomb(n, hh, rho, omega_r);
 
   vec eigval;
   mat eigvec;
@@ -37,5 +48,14 @@ int main(int argc, char const *argv[]) {
   cout << fixed << "CPU time used with Jacobi's method: "
        << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
+  ofstream ofile;
+
+  ofile.open("eigenvectors.txt");
+  for (int i = 0; i < n; i++) {
+    ofile << rho[i] << " " << R(0, i) << endl;
+    // ofile << rho << " ";
+    // ofile << R(span::all, 0) << endl;
+    ofile.close();
+  }
   return 0;
 }
