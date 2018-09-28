@@ -48,6 +48,24 @@ void rotation(mat &A, mat &R, int &k, int &l, int n) {
   return;
 }
 
+vec eigenpairs(mat &R, vec eigvals, int n) {
+  double temp = 0.0;
+  vec temp_vec = zeros(n);
+  for (int i = 0; i < n; i++) {
+    for (int j = i + 1; j < n; j++) {
+      if (eigvals[j] > eigvals[i]) {
+        temp = eigvals[i];
+        temp_vec = R(span::all, i);
+        eigvals[i] = eigvals[j];
+        R(span::all, i) = R(span::all, j);
+        eigvals[j] = temp;
+        R(span::all, j) = temp_vec;
+      }
+    }
+  }
+  return eigvals;
+}
+
 vec jacobi_method(mat A, mat &R, double eps, double max, int k, int l, int n) {
   int max_iter = (double)n * (double)n * (double)n;
   int iter = 0;
@@ -57,7 +75,8 @@ vec jacobi_method(mat A, mat &R, double eps, double max, int k, int l, int n) {
     iter++;
   }
   cout << "Number of iterations: " << iter << endl;
-  vec eigvals = sort(diagvec(A), R);
+  vec eigvals = diagvec(A);
+  vec eigvals_sorted = eigenpairs(R, eigvals, n);
   // vec eigval_indices = sort_index(diagvec(A));
-  return eigvals;
+  return eigvals_sorted;
 }

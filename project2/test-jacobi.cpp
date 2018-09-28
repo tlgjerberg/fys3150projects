@@ -26,5 +26,4 @@ TEST_CASE("Testing orthogonality of the eigenvectors") {
   int k, l;
   int n = 10;
   double h = 1 / n;
-  double hh = h * h
 }

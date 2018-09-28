@@ -8,20 +8,20 @@ elec:		main_ee.o toeplitz.o maxoffdiag.o jacobi.o
 beam:		main_beam.o toeplitz.o maxoffdiag.o jacobi.o
 					${CPPflags} main_beam.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o beam.o
 
-# main_beam.o: main_beam.cpp jacobi.h
-# 						${CPPflags} -c main_beam.cpp
-#
-# main_ee.o: main_ee.cpp jacobi.h
-# 						${CPPflags} -c main_ee.cpp
-#
-# toeplitz.o: toeplitz.cpp
-# 						${CPPflags} -c toeplitz.cpp
-#
-# maxoffdiag.o: maxoffdiag.cpp
-# 							${CPPflags} -c maxoffdiag.cpp
-#
-# jacobi.o:	jacobi.cpp
-# 					${CPPflags} -c jacobi.cpp
+main_beam.o: main_beam.cpp jacobi.h
+						${CPPflags} -c main_beam.cpp
+
+main_ee.o: main_ee.cpp jacobi.h
+						${CPPflags} -c main_ee.cpp
+
+toeplitz.o: toeplitz.cpp
+						${CPPflags} -c toeplitz.cpp
+
+maxoffdiag.o: maxoffdiag.cpp
+							${CPPflags} -c maxoffdiag.cpp
+
+jacobi.o:	jacobi.cpp
+					${CPPflags} -c jacobi.cpp
 
 
 

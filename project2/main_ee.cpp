@@ -1,16 +1,5 @@
 #include "jacobi.h"
 
-vec eigenpairs(mat A, mat &R, vec eigval_indices, int n) {
-  double eig = 0.0;
-  for (int i = 0; i < n; i++) {
-    for (int j = i; j < n; j++) {
-      if (A(i, j) > eig) {
-        eig = A(i, j);
-      }
-    }
-  }
-}
-
 int main(int argc, char const *argv[]) {
 
   int n = atoi(argv[1]);
@@ -29,6 +18,9 @@ int main(int argc, char const *argv[]) {
 
   eig_sym(eigval, eigvec, A);
 
+  cout << eigval << endl;
+  // cout << eigvec << endl;
+
   mat R = zeros(n, n);
   R.diag() += 1;
 
@@ -41,10 +33,10 @@ int main(int argc, char const *argv[]) {
 
   clock_t c_end = clock();
 
-  for (int i = 0; i < 4; i++) {
-    // cout << eigval[i] << endl;
-    cout << jacobi_eigval[i] << endl;
-  }
+  // for (int i = 0; i < 4; i++) {
+  //   cout << jacobi_eigval[i] << endl;
+  // }
+  cout << jacobi_eigval << endl;
   cout << fixed << "CPU time used with Jacobi's method: "
        << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
@@ -55,7 +47,8 @@ int main(int argc, char const *argv[]) {
     ofile << rho[i] << " " << R(0, i) << endl;
     // ofile << rho << " ";
     // ofile << R(span::all, 0) << endl;
-    ofile.close();
   }
+  ofile.close();
+
   return 0;
 }
