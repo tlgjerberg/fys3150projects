@@ -1,6 +1,7 @@
 #ifndef JACOBI_H
 #define JACOBI_H
 
+#define _USE_MATH_DEFINES
 #include <armadillo>
 #include <cmath>
 #include <fstream>

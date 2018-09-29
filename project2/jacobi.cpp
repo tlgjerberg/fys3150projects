@@ -1,5 +1,6 @@
 #include "jacobi.h"
 
+/* Preforms a jacobi rotation of a matrix A and a matrix of eigenvectors R*/
 void rotation(mat &A, mat &R, int &k, int &l, int n) {
 
   double c, s;
@@ -48,6 +49,8 @@ void rotation(mat &A, mat &R, int &k, int &l, int n) {
   return;
 }
 
+/* Loops over the unsorted vector of eigenvalues and sorts eigenvalues and
+eigenvectors from smallest to largest eigenvalue */
 vec eigenpairs(mat &R, vec eigvals, int n) {
   double temp = 0.0;
   vec temp_vec = zeros(n);
@@ -66,6 +69,8 @@ vec eigenpairs(mat &R, vec eigvals, int n) {
   return eigvals;
 }
 
+/* Main loop calling on maxoffdiag(), rotation() and eigenpairs() to preform
+jacobi's method and sorting the eigenpairs */
 vec jacobi_method(mat A, mat &R, double eps, double max, int k, int l, int n) {
   int max_iter = (double)n * (double)n * (double)n;
   int iter = 0;
@@ -77,6 +82,5 @@ vec jacobi_method(mat A, mat &R, double eps, double max, int k, int l, int n) {
   cout << "Number of iterations: " << iter << endl;
   vec eigvals = diagvec(A);
   vec eigvals_sorted = eigenpairs(R, eigvals, n);
-  // vec eigval_indices = sort_index(diagvec(A));
   return eigvals_sorted;
 }
