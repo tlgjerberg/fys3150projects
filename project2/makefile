@@ -2,7 +2,10 @@ CPPflags = g++ -o -03
 
 LIB = -DARMA_DONT_USE_WRAPPER -llapack -lblas
 
-elec:		main_ee.o toeplitz.o maxoffdiag.o jacobi.o
+two_elec:		main_ee.o toeplitz.o maxoffdiag.o jacobi.o
+					${CPPflags} main_ee.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o two_elec.o
+
+elec:		main_e.o toeplitz.o maxoffdiag.o jacobi.o
 					${CPPflags} main_ee.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o elec.o
 
 beam:		main_beam.o toeplitz.o maxoffdiag.o jacobi.o
@@ -13,6 +16,9 @@ main_beam.o: main_beam.cpp jacobi.h
 
 main_ee.o: main_ee.cpp jacobi.h
 						${CPPflags} -c main_ee.cpp
+
+main_e.o: main_e.cpp jacobi.h
+					${CPPflags} -c main_e.cpp
 
 toeplitz.o: toeplitz.cpp
 						${CPPflags} -c toeplitz.cpp
