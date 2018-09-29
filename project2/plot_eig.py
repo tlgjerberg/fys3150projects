@@ -20,7 +20,6 @@ fig, ax = plt.subplots()
 
 ax.plot(rho_array, eigenvec_array, label='Ground state')
 plt.grid("on")
-# plt.xticks(np.arange(1, len(rho_array)+1, step=1))
 plt.legend(loc='best')
 ax.set_title("Ground state of a harmonic oscillator potential")
 ax.set_xlabel("rho")

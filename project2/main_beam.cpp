@@ -1,16 +1,5 @@
 #include "jacobi.h"
 
-vec analytic_eigenvalues_buckling_beam(int n, double hh) {
-  double d = 2 / hh;
-  double a = -1 / hh;
-  double pi = M_PI;
-  vec lambda = zeros(n);
-  for (int j = 1; j < n; j++) {
-    lambda[j] = d + 2 * a * cos((j * pi) / (n + 1));
-  }
-  return lambda;
-}
-
 int main(int argc, char const *argv[]) {
 
   int n = atoi(argv[1]);
@@ -63,8 +52,6 @@ and with jacobi's method */
   for (int i = 0; i < n; i++) {
     ofile << analytic_eigval[i + 1] << " " << arma_eigval[i] << " "
           << jacobi_eigval[i] << endl;
-    // ofile << rho << " ";
-    // ofile << R(span::all, 0) << endl;
   }
   ofile.close();
 
