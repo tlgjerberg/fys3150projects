@@ -6,7 +6,7 @@ two_elec:		main_ee.o toeplitz.o maxoffdiag.o jacobi.o
 					${CPPflags} main_ee.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o two_elec.o
 
 elec:		main_e.o toeplitz.o maxoffdiag.o jacobi.o
-					${CPPflags} main_ee.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o elec.o
+					${CPPflags} main_e.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o elec.o
 
 beam:		main_beam.o toeplitz.o maxoffdiag.o jacobi.o
 					${CPPflags} main_beam.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o beam.o

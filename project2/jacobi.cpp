@@ -1,5 +1,18 @@
 #include "jacobi.h"
 
+/* Computes the eigenvalues og the bukling beam from the known analytical
+  expression*/
+vec analytic_eigenvalues_buckling_beam(int n, double hh) {
+  double d = 2 / hh;
+  double a = -1 / hh;
+  double pi = M_PI;
+  vec lambda = zeros(n);
+  for (int j = 1; j < n; j++) {
+    lambda[j] = d + 2 * a * cos((j * pi) / (n + 1));
+  }
+  return lambda;
+}
+
 /* Preforms a jacobi rotation of a matrix A and a matrix of eigenvectors R*/
 void rotation(mat &A, mat &R, int &k, int &l, int n) {
 
@@ -24,7 +37,7 @@ void rotation(mat &A, mat &R, int &k, int &l, int n) {
     c = 1.0;
     s = 0.0;
   }
-
+  // Rotating the matrix with A(k, l) as the largest off-diagonal element
   double akk = A(k, k);
   double all = A(l, l);
   double aik, ail;
@@ -41,6 +54,7 @@ void rotation(mat &A, mat &R, int &k, int &l, int n) {
       A(i, l) = ail * c + aik * s;
       A(l, i) = A(i, l);
     }
+    // Computing the eigenvectors
     double rik = R(i, k);
     double ril = R(i, l);
     R(i, k) = c * rik - s * ril;
@@ -51,7 +65,7 @@ void rotation(mat &A, mat &R, int &k, int &l, int n) {
 
 /* Loops over the unsorted vector of eigenvalues and sorts eigenvalues and
 eigenvectors from smallest to largest eigenvalue */
-vec eigenpairs(mat &R, vec eigvals, int n) {
+vec sort_eigenpairs(mat &R, vec eigvals, int n) {
   double temp = 0.0;
   vec temp_vec = zeros(n);
   for (int i = 0; i < n; i++) {
@@ -81,6 +95,6 @@ vec jacobi_method(mat A, mat &R, double eps, double max, int k, int l, int n) {
   }
   cout << "Number of iterations: " << iter << endl;
   vec eigvals = diagvec(A);
-  vec eigvals_sorted = eigenpairs(R, eigvals, n);
+  vec eigvals_sorted = sort_eigenpairs(R, eigvals, n);
   return eigvals_sorted;
 }

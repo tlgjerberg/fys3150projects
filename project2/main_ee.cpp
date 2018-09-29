@@ -1,23 +1,12 @@
 #include "jacobi.h"
 
-vec analytic_eigenvalues_buckling_beam(int n, double hh) {
-  double d = 2 / hh;
-  double a = -1 / hh;
-  double pi = M_PI;
-  vec lambda = zeros(n);
-  for (int j = 1; j < n - 1; j++) {
-    lambda[j] = d + 2 * a * cos((j * pi) / (n + 1));
-  }
-  return lambda;
-}
-
 /* Writing rho, the eigenvectors from the jacobi method and the eigenvectors
   the armadillo eig_sym function produces  to a file eigenvector.txt */
 void write_eigenvector_to_file(vec rho, mat R, mat eigvec, int n) {
 
   ofstream ovecfile;
 
-  ovecfile.open("eigenvectors.txt");
+  ovecfile.open("eigenvectors_e.txt");
 
   ovecfile << "rho"
            << " "
@@ -26,8 +15,6 @@ void write_eigenvector_to_file(vec rho, mat R, mat eigvec, int n) {
            << "eigenvector_arma" << endl;
   for (int i = 0; i < n; i++) {
     ovecfile << rho[i] << " " << R(i, 0) << " " << eigvec(i, 0) << endl;
-    // ofile << rho << " ";
-    // ofile << R(span::all, 0) << endl;
   }
   ovecfile.close();
   return;
@@ -37,7 +24,7 @@ void write_eigenvalues_to_file(vec jacobi_eigval, vec eigval, int n) {
 
   ofstream ovalfile;
 
-  ovalfile.open("eigenvalues.txt");
+  ovalfile.open("eigenvalues_e.txt");
 
   ovalfile << "n"
            << " "
@@ -46,8 +33,6 @@ void write_eigenvalues_to_file(vec jacobi_eigval, vec eigval, int n) {
            << "eigenvalues_arma" << endl;
   for (int i = 0; i < n; i++) {
     ovalfile << i + 1 << " " << jacobi_eigval[i] << " " << eigval[i] << endl;
-    // ofile << rho << " ";
-    // ofile << R(span::all, 0) << endl;
   }
   ovalfile.close();
   return;
@@ -71,7 +56,7 @@ int main(int argc, char const *argv[]) {
 
   eig_sym(arma_eigval, arma_eigvec, A);
 
-  mat R = zeros(n, n);
+  mat R = zeros(n, n); // Matrix for storing eigenvectors
   R.diag() += 1;
 
   int k, l;
@@ -94,6 +79,7 @@ int main(int argc, char const *argv[]) {
   cout << fixed << "CPU time used with Jacobi's method: "
        << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
+  /*Printing eigenvectors and eigenvalues to the files*/
   write_eigenvector_to_file(rho, R, arma_eigvec, n);
   write_eigenvalues_to_file(jacobi_eigval, arma_eigval, n);
 

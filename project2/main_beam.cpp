@@ -5,7 +5,7 @@ vec analytic_eigenvalues_buckling_beam(int n, double hh) {
   double a = -1 / hh;
   double pi = M_PI;
   vec lambda = zeros(n);
-  for (int j = 1; j < n - 1; j++) {
+  for (int j = 1; j < n; j++) {
     lambda[j] = d + 2 * a * cos((j * pi) / (n + 1));
   }
   return lambda;
@@ -21,10 +21,14 @@ int main(int argc, char const *argv[]) {
 
   mat A = toeplitz(n, hh);
 
-  vec eigval;
-  mat eigvec;
+  vec arma_eigval;
+  mat arma_eigvec;
 
-  eig_sym(eigval, eigvec, A);
+  clock_t arma_start = clock();
+
+  eig_sym(arma_eigval, arma_eigvec, A);
+
+  clock_t arma_end = clock();
 
   mat R = zeros(n, n);
   R.diag() += 1;
@@ -38,20 +42,27 @@ int main(int argc, char const *argv[]) {
 
   clock_t c_end = clock();
 
+  cout << fixed << "CPU time used with Armadillo eig_sym method: "
+       << 1000.0 * (arma_end - arma_start) / CLOCKS_PER_SEC << " ms\n";
   cout << fixed << "CPU time used with Jacobi's method: "
        << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
   vec analytic_eigval = analytic_eigenvalues_buckling_beam(n, hh);
 
+  /*Printing the three sets of eigenvalues computed analytically, with Armadillo
+and with jacobi's method */
   ofstream ofile;
 
   ofile.open("eigenvalues.txt");
 
   ofile << "analytic_eigval"
         << " "
+        << "arma_eigval"
+        << " "
         << "jacobi_eigval" << endl;
   for (int i = 0; i < n; i++) {
-    ofile << analytic_eigval[i] << " " << jacobi_eigval[i] << " " << endl;
+    ofile << analytic_eigval[i + 1] << " " << arma_eigval[i] << " "
+          << jacobi_eigval[i] << endl;
     // ofile << rho << " ";
     // ofile << R(span::all, 0) << endl;
   }

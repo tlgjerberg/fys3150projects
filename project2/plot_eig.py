@@ -18,7 +18,7 @@ eigenvec_array = np.array(eigenvec)
 plt.style.use('ggplot')
 fig, ax = plt.subplots()
 
-ax.plot(rho_array, eigenvec_array, "-o", label='Ground state')
+ax.plot(rho_array, eigenvec_array, label='Ground state')
 plt.grid("on")
 # plt.xticks(np.arange(1, len(rho_array)+1, step=1))
 plt.legend(loc='best')
