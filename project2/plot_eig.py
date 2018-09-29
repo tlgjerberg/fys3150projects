@@ -1,24 +1,28 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-file = open("eigenvectors.txt", "r")
 
 rho = []
-eigenvalues = []
+eigenvec = []
 
-
-for line in file:
-    col = line.split()
-    rho.append(col[0])
-    eigenvalues.append(float(col[1]))
+with open("eigenvectors.txt", "r") as file:
+    next(file)
+    for line in file:
+        col = line.split()
+        rho.append(float(col[0]))
+        eigenvec.append(float(col[1]))
 
 rho_array = np.array(rho)
-eigenvalues_array = np.array(eigenvalues)
+eigenvec_array = np.array(eigenvec)
 
+plt.style.use('ggplot')
+fig, ax = plt.subplots()
 
-plt.plot(rho_array, eigenvalues_array, "-o")
+ax.plot(rho_array, eigenvec_array, "-o", label='Ground state')
 plt.grid("on")
-plt.legend(["eigenvalues"])
-plt.xlabel("rho")
-plt.ylabel("lambda")
+# plt.xticks(np.arange(1, len(rho_array)+1, step=1))
+plt.legend(loc='best')
+ax.set_title("Ground state of a harmonic oscillator potential")
+ax.set_xlabel("rho")
+ax.set_ylabel("u(rho)")
 plt.show()
