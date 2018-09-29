@@ -52,7 +52,7 @@ vec eigenpairs(mat &R, vec eigvals, int n) {
   double temp = 0.0;
   vec temp_vec = zeros(n);
   for (int i = 0; i < n; i++) {
-    for (int j = i + 1; j < n; j++) {
+    for (int j = 0; j < n; j++) {
       if (eigvals[j] > eigvals[i]) {
         temp = eigvals[i];
         temp_vec = R(span::all, i);
