@@ -8,9 +8,9 @@ void write_eigenvector_to_file(vec rho, mat R, mat eigvec, int n) {
 
   ovecfile.open("eigenvectors_e.txt", ofstream::app);
 
-  ovecfile << "rho"
-           << " "
-           << "eigenvector" << endl;
+  // ovecfile << "rho"
+  //          << " "
+  //          << "eigenvector" << endl;
   for (int i = 0; i < n; i++) {
     ovecfile << rho[i] << " " << R(i, 0) << endl;
   }

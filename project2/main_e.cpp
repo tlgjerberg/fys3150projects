@@ -1,5 +1,21 @@
 #include "jacobi.h"
 
+void write_eigenvector_to_file(vec rho, mat R, int n) {
+
+  ofstream ovecfile;
+
+  ovecfile.open("eigenvectors_d.txt", ofstream::app);
+
+  // ovecfile << "rho"
+  //          << " "
+  //          << "eigenvector" << endl;
+  for (int i = 0; i < n; i++) {
+    ovecfile << rho[i] << " " << R(i, 0) << endl;
+  }
+  ovecfile.close();
+  return;
+}
+
 int main(int argc, char const *argv[]) {
 
   int n = atoi(argv[1]);
@@ -43,6 +59,8 @@ int main(int argc, char const *argv[]) {
   }
 
   ofile.close();
+
+  write_eigenvector_to_file(rho, R, n);
 
   return 0;
 }
