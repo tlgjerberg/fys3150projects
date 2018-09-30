@@ -5,7 +5,7 @@ import numpy as np
 rho = []
 eigenvec = []
 
-with open("eigenvectors.txt", "r") as file:
+with open("eigenvectors_e.txt", "r") as file:
     next(file)
     for line in file:
         col = line.split()
@@ -18,10 +18,12 @@ eigenvec_array = np.array(eigenvec)
 plt.style.use('ggplot')
 fig, ax = plt.subplots()
 
-ax.plot(rho_array, eigenvec_array, label='Ground state')
-plt.grid("on")
+ax.plot(rho_array, eigenvec_array, label='Ground state energy')
 plt.legend(loc='best')
+# ax.set_title("Energy ground states for different $\\omega_r$")
+# ax.set_xlabel("$\\omega_r$")
+# ax.set_ylabel("E($\\omega_r$)")
 ax.set_title("Ground state of a harmonic oscillator potential")
-ax.set_xlabel("rho")
-ax.set_ylabel("u(rho)")
+ax.set_xlabel("$\\rho$")
+ax.set_ylabel("u($\\rho$)")
 plt.show()

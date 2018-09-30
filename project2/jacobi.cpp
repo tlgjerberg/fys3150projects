@@ -38,11 +38,15 @@ void rotation(mat &A, mat &R, int &k, int &l, int n) {
     s = 0.0;
   }
   // Rotating the matrix with A(k, l) as the largest off-diagonal element
+  double cc, ss, cs;
+  cc = c * c;
+  ss = s * s;
+  cs = c * s;
   double akk = A(k, k);
   double all = A(l, l);
   double aik, ail;
-  A(k, k) = akk * c * c - 2 * A(k, l) * c * s + all * s * s;
-  A(l, l) = all * c * c + 2 * A(k, l) * c * s + akk * s * s;
+  A(k, k) = akk * cc - 2 * A(k, l) * cs + all * ss;
+  A(l, l) = all * cc + 2 * A(k, l) * cs + akk * ss;
   A(k, l) = A(l, k) = 0.0;
 
   for (int i = 0; i < n; i++) {
