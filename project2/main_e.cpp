@@ -3,7 +3,7 @@
 int main(int argc, char const *argv[]) {
 
   int n = atoi(argv[1]);
-  double rho_N = 10;
+  double rho_N = atoi(argv[2]);
   double rho_0 = 0;
   double h = (rho_N - rho_0) / n;
   double hh = h * h;

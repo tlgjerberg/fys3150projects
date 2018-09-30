@@ -6,34 +6,29 @@ void write_eigenvector_to_file(vec rho, mat R, mat eigvec, int n) {
 
   ofstream ovecfile;
 
-  ovecfile.open("eigenvectors_e.txt");
+  ovecfile.open("eigenvectors_e.txt", ofstream::app);
 
   ovecfile << "rho"
            << " "
-           << "eigenvector"
-           << " "
-           << "eigenvector_arma" << endl;
+           << "eigenvector" << endl;
   for (int i = 0; i < n; i++) {
-    ovecfile << rho[i] << " " << R(i, 0) << " " << eigvec(i, 0) << endl;
+    ovecfile << rho[i] << " " << R(i, 0) << endl;
   }
   ovecfile.close();
   return;
 }
 
-void write_eigenvalues_to_file(vec jacobi_eigval, vec eigval, int n) {
+void write_eigenvalues_to_file(vec jacobi_eigval, vec eigval, int n,
+                               double omega_r) {
 
   ofstream ovalfile;
 
-  ovalfile.open("eigenvalues_e.txt");
+  ovalfile.open("eigenvalues_e.txt", ofstream::app);
 
-  ovalfile << "n"
-           << " "
-           << "eigenvalues"
-           << " "
-           << "eigenvalues_arma" << endl;
-  for (int i = 0; i < n; i++) {
-    ovalfile << i + 1 << " " << jacobi_eigval[i] << " " << eigval[i] << endl;
-  }
+  // ovalfile << "omega_r"
+  //          << " "
+  //          << "eigenvalues" << endl;
+  ovalfile << omega_r << " " << jacobi_eigval[0] << endl;
   ovalfile.close();
   return;
 }
@@ -81,7 +76,7 @@ int main(int argc, char const *argv[]) {
 
   /*Printing eigenvectors and eigenvalues to the files*/
   write_eigenvector_to_file(rho, R, arma_eigvec, n);
-  write_eigenvalues_to_file(jacobi_eigval, arma_eigval, n);
+  write_eigenvalues_to_file(jacobi_eigval, arma_eigval, n, omega_r);
 
   return 0;
 }
