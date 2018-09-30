@@ -42,7 +42,7 @@ int main(int argc, char const *argv[]) {
 and with jacobi's method */
   ofstream ofile;
 
-  ofile.open("eigenvalues.txt");
+  ofile.open("eigenvalues_b.txt");
 
   ofile << "analytic_eigval"
         << " "
