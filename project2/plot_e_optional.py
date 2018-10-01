@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
+""" Script for plotting the eigenvector for the ground state for different
+    values of omega_r"""
 plt.style.use('ggplot')
 fig, ax = plt.subplots()
 files = ["eigenvectors_e_opt_0_05.txt", "eigenvectors_e_opt_0_5.txt",
@@ -20,7 +21,7 @@ for i in files:
 
     ax.plot(rho_array, eigenvec_array)
 
-    # plt.hold('on')
+
 plt.legend(["$\\omega_r = 0.05 $", "$\\omega_r = 0.5$",
             "$\\omega_r = 1$", "Non-interacting"], loc='best')
 ax.set_title(

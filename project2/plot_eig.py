@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+"""Script for plotting eigenvalues as a function of omega_r and logarithmic
+    plot of iterations as a function of n"""
+
 rho = []
 eigenvec = []
 
