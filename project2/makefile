@@ -11,6 +11,8 @@ elec:		main_e.o toeplitz.o maxoffdiag.o jacobi.o
 beam:		main_beam.o toeplitz.o maxoffdiag.o jacobi.o
 					${CPPflags} main_beam.cpp toeplitz.cpp maxoffdiag.cpp jacobi.cpp ${LIB} -o beam.o
 
+
+# Run without this part to save all .o files
 main_beam.o: main_beam.cpp jacobi.h
 						${CPPflags} -c main_beam.cpp
 

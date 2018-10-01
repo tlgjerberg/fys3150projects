@@ -1,5 +1,6 @@
 #include "jacobi.h"
 
+/* Generates a tridiagonal toeplitz matrix for solving the buckling beam */
 mat toeplitz(int n, double hh) {
   mat A = zeros(n, n);
   double d = 2 / hh;
@@ -10,7 +11,7 @@ mat toeplitz(int n, double hh) {
 
   return A;
 }
-
+/* Generates a random tridiagonal toeplitz matrix for testing */
 mat rand_toeplitz(int n, double hh) {
   mat A = zeros(n, n);
   A.diag() += randu() / hh;
@@ -20,8 +21,8 @@ mat rand_toeplitz(int n, double hh) {
   return A;
 }
 
-// Toeplitz matrix for a harmonic oscillator potential
-mat HO_toeplitz(int n, double hh, vec rho) {
+/* Generates a tridiagonal matrix with the harmonic oscillator potential */
+mat HO_tridiag(int n, double hh, vec rho) {
   mat A = zeros(n, n);
   double d = 2 / hh;
   double s_d = 1 / hh;
@@ -33,7 +34,9 @@ mat HO_toeplitz(int n, double hh, vec rho) {
   return A;
 }
 
-mat HO_toeplitz_coulomb(int n, double hh, vec rho, double omega_r) {
+/* Generates a tridiagonal matrix with the harmonic oscillator potential and
+coulomb term */
+mat HO_tridiag_coulomb(int n, double hh, vec rho, double omega_r) {
   mat A = zeros(n, n);
   double d = 2 / hh;
   double s_d = 1 / hh;

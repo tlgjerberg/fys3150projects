@@ -1,5 +1,7 @@
 #include "jacobi.h"
 
+/* Finds the maximum off-diagonal element of matrix A and changes indices k, l
+in memory */
 double maxoffdiag(mat A, int &k, int &l, int n) {
   double max = 0.0;
   for (int i = 0; i < n; i++) {

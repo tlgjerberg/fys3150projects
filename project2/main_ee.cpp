@@ -1,7 +1,7 @@
 #include "jacobi.h"
 
-/* Writing rho, the eigenvectors from the jacobi method and the eigenvectors
-  the armadillo eig_sym function produces  to a file eigenvector.txt */
+/* Writing rho and the eigenvectors from the jacobi method produces to a file
+ eigenvector_e.txt */
 void write_eigenvector_to_file(vec rho, mat R, mat eigvec, int n) {
 
   ofstream ovecfile;
@@ -18,6 +18,8 @@ void write_eigenvector_to_file(vec rho, mat R, mat eigvec, int n) {
   return;
 }
 
+/* Writing omega_r and the eigenvalues from the jacobi method produces to a file
+ eigenvalues_e.txt */
 void write_eigenvalues_to_file(vec jacobi_eigval, vec eigval, int n,
                                double omega_r) {
 
@@ -44,7 +46,7 @@ int main(int argc, char const *argv[]) {
 
   vec rho = linspace(1, n, n) * h;
 
-  mat A = HO_toeplitz_coulomb(n, hh, rho, omega_r);
+  mat A = HO_tridiag_coulomb(n, hh, rho, omega_r);
 
   vec arma_eigval;
   mat arma_eigvec;
