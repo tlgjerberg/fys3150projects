@@ -4,7 +4,10 @@ import numpy as np
 rho = []
 eigenvec = []
 
-with open("eigenvectors_d.txt", "r") as file:
+n = [10, 20, 50, 100, 200, 300]
+iter = [138, 663, 4319, 17664, 70859, 160084]
+
+with open("eigenvectors_e.txt", "r") as file:
     # next(file)
     for line in file:
         col = line.split()
@@ -25,4 +28,12 @@ plt.legend(loc='best')
 ax.set_title("Ground state of a harmonic oscillator potential")
 ax.set_xlabel("$\\rho$")
 ax.set_ylabel("u($\\rho$)")
+
+plt.style.use('ggplot')
+
+fig, ax = plt.subplots()
+ax.plot(np.log(n), np.log(iter))
+ax.set_title("Logarithmic plot of iterations against dimension n")
+ax.set_xlabel("log(n)")
+ax.set_ylabel("log(iterations)")
 plt.show()
