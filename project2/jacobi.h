@@ -13,7 +13,7 @@ using namespace arma;
 
 vec analytic_eigenvalues_buckling_beam(int n, double hh);
 mat toeplitz(int n, double hh);
-mat rand_toeplitz(int n, double hh);
+mat rand_toeplitz(int n);
 mat HO_tridiag(int n, double hh, vec rho);
 mat HO_tridiag_coulomb(int n, double hh, vec rho, double omega_r);
 double maxoffdiag(mat A, int &k, int &l, int n);
