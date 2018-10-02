@@ -11,15 +11,6 @@ mat toeplitz(int n, double hh) {
 
   return A;
 }
-/* Generates a random tridiagonal toeplitz matrix for testing */
-mat rand_toeplitz(int n, double hh) {
-  mat A = zeros(n, n);
-  A.diag() += randu() / hh;
-  A.diag(1) += -randu() / hh;
-  A.diag(-1) += randu() / hh;
-
-  return A;
-}
 
 /* Generates a tridiagonal matrix with the harmonic oscillator potential */
 mat HO_tridiag(int n, double hh, vec rho) {
