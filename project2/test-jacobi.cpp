@@ -1,8 +1,8 @@
 #include "catch.hpp"
 #include "jacobi.h"
 
-using namespace std;
-using namespace arma;
+/* Create program with: make test-jacobi */
+/* Run ./test-jacobi */
 
 TEST_CASE("Testing the maximum off-diagonal element") {
   int k, l;
