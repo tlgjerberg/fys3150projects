@@ -1,5 +1,8 @@
 #include "jacobi.h"
 
+/* Create program with: make elec */
+/* Run ./elec.o with command line argument n and rho_N */
+
 void write_eigenvector_to_file(vec rho, mat R, int n) {
 
   ofstream ovecfile;
@@ -26,7 +29,7 @@ int main(int argc, char const *argv[]) {
 
   vec rho = linspace(1, n, n) * h;
 
-  mat A = HO_toeplitz(n, hh, rho);
+  mat A = HO_tridiag(n, hh, rho);
 
   vec eigval;
   mat eigvec;

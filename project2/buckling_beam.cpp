@@ -1,5 +1,8 @@
 #include "jacobi.h"
 
+/* Create program with: make beam */
+/* Run ./beam.o with command line argument n */
+
 int main(int argc, char const *argv[]) {
 
   int n = atoi(argv[1]);

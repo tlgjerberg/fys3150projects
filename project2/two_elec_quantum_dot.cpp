@@ -1,5 +1,8 @@
 #include "jacobi.h"
 
+/* Create program with: make two_elec */
+/* Run ./two_elec.o with command line argument n, omega_r and rho_N */
+
 /* Writing rho and the eigenvectors from the jacobi method produces to a file
  eigenvector_e.txt */
 void write_eigenvector_to_file(vec rho, mat R, mat eigvec, int n) {
