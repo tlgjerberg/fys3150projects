@@ -4,14 +4,26 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
-class Solar_system {
+using std::vector;
+using namespace std;
+
+class planet {
 private:
-  double MS = 2e30;
-  double ME = 6e24;
-  double G = 6.67e-11;
-};
-void verlet(double *x, double *y, double *vx, double *vy, int n, double h,
-            double MS, double G)
+  double G;
 
-#endif
+public:
+  double mass;
+  double position[2];
+  double velocity[2];
+  double kinetic;
+  double potential;
+
+  planet();
+  planet(double x, double y, double vx, double vy, double K, double V);
+  double distance(planet otherplanet);
+  double GForce(planet otherplanet);
+};
+
+#endif Solar_system_H
