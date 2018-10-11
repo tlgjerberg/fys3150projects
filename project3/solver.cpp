@@ -1,10 +1,5 @@
 #define _USE_MATH_DEFINES
-#include "solar_system.h"
-#include <cmath>
-#include <fstream>
-#include <iostream>
-
-using namespace std;
+#include "solver.h"
 
 void euler(double *x, double *y, double *vx, double *vy, int n, double h,
            double MS, double G) {
