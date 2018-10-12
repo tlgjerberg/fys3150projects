@@ -11,7 +11,7 @@ using namespace std;
 
 class planet {
 private:
-  double G;
+  double G = 6.67e-11;
 
 public:
   double mass;
@@ -21,9 +21,9 @@ public:
   double potential;
 
   planet();
-  planet(double x, double y, double vx, double vy, double K, double V);
+  planet(double x, double y, double vx, double vy);
   double distance(planet otherplanet);
   double GForce(planet otherplanet);
 };
 
-#endif Solar_system_H
+#endif // Solar_system_H

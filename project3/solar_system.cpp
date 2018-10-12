@@ -1,4 +1,5 @@
 #include "solar_system.h"
+#include "solver.h"
 
 planet::planet() {
   position[0] = 1.;
@@ -9,13 +10,13 @@ planet::planet() {
   potential = 1.;
 }
 
-planet::planet(double x, double y, double vx, double vy, double K, double V) {
+planet::planet(double x, double y, double vx, double vy) {
   position[0] = x;
   position[1] = y;
   velocity[0] = vx;
   velocity[1] = vy;
-  kinetic = K;
-  potential = V;
+  kinetic = 1.;
+  potential = 1.;
 }
 
 double planet::distance(planet otherplanet) {
