@@ -15,6 +15,12 @@ using namespace std;
 class solver {
 private:
   double G;
+  double x;
+  double y;
+  double z;
+  double vx;
+  double vy;
+  double vz;
 
 public:
   friend class planet;
@@ -24,6 +30,7 @@ public:
   solver();
   solver(double r);
   void euler(planet &current, planet &other, int n, double h);
+  void verlet(planet &current, planet &other, int n, double h);
 };
 
 #endif // Solver_H

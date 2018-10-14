@@ -6,10 +6,12 @@ solver::solver() { radius = 1.0; }
 solver::solver(double r) { radius = r; }
 
 void solver::euler(planet &current, planet &other, int n, double h) {
-  double x = current.position[0];
-  double y = current.position[1];
-  double vx = current.velocity[0];
-  double vy = current.velocity[1];
+  x = current.x;
+  y = current.y;
+  z = current.z;
+  vx = current.vx;
+  vy = current.vy;
+  vz = current.vz;
   ofstream ofile;
 
   char *sol_array;
@@ -28,49 +30,43 @@ void solver::euler(planet &current, planet &other, int n, double h) {
   return;
 }
 
-/*
-
-void solver::verlet(double *x, double *y, double *vx, double *vy, int n,
-                    double h, double MS, double G) {
-  x[0] = 1.0;
-  y[0] = 0.0;
-  vx[0] = 0.0;
-  vy[0] = 2.0 * M_PI;
-  double *ax = new double[n];
-  double *ay = new double[n];
+void solver::verlet(planet &current, planet &other, int n, double h) {
+  x = current.x;
+  y = current.y;
+  z = current.z;
+  vx = current.vx;
+  vy = current.vy;
+  vz = current.vz;
+  double ax;
+  double ay;
+  double az;
   double hh = h * h;
-  for (int i = 0; i < n; i++) {
-    double r = sqrt(pow(x[i], 2) + pow(y[i], 2));
-    x[i + 1] = x[i] + h * vx[i] + (hh / 2) * ax[i];
-    y[i + 1] = y[i] + h * vy[i] + (hh / 2) * ay[i];
-    ay[i + 1] = -(G * MS / pow(r, 3)) * y[i];
-    ax[i + 1] = -(G * MS / pow(r, 3)) * x[i];
-    vx[i + 1] = vx[i] + (h / 2) * (ax[i + 1] + ax[i]);
-    vy[i + 1] = vy[i] + (h / 2) * (ay[i + 1] + ay[i]);
-  }
   ofstream ofile;
 
   char *sol_array;
 
   ofile.open("sol_array.txt");
-
-  for (int i = 1; i < n; i++) {
-    ofile << x[i] << " " << y[i] << endl;
+  for (int i = 0; i < n; i++) {
+    double r = current.distance(other);
+    x = x + h * vx + (hh / 2) * ax;
+    y = y + h * vy + (hh / 2) * ay;
+    ay = -(G * current.mass / pow(r, 3)) * y;
+    ax = -(G * current.mass / pow(r, 3)) * x;
+    vx = vx + (h / 2) * (ax + ax);
+    vy = vy + (h / 2) * (ay + ay);
+    ofile << x << " " << y << endl;
   }
 
   ofile.close();
   return;
 }
 
-double **CreateMatrix(int row, int col) {
-  double **M;
-  M = new double *[row];
-  for (int i = 0; i < row; i++) {
-    M[i] = new double[col];
-  }
-}
-return (double **)M;
-}
-
-
-*/
+// double **CreateMatrix(int row, int col) {
+//   double **M;
+//   M = new double *[row];
+//   for (int i = 0; i < row; i++) {
+//     M[i] = new double[col];
+//   }
+// }
+// return (double **)M;
+// }

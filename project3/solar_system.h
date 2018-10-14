@@ -18,10 +18,17 @@ public:
   double mass;
   vec3 position();
   vec3 velocity;
+  double x;
+  double y;
+  double z;
+  double vx;
+  double vy;
+  double vz;
   double kinetic;
   double potential;
 
   planet();
+  ~planet() {}
   planet(vec3 position, vec3 velocity);
   double distance(planet otherplanet);
   double GForce(planet otherplanet);

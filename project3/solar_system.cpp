@@ -25,7 +25,6 @@ planet::planet(vec3 position, vec3 velocity) {
 }
 
 double planet::distance(planet otherplanet) {
-  double x, y;
   x = x - otherplanet.x;
   y = y - otherplanet.y;
   z = z - otherplanet.z;
@@ -34,6 +33,7 @@ double planet::distance(planet otherplanet) {
 
 double planet::GForce(planet otherplanet) {
   double M1, M2, r;
+  double Gx, Gy, Gz;
   M1 = mass;
   M2 = otherplanet.mass;
   r = distance(otherplanet);
