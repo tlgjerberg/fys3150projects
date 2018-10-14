@@ -1,6 +1,7 @@
 #ifndef Solar_system_H
 #define Solar_system_H
 
+#include "vec3.h"
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -15,13 +16,13 @@ private:
 
 public:
   double mass;
-  double position[2];
-  double velocity[2];
+  vec3 position();
+  vec3 velocity;
   double kinetic;
   double potential;
 
   planet();
-  planet(double x, double y, double vx, double vy);
+  planet(vec3 position, vec3 velocity);
   double distance(planet otherplanet);
   double GForce(planet otherplanet);
 };

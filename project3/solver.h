@@ -3,6 +3,7 @@
 #define _USE_MATH_DEFINES
 
 #include "solar_system.h"
+#include "vec3.h"
 #include <cmath>
 #include <fstream>
 #include <iostream>

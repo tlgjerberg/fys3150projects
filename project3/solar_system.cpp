@@ -1,29 +1,35 @@
 #include "solar_system.h"
 #include "solver.h"
+#include "vec3.h"
 
 planet::planet() {
-  position[0] = 1.;
-  position[1] = 1.;
-  velocity[0] = 1.;
-  velocity[1] = 1.;
+  x = 1.;
+  y = 1.;
+  z = 1.;
+  vx = 1.;
+  vy = 1.;
+  vz = 1.;
   kinetic = 1.;
   potential = 1.;
 }
 
-planet::planet(double x, double y, double vx, double vy) {
-  position[0] = x;
-  position[1] = y;
-  velocity[0] = vx;
-  velocity[1] = vy;
+planet::planet(vec3 position, vec3 velocity) {
+  x = position[0];
+  y = position[1];
+  z = position[2];
+  vx = velocity[0];
+  vy = velocity[1];
+  vz = velocity[2];
   kinetic = 1.;
   potential = 1.;
 }
 
 double planet::distance(planet otherplanet) {
   double x, y;
-  x = position[0] - otherplanet.position[0];
-  y = position[1] - otherplanet.position[1];
-  return sqrt(x * x + y * y);
+  x = x - otherplanet.x;
+  y = y - otherplanet.y;
+  z = z - otherplanet.z;
+  return sqrt(x * x + y * y + z * z);
 }
 
 double planet::GForce(planet otherplanet) {
