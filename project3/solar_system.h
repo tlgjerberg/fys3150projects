@@ -1,37 +1,25 @@
 #ifndef Solar_system_H
 #define Solar_system_H
 
+#include "planet.h"
 #include "vec3.h"
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <vector>
 
-using std::vector;
 using namespace std;
 
-class planet {
-private:
-  double G = 6.67e-11;
-
+class SolarSystem {
 public:
-  double mass;
-  vec3 position();
-  vec3 velocity;
-  double x;
-  double y;
-  double z;
-  double vx;
-  double vy;
-  double vz;
-  double kinetic;
-  double potential;
+  vector<planet *> celestial_objects;
 
-  planet();
-  ~planet() {}
-  planet(vec3 position, vec3 velocity);
-  double distance(planet otherplanet);
-  double GForce(planet otherplanet);
+  // Methods
+  SolarSystem();
+  ~SolarSystem();
+  void add_celestial_objects(planet *planet) {
+    celestial_objects.push_back(planet);
+  }
 };
 
 #endif // Solar_system_H
