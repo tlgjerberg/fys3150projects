@@ -21,8 +21,6 @@ planet::planet(vec3 position, vec3 velocity, const double M) {
   vy = velocity[1];
   vz = velocity[2];
   mass = M;
-  kinetic = 1.;
-  potential = 1.;
 }
 
 double planet::distance(planet otherplanet) {
@@ -32,12 +30,19 @@ double planet::distance(planet otherplanet) {
   return sqrt(x * x + y * y + z * z);
 }
 
-double planet::GForce(planet otherplanet) {
+vec3 planet::GForce(planet otherplanet) {
   double M1, M2, r;
-  double Gx, Gy, Gz;
   M1 = mass;
   M2 = otherplanet.mass;
   r = distance(otherplanet);
+  gforce[0] = -G * (M2 * M1 / pow(r, 3)) * x;
+  gforce[1] = -G * (M2 * M1 / pow(r, 3)) * y;
+  gforce[2] = -G * (M2 * M1 / pow(r, 3)) * z;
+  return gforce;
+}
 
-  return -((G * M1 * M2) / r * r);
+vec3 planet::accel(planet otherplanet, vec3 gforce) {
+  vec3 acceleration;
+  acceleration = gforce / mass;
+  return acceleration;
 }

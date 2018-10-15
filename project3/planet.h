@@ -18,12 +18,10 @@ public:
   double mass;
   vec3 position;
   vec3 velocity;
-  double x;
-  double y;
-  double z;
-  double vx;
-  double vy;
-  double vz;
+  double x, y, z;
+  double vx, vy, vz;
+  double ax, ay, az;
+  vec3 gforce;
   double kinetic;
   double potential;
 
@@ -31,7 +29,8 @@ public:
   ~planet() {}
   planet(vec3 position, vec3 velocity, const double M);
   double distance(planet otherplanet);
-  double GForce(planet otherplanet);
+  vec3 GForce(planet otherplanet);
+  vec3 accel(planet otherplanet, vec3 gforce);
 };
 
 #endif // Planet_H
