@@ -31,6 +31,8 @@ public:
   double distance(planet otherplanet);
   vec3 GForce(planet otherplanet);
   vec3 accel(planet otherplanet, vec3 gforce);
+  double kinetic();
+  double potential();
 };
 
 #endif // Planet_H
