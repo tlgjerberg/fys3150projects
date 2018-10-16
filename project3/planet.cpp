@@ -1,6 +1,6 @@
 #include "planet.h"
 #include "solver.h"
-#include "vec3.h"
+// #include "vec3.h"
 
 planet::planet() {
   x = 1.;
@@ -9,8 +9,7 @@ planet::planet() {
   vx = 1.;
   vy = 1.;
   vz = 1.;
-  kinetic = 1.;
-  potential = 1.;
+  mass = 1.;
 }
 
 planet::planet(vec3 position, vec3 velocity, const double M) {
@@ -41,8 +40,16 @@ vec3 planet::GForce(planet otherplanet) {
   return gforce;
 }
 
-vec3 planet::accel(planet otherplanet, vec3 gforce) {
-  vec3 acceleration;
-  acceleration = gforce / mass;
+vec planet::accel(planet otherplanet) {
+  vec acceleration;
+  double r = distance(otherplanet);
+  acceleration[0] = -G * x / pow(r, 3);
+  acceleration[1] = -G * y / pow(r, 3);
+  acceleration[2] = -4 * (pi * pi * z) / pow(r, 3);
   return acceleration;
 }
+
+// double planet::kinetic() { return 0.5 * mass * (vx * vx + vy * vy + vz * vz);
+// } double planet::potential(planet otherplanet) {
+//   return -G(mass * otherplanet.mass) / distance(otherplanet);
+// }

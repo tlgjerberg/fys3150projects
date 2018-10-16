@@ -2,17 +2,20 @@
 #define Planet_H
 
 #include "vec3.h"
+// #include <armadillo>
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <vector>
+
+#define _USE_MATH_DEFINES
 
 using std::vector;
 using namespace std;
 
 class planet {
 private:
-  double G = 6.67e-11;
+  double G = 4 * pow(M_PI, 2);
 
 public:
   double mass;
@@ -22,17 +25,16 @@ public:
   double vx, vy, vz;
   double ax, ay, az;
   vec3 gforce;
-  double kinetic;
-  double potential;
+  double pi = M_PI;
 
   planet();
   ~planet() {}
   planet(vec3 position, vec3 velocity, const double M);
   double distance(planet otherplanet);
   vec3 GForce(planet otherplanet);
-  vec3 accel(planet otherplanet, vec3 gforce);
-  double kinetic();
-  double potential();
+  vec3 accel(planet otherplanet);
+  // double kinetic();
+  // double potential(planet otherplanet);
 };
 
 #endif // Planet_H

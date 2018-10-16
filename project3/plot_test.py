@@ -26,9 +26,9 @@ plt.legend(loc='best')
 # ax.set_title("Energy ground states for different $\\omega_r$")
 # ax.set_xlabel("$\\omega_r$")
 # ax.set_ylabel("E($\\omega_r$)")
-ax.set_title("Ground state of a harmonic oscillator potential")
-ax.set_xlabel("$\\rho$")
-ax.set_ylabel("u($\\rho$)")
+# ax.set_title("Ground state of a harmonic oscillator potential")
+# ax.set_xlabel("$\\rho$")
+# ax.set_ylabel("u($\\rho$)")
 
 
 # fig, ax = plt.subplots()

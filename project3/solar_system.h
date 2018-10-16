@@ -3,12 +3,14 @@
 
 #include "planet.h"
 #include "vec3.h"
+// #include <armadillo>
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <vector>
 
 using namespace std;
+// using namespace arma;
 
 class SolarSystem {
 public:

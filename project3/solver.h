@@ -5,6 +5,7 @@
 #include "planet.h"
 #include "solar_system.h"
 #include "vec3.h"
+// #include <armadillo>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -15,13 +16,13 @@ using namespace std;
 
 class solver {
 private:
-  double G;
   double x;
   double y;
   double z;
   double vx;
   double vy;
   double vz;
+  double pi = M_PI;
 
 public:
   friend class planet;
@@ -31,7 +32,7 @@ public:
   solver();
   solver(double r);
   void euler(planet &current, planet &other, int n, double h);
-  void verlet(planet &current, planet &other, int n, double h, vec3 gforce);
+  void verlet(planet &current, planet &other, int n, double h);
 };
 
 #endif // Solver_H
