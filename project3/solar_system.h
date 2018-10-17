@@ -2,8 +2,8 @@
 #define Solar_system_H
 
 #include "planet.h"
-#include "vec3.h"
-// #include <armadillo>
+// #include "vec3.h"
+#include <armadillo>
 #include <cmath>
 #include <fstream>
 #include <iostream>

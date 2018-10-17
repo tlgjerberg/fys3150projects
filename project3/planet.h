@@ -1,8 +1,8 @@
 #ifndef Planet_H
 #define Planet_H
 
-#include "vec3.h"
-// #include <armadillo>
+// #include "vec3.h"
+#include <armadillo>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -12,6 +12,7 @@
 
 using std::vector;
 using namespace std;
+using namespace arma;
 
 class planet {
 private:
@@ -19,20 +20,20 @@ private:
 
 public:
   double mass;
-  vec3 position;
-  vec3 velocity;
+  vec position;
+  vec velocity;
   double x, y, z;
   double vx, vy, vz;
   double ax, ay, az;
-  vec3 gforce;
+  vec gforce;
   double pi = M_PI;
 
   planet();
   ~planet() {}
-  planet(vec3 position, vec3 velocity, const double M);
+  planet(vec position, vec velocity, const double M);
   double distance(planet otherplanet);
-  vec3 GForce(planet otherplanet);
-  vec3 accel(planet otherplanet);
+  vec GForce(planet otherplanet);
+  vec accel(planet otherplanet);
   // double kinetic();
   // double potential(planet otherplanet);
 };

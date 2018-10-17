@@ -12,7 +12,7 @@ planet::planet() {
   mass = 1.;
 }
 
-planet::planet(vec3 position, vec3 velocity, const double M) {
+planet::planet(vec position, vec velocity, const double M) {
   x = position[0];
   y = position[1];
   z = position[2];
@@ -29,7 +29,7 @@ double planet::distance(planet otherplanet) {
   return sqrt(x * x + y * y + z * z);
 }
 
-vec3 planet::GForce(planet otherplanet) {
+vec planet::GForce(planet otherplanet) {
   double M1, M2, r;
   M1 = mass;
   M2 = otherplanet.mass;

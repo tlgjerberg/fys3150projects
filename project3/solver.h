@@ -4,8 +4,8 @@
 
 #include "planet.h"
 #include "solar_system.h"
-#include "vec3.h"
-// #include <armadillo>
+// #include "vec3.h"
+#include <armadillo>
 #include <cmath>
 #include <fstream>
 #include <iostream>
