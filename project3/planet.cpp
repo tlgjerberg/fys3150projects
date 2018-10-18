@@ -34,18 +34,19 @@ vec planet::GForce(planet otherplanet) {
   M1 = mass;
   M2 = otherplanet.mass;
   r = distance(otherplanet);
-  gforce[0] = -G * (M2 * M1 / pow(r, 3)) * x;
-  gforce[1] = -G * (M2 * M1 / pow(r, 3)) * y;
-  gforce[2] = -G * (M2 * M1 / pow(r, 3)) * z;
+  gforce[0] = -G * (M2 * M1 / pow(r, 3)) * (x - otherplanet.x);
+  gforce[1] = -G * (M2 * M1 / pow(r, 3)) * (y - otherplanet.y);
+  gforce[2] = -G * (M2 * M1 / pow(r, 3)) * (z - otherplanet.z);
   return gforce;
 }
 
 vec planet::accel(planet otherplanet) {
-  vec acceleration;
+  vec acceleration = zeros(3);
+  double M2 = otherplanet.mass;
   double r = distance(otherplanet);
-  acceleration[0] = -G * x / pow(r, 3);
-  acceleration[1] = -G * y / pow(r, 3);
-  acceleration[2] = -4 * (pi * pi * z) / pow(r, 3);
+  acceleration(0) = -G * M2 * (x - otherplanet.x) / pow(r, 3);
+  acceleration(1) = -G * M2 * (y - otherplanet.y) / pow(r, 3);
+  acceleration(2) = -G * M2 * (z - otherplanet.z) / pow(r, 3);
   return acceleration;
 }
 

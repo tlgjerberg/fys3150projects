@@ -55,9 +55,9 @@ void solver::verlet(planet &current, planet &other, int n, double h) {
     tmpax = -4 * (pi * pi * x) / pow(r, 3);
     tmpay = -4 * (pi * pi * y) / pow(r, 3);
     tmpaz = -4 * (pi * pi * z) / pow(r, 3);
-    x = x + h * vx + (hh / 2) * tmpax;
-    y = y + h * vy + (hh / 2) * tmpay;
-    z = z + h * vz + (hh / 2) * tmpaz;
+    x += h * vx + (hh / 2) * tmpax;
+    y += h * vy + (hh / 2) * tmpay;
+    z += h * vz + (hh / 2) * tmpaz;
     // cout << tmpax << endl;
     // a = current.accel(other);
     ax = -4 * (pi * pi * x) / pow(r, 3);
