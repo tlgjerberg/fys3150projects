@@ -2,6 +2,8 @@
 #define Planet_H
 
 // #include "vec3.h"
+// #include "solar_system.h"
+// #include "solver.h"
 #include <armadillo>
 #include <cmath>
 #include <fstream>

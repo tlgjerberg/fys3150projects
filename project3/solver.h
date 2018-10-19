@@ -23,16 +23,17 @@ private:
   double vy;
   double vz;
   double pi = M_PI;
+  double G = 4 * pi * pi;
 
 public:
   friend class planet;
+  friend class SolarSystem;
   double radius;
-  vector<double> planets;
 
   solver();
   solver(double r);
   void euler(planet &current, planet &other, int n, double h);
-  void verlet(planet &current, planet &other, int n, double h);
+  void verlet(SolarSystem solsys, int n, double h);
 };
 
 #endif // Solver_H

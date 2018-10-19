@@ -23,6 +23,17 @@ mat SolarSystem::position() {
   return pos;
 }
 
+mat SolarSystem::velocity() {
+  int n = celestial_objects.size();
+  mat vel = zeros(3, n);
+  for (int i = 0; i < n; i++) {
+    vel(0, i) = celestial_objects[i].vx;
+    vel(1, i) = celestial_objects[i].vy;
+    vel(2, i) = celestial_objects[i].vz;
+  }
+  return vel;
+}
+
 mat SolarSystem::accel() {
   int n = celestial_objects.size();
   mat A = zeros(3, n);

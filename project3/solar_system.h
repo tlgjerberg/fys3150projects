@@ -24,6 +24,7 @@ public:
   void add_celestial_objects(planet planet);
   mat accel();
   mat position();
+  mat velocity();
 };
 
 #endif // Solar_system_H

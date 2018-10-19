@@ -23,10 +23,10 @@ planet::planet(vec position, vec velocity, const double M) {
 }
 
 double planet::distance(planet otherplanet) {
-  x = x - otherplanet.x;
-  y = y - otherplanet.y;
-  z = z - otherplanet.z;
-  return sqrt(x * x + y * y + z * z);
+  double delta_x = x - otherplanet.x;
+  double delta_y = y - otherplanet.y;
+  double delta_z = z - otherplanet.z;
+  return sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
 }
 
 vec planet::GForce(planet otherplanet) {

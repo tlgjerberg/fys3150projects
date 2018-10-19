@@ -35,40 +35,45 @@ void solver::euler(planet &current, planet &other, int n, double h) {
   return;
 }
 
-void solver::verlet(planet &current, planet &other, int n, double h) {
-  x = current.x;
-  y = current.y;
-  z = current.z;
-  vx = current.vx;
-  vy = current.vy;
-  vz = current.vz;
+void solver::verlet(SolarSystem solsys, int n, double h) {
+  // x = current.x;
+  // y = current.y;
+  // z = current.z;
+  // vx = current.vx;
+  // vy = current.vy;
+  // vz = current.vz;
+  mat position = solsys.position();
+  mat velocity = solsys.velocity();
   double tmpax, tmpay, tmpaz;
   double hh = h * h;
   ofstream ofile;
-  double ax, ay, az;
+  // double ax, ay, az;
+  mat preva;
+  mat a;
   char *sol_array;
 
   ofile.open("sol_array.txt");
   for (int i = 0; i < n; i++) {
-    double r = current.distance(other);
-    // vec3 a = current.accel(other);
-    tmpax = -4 * (pi * pi * x) / pow(r, 3);
-    tmpay = -4 * (pi * pi * y) / pow(r, 3);
-    tmpaz = -4 * (pi * pi * z) / pow(r, 3);
-    x += h * vx + (hh / 2) * tmpax;
-    y += h * vy + (hh / 2) * tmpay;
-    z += h * vz + (hh / 2) * tmpaz;
-    // cout << tmpax << endl;
-    // a = current.accel(other);
-    ax = -4 * (pi * pi * x) / pow(r, 3);
-    ay = -4 * (pi * pi * y) / pow(r, 3);
-    az = -4 * (pi * pi * z) / pow(r, 3);
-    // cout << ax << ay << endl;
-    vx = vx + (h / 2) * (ax + tmpax);
-    vy = vy + (h / 2) * (ay + tmpay);
-    vz = vz + (h / 2) * (az + tmpaz);
+
+    preva = solsys.accel();
+    // cout << preva << endl;
+    position += h * velocity + (hh / 2) * preva;
+    cout << position << endl;
+    // tmpay = -4 * (pi * pi * y) / pow(r, 3);
+    // tmpaz = -4 * (pi * pi * z) / pow(r, 3);
+    // pos += h * vel + (hh / 2) * preva;
+    // y += h * vy + (hh / 2) * tmpay;
+    // z += h * vz + (hh / 2) * tmpaz;
+    a = solsys.accel();
+    // cout << a << endl;
+    // ay = -4 * (pi * pi * y) / pow(r, 3);
+    // az = -4 * (pi * pi * z) / pow(r, 3);
+    velocity += (h / 2) * (a + preva);
+    // vx += (h / 2) * (ax + tmpax);
+    // vy += (h / 2) * (ay + tmpay);
+    // vz += (h / 2) * (az + tmpaz);
     if (i % 10 == 0) {
-      ofile << x << " " << y << endl;
+      ofile << position(0, 0) << " " << position(1, 0) << endl;
     }
   }
 
