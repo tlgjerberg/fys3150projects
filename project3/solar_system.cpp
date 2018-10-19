@@ -2,8 +2,26 @@
 #include "solar_system.h"
 #include "solver.h"
 
-SolarSystem::SolarSystem() {}
+SolarSystem::SolarSystem() { vector<planet> celestial_objects = {}; }
+SolarSystem::SolarSystem(vector<planet> init_cel_obj) {
+  celestial_objects = init_cel_obj;
+}
+
+void SolarSystem::add_celestial_objects(planet planet) {
+  celestial_objects.push_back(planet);
+}
 int SolarSystem::length() { return celestial_objects.size(); }
+
+mat SolarSystem::position() {
+  int n = celestial_objects.size();
+  mat pos = zeros(3, n);
+  for (int i = 0; i < n; i++) {
+    pos(0, i) = celestial_objects[i].x;
+    pos(1, i) = celestial_objects[i].y;
+    pos(2, i) = celestial_objects[i].z;
+  }
+  return pos;
+}
 
 mat SolarSystem::accel() {
   int n = celestial_objects.size();
