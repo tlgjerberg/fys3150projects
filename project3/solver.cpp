@@ -7,6 +7,8 @@ solver::solver() { radius = 1.0; }
 
 solver::solver(double r) { radius = r; }
 
+// void solver::acceleration() {}
+
 void solver::euler(planet &current, planet &other, int n, double h) {
   x = current.x;
   y = current.y;
@@ -35,45 +37,47 @@ void solver::euler(planet &current, planet &other, int n, double h) {
   return;
 }
 
-void solver::verlet(SolarSystem solsys, int n, double h) {
-  // x = current.x;
-  // y = current.y;
-  // z = current.z;
-  // vx = current.vx;
-  // vy = current.vy;
-  // vz = current.vz;
-  mat position = solsys.position();
-  mat velocity = solsys.velocity();
-  double tmpax, tmpay, tmpaz;
+// void solver::euler(SolarSystem &input_obj)
+
+void solver::verlet(SolarSystem &input_obj, int n, double h) {
+  solsys = &input_obj;
+
+  // vector of objects of planets given in the solar system
+  vector<planet> &bodies = solsys->objects();
   double hh = h * h;
+
+  int dim = bodies.size(); // Size of the vector of planets
+  cout << dim << endl;
+  mat a_next(3, dim); // Declare empty acceleration matrix
+  mat a(3, dim);      // Declare empty acceleration matrix
+
+  // vec a, a_next;
+
   ofstream ofile;
-  // double ax, ay, az;
-  mat preva;
-  mat a;
   char *sol_array;
 
   ofile.open("sol_array.txt");
+
   for (int i = 0; i < n; i++) {
 
-    preva = solsys.accel();
-    // cout << preva << endl;
-    position += h * velocity + (hh / 2) * preva;
-    cout << position << endl;
-    // tmpay = -4 * (pi * pi * y) / pow(r, 3);
-    // tmpaz = -4 * (pi * pi * z) / pow(r, 3);
-    // pos += h * vel + (hh / 2) * preva;
-    // y += h * vy + (hh / 2) * tmpay;
-    // z += h * vz + (hh / 2) * tmpaz;
-    a = solsys.accel();
-    // cout << a << endl;
-    // ay = -4 * (pi * pi * y) / pow(r, 3);
-    // az = -4 * (pi * pi * z) / pow(r, 3);
-    velocity += (h / 2) * (a + preva);
-    // vx += (h / 2) * (ax + tmpax);
-    // vy += (h / 2) * (ay + tmpay);
-    // vz += (h / 2) * (az + tmpaz);
     if (i % 10 == 0) {
-      ofile << position(0, 0) << " " << position(1, 0) << endl;
+      ofile << bodies[0].position << "\n";
+    }
+
+    // a = zeros(3, dim);    // Resets acceleration for each step
+    a += solsys->accel(); // Adds acceleration from all planets
+    // cout << a << endl;
+
+    for (int j = 0; j < dim; j++) {
+
+      bodies[j].position += h * bodies[j].velocity + (hh / 2) * a.col(j);
+    }
+    // a_next = zeros(3, dim);    // Resets the next step of the acceleration
+    a_next += solsys->accel(); // Adds the acceleration for the next steps
+    // cout << a_next << endl;
+    for (int j = 0; j < dim; j++) {
+
+      bodies[j].velocity += (h / 2) * (a_next.col(j) + a.col(j));
     }
   }
 

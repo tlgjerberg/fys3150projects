@@ -4,7 +4,7 @@
 // #include "vec3.h"
 
 int main(int argc, char const *argv[]) {
-  double t = 10.0;
+  double t = 1.0;
   int n = 1000;
   int N = n * t;
   double h = t / N;
@@ -20,11 +20,12 @@ int main(int argc, char const *argv[]) {
   planet planet3(pos3, vel3, 0.00095);
   solsys.add_celestial_objects(planet1);
   solsys.add_celestial_objects(planet2);
+
   // solsys.add_celestial_objects(planet3);
   cout << solsys.length() << endl;
-  cout << planet1.distance(planet2) << endl;
-  cout << solsys.accel() << endl;
-  cout << solsys.position() << endl;
+  // cout << planet1.distance(planet2) << endl;
+  // cout << solsys.accel() << endl;
+  // cout << solsys.position() << endl;
 
   // vec gforce = planet1.GForce(planet2);
   solver binobj;

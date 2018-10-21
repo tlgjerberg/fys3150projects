@@ -24,6 +24,7 @@ public:
   double mass;
   vec position;
   vec velocity;
+  vec acceleration;
   double x, y, z;
   double vx, vy, vz;
   double ax, ay, az;
