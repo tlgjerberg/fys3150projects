@@ -68,20 +68,20 @@ int SolarSystem::length() { return celestial_objects.size(); }
 
 mat SolarSystem::accel() {
   int n = celestial_objects.size();
-  double r;
+  double r
   mat A = zeros(3, n);
   for (int i = 0; i < n; i++) {
 
     for (int j = i + 1; j < n; j++) {
 
-      r = celestial_objects[i].distance(celestial_objects[j]);
-      // vec accel = celestial_objects[i].accel(celestial_objects[j]);
-      A(0, i) += -G * celestial_objects[j].mass *
-                 (celestial_objects[i].x - celestial_objects[j].x) / pow(r, 2);
-      A(1, i) += -G * celestial_objects[j].mass *
-                 (celestial_objects[i].y - celestial_objects[j].y) / pow(r, 2);
-      A(2, i) += -G * celestial_objects[j].mass *
-                 (celestial_objects[i].z - celestial_objects[j].z) / pow(r, 2);
+      r = sqrt((celestial_objects[j].position) - (celestial_objects[i].position));
+      A.col(i) += -G*celestial_objects[j].mass*(celestial_objects[i].position - celestial_objects[j].position)/pow(r,3);
+      // A(0, i) += -G * &celestial_objects[j].mass *
+      //            (&celestial_objects[i].x - &celestial_objects[j].x) / pow(r, 2);
+      // A(1, i) += -G * &celestial_objects[j].mass *
+      //            (&celestial_objects[i].y - &celestial_objects[j].y) / pow(r, 2);
+      // A(2, i) += -G * &celestial_objects[j].mass *
+      //            (&celestial_objects[i].z - &celestial_objects[j].z) / pow(r, 2);
     }
   }
   return A;

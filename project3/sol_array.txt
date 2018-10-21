@@ -2,399 +2,399 @@
         0
         0
 
-   0.9924
       nan
-        0
-
-   0.9433
       nan
-        0
-
-   0.8134
       nan
-        0
 
-   0.5630
       nan
-        0
-
-   0.1527
       nan
-        0
-
-  -0.4570
       nan
-        0
 
-  -1.3054
       nan
-        0
-
-  -2.4323
       nan
-        0
-
-  -3.8769
       nan
-        0
 
-  -5.6788
       nan
-        0
-
-  -7.8774
       nan
-        0
-
-  -10.5123
-       nan
-         0
-
-  -13.6229
-       nan
-         0
-
-  -17.2487
-       nan
-         0
-
-  -21.4292
-       nan
-         0
-
-  -26.2038
-       nan
-         0
-
-  -31.6120
-       nan
-         0
-
-  -37.6934
-       nan
-         0
-
-  -44.4873
-       nan
-         0
-
-  -52.0333
-       nan
-         0
-
-  -60.3709
-       nan
-         0
-
-  -69.5394
-       nan
-         0
-
-  -79.5785
-       nan
-         0
-
-  -90.5276
-       nan
-         0
-
-  -1.0243e+02
-          nan
-            0
-
-  -1.1531e+02
-          nan
-            0
-
-  -1.2923e+02
-          nan
-            0
-
-  -1.4421e+02
-          nan
-            0
-
-  -1.6030e+02
-          nan
-            0
-
-  -1.7754e+02
-          nan
-            0
-
-  -1.9597e+02
-          nan
-            0
-
-  -2.1562e+02
-          nan
-            0
-
-  -2.3653e+02
-          nan
-            0
-
-  -2.5875e+02
-          nan
-            0
-
-  -2.8232e+02
-          nan
-            0
-
-  -3.0726e+02
-          nan
-            0
-
-  -3.3364e+02
-          nan
-            0
-
-  -3.6147e+02
-          nan
-            0
-
-  -3.9081e+02
-          nan
-            0
-
-  -4.2168e+02
-          nan
-            0
-
-  -4.5414e+02
-          nan
-            0
-
-  -4.8822e+02
-          nan
-            0
-
-  -5.2396e+02
-          nan
-            0
-
-  -5.6140e+02
-          nan
-            0
-
-  -6.0058e+02
-          nan
-            0
-
-  -6.4154e+02
-          nan
-            0
-
-  -6.8431e+02
-          nan
-            0
-
-  -7.2894e+02
-          nan
-            0
-
-  -7.7547e+02
-          nan
-            0
-
-  -8.2394e+02
-          nan
-            0
-
-  -8.7438e+02
-          nan
-            0
-
-  -9.2683e+02
-          nan
-            0
-
-  -9.8135e+02
-          nan
-            0
-
-  -1.0380e+03
-          nan
-            0
-
-  -1.0967e+03
-          nan
-            0
-
-  -1.1576e+03
-          nan
-            0
-
-  -1.2207e+03
-          nan
-            0
-
-  -1.2861e+03
-          nan
-            0
-
-  -1.3538e+03
-          nan
-            0
-
-  -1.4238e+03
-          nan
-            0
-
-  -1.4961e+03
-          nan
-            0
-
-  -1.5709e+03
-          nan
-            0
-
-  -1.6482e+03
-          nan
-            0
-
-  -1.7279e+03
-          nan
-            0
-
-  -1.8101e+03
-          nan
-            0
-
-  -1.8949e+03
-          nan
-            0
-
-  -1.9824e+03
-          nan
-            0
-
-  -2.0724e+03
-          nan
-            0
-
-  -2.1652e+03
-          nan
-            0
-
-  -2.2607e+03
-          nan
-            0
-
-  -2.3589e+03
-          nan
-            0
-
-  -2.4600e+03
-          nan
-            0
-
-  -2.5639e+03
-          nan
-            0
-
-  -2.6707e+03
-          nan
-            0
-
-  -2.7804e+03
-          nan
-            0
-
-  -2.8930e+03
-          nan
-            0
-
-  -3.0087e+03
-          nan
-            0
-
-  -3.1274e+03
-          nan
-            0
-
-  -3.2492e+03
-          nan
-            0
-
-  -3.3741e+03
-          nan
-            0
-
-  -3.5022e+03
-          nan
-            0
-
-  -3.6335e+03
-          nan
-            0
-
-  -3.7680e+03
-          nan
-            0
-
-  -3.9058e+03
-          nan
-            0
-
-  -4.0469e+03
-          nan
-            0
-
-  -4.1914e+03
-          nan
-            0
-
-  -4.3392e+03
-          nan
-            0
-
-  -4.4906e+03
-          nan
-            0
-
-  -4.6453e+03
-          nan
-            0
-
-  -4.8036e+03
-          nan
-            0
-
-  -4.9655e+03
-          nan
-            0
-
-  -5.1309e+03
-          nan
-            0
-
-  -5.3000e+03
-          nan
-            0
-
-  -5.4727e+03
-          nan
-            0
-
-  -5.6492e+03
-          nan
-            0
-
-  -5.8294e+03
-          nan
-            0
-
-  -6.0134e+03
-          nan
-            0
-
-  -6.2013e+03
-          nan
-            0
-
-  -6.3930e+03
-          nan
-            0
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
+
+      nan
+      nan
+      nan
 

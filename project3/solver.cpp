@@ -44,6 +44,7 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
 
   // vector of objects of planets given in the solar system
   vector<planet> &bodies = solsys->objects();
+
   double hh = h * h;
 
   int dim = bodies.size(); // Size of the vector of planets
@@ -66,11 +67,12 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
 
     // a = zeros(3, dim);    // Resets acceleration for each step
     a += solsys->accel(); // Adds acceleration from all planets
-    // cout << a << endl;
+    cout << a << endl;
 
     for (int j = 0; j < dim; j++) {
 
       bodies[j].position += h * bodies[j].velocity + (hh / 2) * a.col(j);
+      // cout << bodies.position << endl;
     }
     // a_next = zeros(3, dim);    // Resets the next step of the acceleration
     a_next += solsys->accel(); // Adds the acceleration for the next steps
