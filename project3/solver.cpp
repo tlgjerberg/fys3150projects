@@ -62,21 +62,23 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
   for (int i = 0; i < n; i++) {
 
     if (i % 10 == 0) {
-      ofile << bodies[0].position << "\n";
+      ofile << bodies[2].position(0) << " " << bodies[2].position(1) << " "
+            << bodies[2].position(2) << "\n";
     }
 
-    // a = zeros(3, dim);    // Resets acceleration for each step
+    a = zeros(3, dim);    // Resets acceleration for each step
     a += solsys->accel(); // Adds acceleration from all planets
-    cout << "a" << endl;
-    cout << a << endl;
+    // cout << "a" << endl;
+    // cout << a << endl;
 
     for (int j = 0; j < dim; j++) {
 
       bodies[j].position += h * bodies[j].velocity + (hh / 2) * a.col(j);
       // cout << bodies.position << endl;
     }
-    // a_next = zeros(3, dim);    // Resets the next step of the acceleration
+    a_next = zeros(3, dim);    // Resets the next step of the acceleration
     a_next += solsys->accel(); // Adds the acceleration for the next steps
+    // cout << "a_next" << endl;
     // cout << a_next << endl;
     for (int j = 0; j < dim; j++) {
 
