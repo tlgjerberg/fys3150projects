@@ -18,18 +18,25 @@ int main(int argc, char const *argv[]) {
   planet planet1(pos1, vel1, 0.000003);
   planet planet2(pos2, vel2, 1);
   planet planet3(pos3, vel3, 0.00095);
+
+  // cout << planet1.position << endl;
+  // cout << planet2.position << endl;
   solsys.add_celestial_objects(planet1);
   solsys.add_celestial_objects(planet2);
 
+  vector <planet> cel_obj;
+  cel_obj = solsys.objects();
+  cout << "cel_obj[1] position" << cel_obj[1].position << endl;
+
   // solsys.add_celestial_objects(planet3);
-  cout << solsys.length() << endl;
+  // cout << solsys.length() << endl;
   // cout << planet1.distance(planet2) << endl;
-  // cout << solsys.accel() << endl;
+  cout << solsys.accel() << endl;
   // cout << solsys.position() << endl;
 
   // vec gforce = planet1.GForce(planet2);
-  solver binobj;
-  binobj.verlet(solsys, N, h);
+  // solver binobj;
+  // binobj.verlet(solsys, N, h);
   // binobj.euler(planet1, planet2, N, h);
   return 0;
 }

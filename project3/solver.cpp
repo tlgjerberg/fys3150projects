@@ -67,6 +67,7 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
 
     // a = zeros(3, dim);    // Resets acceleration for each step
     a += solsys->accel(); // Adds acceleration from all planets
+    cout << "a" << endl;
     cout << a << endl;
 
     for (int j = 0; j < dim; j++) {

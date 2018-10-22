@@ -35,7 +35,10 @@ double planet::distance(planet otherplanet) {
   double delta_x = this->x - otherplanet.x;
   double delta_y = this->y - otherplanet.y;
   double delta_z = this->z - otherplanet.z;
+  // vec dr;
+  // dr = this->position-otherplanet.position;
   return sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
+  // return sqrt(dr%dr);
 }
 
 vec planet::GForce(planet otherplanet) {

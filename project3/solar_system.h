@@ -29,7 +29,7 @@ public:
   void add_celestial_objects(planet planet);
   mat Forces();
   mat accel();
-  vector<planet> &objects();
+  vector<planet> objects();
   // mat position();
   // mat velocity();
 };
