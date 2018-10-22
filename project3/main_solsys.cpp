@@ -24,9 +24,9 @@ int main(int argc, char const *argv[]) {
   solsys.add_celestial_objects(planet1);
   solsys.add_celestial_objects(planet2);
 
-  vector <planet> cel_obj;
-  cel_obj = solsys.objects();
-  cout << "cel_obj[1] position" << cel_obj[1].position << endl;
+  // vector <planet> cel_obj;
+  // cel_obj = solsys.objects();
+  // cout << "cel_obj[1] position" << cel_obj[1].position << endl;
 
   // solsys.add_celestial_objects(planet3);
   // cout << solsys.length() << endl;
