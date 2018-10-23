@@ -57,7 +57,7 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
   for (int i = 0; i < n; i++) {
 
     // If test to ensure that only every 10th step is printed
-    if (i % 10 == 0) {
+    if (i % 100 == 0) {
       // Loop for printing x, y, z coordinates of each celestial object to a
       // diffeent file
       for (int k = 0; k < dim; k++) {
