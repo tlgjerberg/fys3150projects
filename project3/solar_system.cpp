@@ -60,16 +60,13 @@ mat SolarSystem::accel() {
   for (int i = 0; i < n; i++) {
 
     for (int j = i + 1; j < n; j++) {
-      // cout << "cel_obj[i]" << endl;
-      // cout << celestial_objects[i].position << endl;
-      // cout << "cel_obj[j]" << endl;
-      // cout << celestial_objects[j].position << endl;
+      // Difference in position between the current planet object and the next
+      // planet object
       drvec = celestial_objects[i].position - celestial_objects[j].position;
-      // cout << "drvec" << endl;
-      // cout << drvec << endl;
+      // Distance between the current planet object with another other planet
+      // object
       r = celestial_objects[i].distance(celestial_objects[j]);
-      // cout << "r" << endl;
-      // cout << r << endl;
+
       // Acceleration on the current object from the next objects
       A.col(i) += -G * celestial_objects[j].mass * (drvec) / pow(r, 3);
       // Acceleration for the next object from the current

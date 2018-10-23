@@ -37,7 +37,6 @@ void solver::euler(planet &current, planet &other, int n, double h) {
   return;
 }
 
-/* Solves
 void solver::verlet(SolarSystem &input_obj, int n, double h) {
   solsys = &input_obj;
 
