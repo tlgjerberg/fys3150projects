@@ -37,6 +37,8 @@ void solver::euler(planet &current, planet &other, int n, double h) {
   return;
 }
 
+/* Velocity verlet for integrating the positions and velocities of all planets
+ in the SolarSystem object*/
 void solver::verlet(SolarSystem &input_obj, int n, double h) {
   solsys = &input_obj;
 
@@ -53,8 +55,11 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
   // vec a, a_next;
 
   for (int i = 0; i < n; i++) {
-    if (i % 10 == 0) {
 
+    // If test to ensure that only every 10th step is printed
+    if (i % 10 == 0) {
+      // Loop for printing x, y, z coordinates of each celestial object to a
+      // diffeent file
       for (int k = 0; k < dim; k++) {
         ofstream ofile;
         string filename[dim];
@@ -71,19 +76,19 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
     }
 
     a = zeros(3, dim);    // Resets acceleration for each step
-    a += solsys->accel(); // Adds acceleration from all planets
-    // cout << "a" << endl;
-    // cout << a << endl;
+    a += solsys->accel(); // Adds acceleration for all planets
 
+    // Integrating the position each planet
     for (int j = 0; j < dim; j++) {
 
       bodies[j].position += h * bodies[j].velocity + (hh / 2) * a.col(j);
       // cout << bodies.position << endl;
     }
     a_next = zeros(3, dim);    // Resets the next step of the acceleration
-    a_next += solsys->accel(); // Adds the acceleration for the next steps
-    // cout << "a_next" << endl;
-    // cout << a_next << endl;
+    a_next += solsys->accel(); // Adds the acceleration for the next step after
+                               // finding the new positions
+
+    // Integrating the velocity of each planet
     for (int j = 0; j < dim; j++) {
 
       bodies[j].velocity += (h / 2) * (a_next.col(j) + a.col(j));

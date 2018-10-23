@@ -4,16 +4,16 @@
 
 // Default constructor
 planet::planet() {
-  x = 1.;
-  y = 1.;
-  z = 1.;
-  vx = 1.;
-  vy = 1.;
-  vz = 1.;
+
   mass = 1.;
   position = {0, 0, 0};
   velocity = {0, 0, 0};
-  // acceleration = {0, 0, 0};
+  x = position(0);
+  y = position(1);
+  z = position(2);
+  vx = velocity(0);
+  vy = velocity(1);
+  vz = velocity(2);
 }
 
 // Constructor creating a planet object with known initial condition
@@ -30,7 +30,7 @@ planet::planet(vec pos, vec vel, const double M) {
   vz = velocity(2);
 }
 
-// Finds the distance between two objects
+// Finds the distance between two objects of the planet class
 double planet::distance(planet otherplanet) {
   double delta_x = this->x - otherplanet.x;
   double delta_y = this->y - otherplanet.y;
@@ -54,7 +54,6 @@ vec planet::GForce(planet otherplanet) {
 }
 
 vec planet::accel(planet otherplanet) {
-
   acceleration = zeros(3);
   double M2 = otherplanet.mass;
   double r = distance(otherplanet);
@@ -63,18 +62,6 @@ vec planet::accel(planet otherplanet) {
   acceleration(2) = -G * M2 * (this->z - otherplanet.z) / pow(r, 3);
   return acceleration;
 }
-
-// vec planet::accel(planet otherplanet) {
-//   acceleration = zeros(3);
-//   double M2 = otherplanet.mass;
-//   double r = distance(otherplanet);
-//   acceleration(0) = -G * M2 * (x - otherplanet.x) / pow(r, 3);
-//   acceleration(1) = -G * M2 * (y - otherplanet.y) / pow(r, 3);
-//   acceleration(2) = -G * M2 * (z - otherplanet.z) / pow(r, 3);
-//   return acceleration;
-// }
-
-// vec planet::accel_reset() { acceleration = zeros(3) }
 
 // double planet::kinetic() { return 0.5 * mass * (vx * vx + vy * vy + vz * vz);
 // } double planet::potential(planet otherplanet) {

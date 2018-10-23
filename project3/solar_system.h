@@ -4,7 +4,6 @@
 #define _USE_MATH_DEFINES
 
 #include "planet.h"
-// #include "solver.h"
 #include <armadillo>
 #include <cmath>
 #include <fstream>
