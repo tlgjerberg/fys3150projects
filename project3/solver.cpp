@@ -37,8 +37,7 @@ void solver::euler(planet &current, planet &other, int n, double h) {
   return;
 }
 
-// void solver::euler(SolarSystem &input_obj)
-
+/* Solves
 void solver::verlet(SolarSystem &input_obj, int n, double h) {
   solsys = &input_obj;
 
@@ -54,16 +53,22 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
 
   // vec a, a_next;
 
-  ofstream ofile;
-  char *sol_array;
-
-  ofile.open("sol_array.txt");
-
   for (int i = 0; i < n; i++) {
-
     if (i % 10 == 0) {
-      ofile << bodies[2].position(0) << " " << bodies[2].position(1) << " "
-            << bodies[2].position(2) << "\n";
+
+      for (int k = 0; k < dim; k++) {
+        ofstream ofile;
+        string filename[dim];
+        filename[k] = to_string(k);
+        filename[k].append(".txt");
+        ofile.open(filename[k], fstream::app);
+
+        // cout << bodies[k].position(0) << " " << bodies[k].position(1) << " "
+        //      << bodies[k].position(2) << "\n";
+        ofile << bodies[k].position(0) << " " << bodies[k].position(1) << " "
+              << bodies[k].position(2) << "\n";
+        ofile.close();
+      }
     }
 
     a = zeros(3, dim);    // Resets acceleration for each step
@@ -86,6 +91,5 @@ void solver::verlet(SolarSystem &input_obj, int n, double h) {
     }
   }
 
-  ofile.close();
   return;
 }

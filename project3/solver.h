@@ -1,6 +1,6 @@
 #ifndef Solver_H
 #define Solver_H
-#define _USE_MATH_DEFINES
+
 // #define ARMA_64BIT_WORD
 
 #include "planet.h"
@@ -10,6 +10,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <vector>
 
 using std::vector;

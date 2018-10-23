@@ -9,14 +9,8 @@ SolarSystem::SolarSystem(vector<planet> init_cel_obj) {
 
 void SolarSystem::add_celestial_objects(planet planet) {
   celestial_objects.push_back(planet);
-  // cout << "earth position" << endl;
-  // cout << celestial_objects[0].position << endl;
 }
-int SolarSystem::length() {
-  // cout << "cel_obj size" << endl;
-  // cout << celestial_objects.size();
-  return celestial_objects.size();
-}
+int SolarSystem::length() { return celestial_objects.size(); }
 
 // mat SolarSystem::position() {
 //   // int n = celestial_objects.size();
@@ -55,21 +49,6 @@ int SolarSystem::length() {
 //     }
 //   }
 //   return F
-// }
-
-// mat SolarSystem::accel() {
-//   int n = celestial_objects.size();
-//   mat A = zeros(3, n);
-//   for (int i = 0; i < n; i++) {
-//
-//     for (int j = i + 1; j < n; j++) {
-//       // vec accel = celestial_objects[i].accel(celestial_objects[j]);
-//       A(0, i) += -G*;
-//       A(1, i) += accel(1);
-//       A(2, i) += accel(2);
-//     }
-//   }
-//   return A;
 // }
 
 mat SolarSystem::accel() {
