@@ -3,8 +3,9 @@ from astroquery.jplhorizons import Horizons
 # conf.horizons_server = 'https://ssd.jpl.nasa.gov/horizons_batch.cgi'
 # from keyring.util.escape import escape as escape_for_ini
 
-planet_id = ['10', '199', '299', '399', '499', '599', '699', '799', '899']
-with open('init_values.txt', 'w+') as f:
+planet_id = ['10', '199', '299', '399',
+             '499', '599', '699', '799', '899', '999']
+with open('pos_values.txt', 'w+') as f:
     for planet in planet_id:
 
         obj = Horizons(id=planet, id_type='majorbody', epochs={
@@ -17,11 +18,22 @@ with open('init_values.txt', 'w+') as f:
         f.write(' ')
         f.write(str(vec['z'][0]))
         f.write("\n")
-        f.write(str(vec['vx'][0] * 365.))
+
+
+f.close()
+
+with open('vel_values.txt', 'w+') as f:
+    for planet in planet_id:
+
+        obj = Horizons(id=planet, id_type='majorbody', epochs={
+                       'start': '2018-10-22', 'stop': '2018-11-1', 'step': '1d'})
+        vec = obj.vectors()
+
+        f.write(str(vec['vx'][0]))
         f.write(' ')
-        f.write(str(vec['vy'][0] * 365.))
+        f.write(str(vec['vy'][0]))
         f.write(' ')
-        f.write(str(vec['vz'][0] * 365.))
+        f.write(str(vec['vz'][0]))
         f.write("\n")
 
 
