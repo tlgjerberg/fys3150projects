@@ -29,11 +29,11 @@ with open('vel_values.txt', 'w+') as f:
                        'start': '2018-10-22', 'stop': '2018-11-1', 'step': '1d'})
         vec = obj.vectors()
 
-        f.write(str(vec['vx'][0]))
+        f.write(str(vec['vx'][0] * 365.))
         f.write(' ')
-        f.write(str(vec['vy'][0]))
+        f.write(str(vec['vy'][0] * 365.))
         f.write(' ')
-        f.write(str(vec['vz'][0]))
+        f.write(str(vec['vz'][0] * 365.))
         f.write("\n")
 
 

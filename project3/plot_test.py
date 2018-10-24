@@ -25,7 +25,10 @@ for i in planets:
             y.append(float(col[1]))
             z.append(float(col[2]))
     # os.remove(i)  # Include to delete files when plotting the Solar System
-    ax.plot(x, y, z, label='parametric curve')
+    ax.plot(x, y, z)
+    ax.set_xlabel('x [AU]')
+    ax.set_ylabel('y [AU]')
+    ax.set_zlabel('z [AU]')
     ax.legend(['Sun', 'Mercury', 'Venus', 'Earth', 'Mars',
                'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'])
 
