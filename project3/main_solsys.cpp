@@ -25,19 +25,13 @@ int main(int argc, char const *argv[]) {
   vec pos_ju = {-2.608419560286494, -4.693097675142516, 0.07785689562431203};
   vec vel_ju = {2.3761749558256002, -1.2090920492062296, -0.04814409500285047};
   vec pos_sat = {1.590991383504502, -9.935642578497415, 0.1093778360004679};
-
   vec vel_sat = {1.9015166685195108, 0.3145811124309021, -0.0810624545684677};
   vec pos_ur = {17.16004314238246, 10.01610951914014, -0.1850097277796742};
   vec vel_ur = {-0.7318099098696571, 1.1717582347543574, 0.013781445340257659};
   vec pos_nep = {28.92681014362943, -7.705393750467173, -0.5080431136761442};
   vec vel_nep = {0.2899445471365661, 1.1130813491673965, -0.02977014473899446};
-
   vec pos_pl = {11.66821433558843, -31.57899846202243, 0.003347781098132288};
   vec vel_pl = {1.09922633030434, 0.15089959886305188, -0.3350907719193256};
-  // vec pos_moon = {8.789226410532623E-01, 4.786541109272935E-01,
-  //                 -2.810798659064063E-04};
-  // vec vel_moon = {-8.427641450856067E-03 * 365, 1.565776310333769E-02 * 365,
-  //                 -2.752443505353444E-05 * 365};
 
   planet earth(pos_ea, vel_ea, 0.000003);
   planet sun(pos_sun, vel_sun, 1);
@@ -49,7 +43,7 @@ int main(int argc, char const *argv[]) {
   planet uranus(pos_ur, vel_ur, 4.4e-5);
   planet neptune(pos_nep, vel_nep, 5.15e-5);
   planet pluto(pos_pl, vel_pl, 6.55e-9);
-  // planet luna(pos_moon, vel_moon, 3.675e-8);
+
 
   solsys.add_celestial_objects(sun);
   solsys.add_celestial_objects(mercury);
@@ -61,10 +55,9 @@ int main(int argc, char const *argv[]) {
   solsys.add_celestial_objects(uranus);
   solsys.add_celestial_objects(neptune);
   solsys.add_celestial_objects(pluto);
-  // solsys.add_celestial_objects(luna);
 
   solver solar;
   solar.verlet(solsys, N, h);
-  // binobj.euler(planet1, planet2, N, h);
+
   return 0;
 }
