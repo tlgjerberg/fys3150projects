@@ -63,7 +63,7 @@ vec planet::accel(planet otherplanet) {
   return acceleration;
 }
 
-// double planet::kinetic() { return 0.5 * mass * (vx * vx + vy * vy + vz * vz);
-// } double planet::potential(planet otherplanet) {
-//   return -G(mass * otherplanet.mass) / distance(otherplanet);
-// }
+double planet::kinetic() { return 0.5 * this->mass * (pow(r, 2)); }
+double planet::potential(planet otherplanet) {
+  return -G(this->mass * otherplanet.mass) / distance(otherplanet);
+}

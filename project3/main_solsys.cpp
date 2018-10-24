@@ -10,8 +10,12 @@ int main(int argc, char const *argv[]) {
   double h = t / N;
   double days = 365;
   SolarSystem solsys;
-  vec pos_sun = {0.0, 0.0, 0.0};
-  vec vel_sun = {0.0, 0.0, 0.0};
+  // vec pos_sun = {0.0, 0.0, 0.0};
+  // vec vel_sun = {0.0, 0.0, 0.0};
+  vec pos_sun = {-2.082456923795519E-04, 7.269365845327120E-03,
+                 -7.116216262733176E-05};
+  vec vel_sun = {-7.605663822232906E-06 * 365., 2.520655405552306E-06 * 365.,
+                 1.901417766099408E-07 * 365.};
   vec pos_mer = {0.02289156292778706, -0.4600322284671032,
                  -0.03969085759251941};
   vec vel_mer = {8.196578360432543, 1.0377015069218147, -0.667145253378925};
@@ -43,7 +47,6 @@ int main(int argc, char const *argv[]) {
   planet uranus(pos_ur, vel_ur, 4.4e-5);
   planet neptune(pos_nep, vel_nep, 5.15e-5);
   planet pluto(pos_pl, vel_pl, 6.55e-9);
-
 
   solsys.add_celestial_objects(sun);
   solsys.add_celestial_objects(mercury);
