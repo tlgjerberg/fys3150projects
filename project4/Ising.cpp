@@ -25,7 +25,7 @@ int gen_random() {
 int PBC(int i, int limit, int add) { return (i + limit + add) % (limit); }
 
 // Setting up a random initial spin state
-void initialize(mat &spin, int n, double &E, double &M) {
+void initialize(Mat<int> &spin, int n, double &E, double &M) {
 
   for (int x = 0; x < n; x++) {
     for (int y = 0; y < n; y++) {
@@ -40,7 +40,7 @@ void initialize(mat &spin, int n, double &E, double &M) {
 }
 
 // Flipps the one spin of choice
-void flip_one(mat &spin, int xf, int yf) {
+void flip_one(Mat<int> &spin, int xf, int yf) {
   spin(xf, yf) *= -1;
   return;
 }
@@ -58,11 +58,13 @@ map<double, double> transitions(double T) {
 }
 
 // Flipps a random spin according to acceptence requirements
-void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
+void tryflip(Mat<int> &spin, int n, int Delta_E, map<double, double> W, int rx,
              int ry, double &E, double &M, mt19937_64 &generator) {
   // int count;
   uniform_real_distribution<float> dist(0, 1);
   double r = dist(generator);
+  cout << r << endl;
+  cout << Delta_E << endl;
   if (r <= W.find(Delta_E)->second) {
     spin(rx, ry) *= -1;
     // cout << "Flipp" << endl;
@@ -76,17 +78,16 @@ void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
 }
 
 // Metropolis algorithm
-void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
-                double &M, mt19937_64 &generator) {
+void Metropolis(Mat<int> &spin, double T, int L, map<double, double> W,
+                double &E, double &M, mt19937_64 &generator) {
   uniform_int_distribution<int> rand_spin(0, L - 1);
-  double J = 1;
   for (int x = 0; x < L; x++) {
     for (int y = 0; y < L; y++) {
       int rx = rand_spin(generator);
       int ry = rand_spin(generator);
-      int Delta_E = 2 * J * spin(rx, ry) *
-                    (spin(rx, PBC(ry, L, 1)) + spin(PBC(ry, L, 1)) +
-                     spin(rx, PBC(ry, L, -1)) + spin(PBC(ry, L, -1)));
+      int Delta_E = 2 * spin(rx, ry) *
+                    (spin(rx, PBC(ry, L, -1)) + spin(PBC(rx, L, -1), ry) +
+                     spin(rx, PBC(ry, L, 1)) + spin(PBC(rx, L, 1), ry));
       tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
     }
   }
@@ -105,7 +106,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 // }
 
 // Monte Carlo simulation
-void MC(mat &spin, double T, int L, double &E, double &M, int mcs) {
+void MC(Mat<int> &spin, double T, int L, double &E, double &M, int mcs) {
   int *averages = new int[mcs];
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   mt19937_64 generator(seed);
@@ -133,7 +134,7 @@ int main(int argc, char const *argv[]) {
   // srand(time(NULL));
 
   // int L = 2;
-  mat spin = zeros(L, L);
+  Mat<int> spin = zeros<Mat<int>>(L, L);
   double E, M;
   double T = 2.0;
   E = 0;
