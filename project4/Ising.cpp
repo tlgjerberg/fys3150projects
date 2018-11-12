@@ -1,6 +1,6 @@
+#include "mpi.h"
 #include <armadillo>
 #include <chrono>
-
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -24,13 +24,24 @@ int gen_random() {
 // Periodic boundry conditions
 int PBC(int i, int limit, int add) { return (i + limit + add) % (limit); }
 
-// Setting up a random initial spin state
-void initialize(Mat<int> &spin, int n, double &E, double &M) {
+// Setting up the initial spin state
+void initialize(mat &spin, int n, double &E, double &M, int GS) {
+  // Setting up the ground state
+  if (GS == 1) {
+    spin.fill(1);
+
+  } else {
+    // Setting up a state with randomly pointing spins
+    for (int x = 0; x < n; x++) {
+      for (int y = 0; y < n; y++) {
+        spin(x, y) = gen_random();
+      }
+    }
+  }
 
   for (int x = 0; x < n; x++) {
     for (int y = 0; y < n; y++) {
-      // spin(x, y) = gen_random();
-      spin(x, y) = 1;
+
       M += (double)spin(x, y);
       E -= (double)spin(x, y) *
            (spin(PBC(x, n, -1), y) + spin(x, PBC(y, n, -1)));
@@ -40,7 +51,7 @@ void initialize(Mat<int> &spin, int n, double &E, double &M) {
 }
 
 // Flipps the one spin of choice
-void flip_one(Mat<int> &spin, int xf, int yf) {
+void flip_one(mat &spin, int xf, int yf) {
   spin(xf, yf) *= -1;
   return;
 }
@@ -51,35 +62,29 @@ map<double, double> transitions(double T) {
 
   for (int de = -8; de <= 8; de += 4) {
     // Inserts the value of the exponential at the "key" de
-    acceptAmp.insert(pair<double, double>(de, exp(-1 / T * (de))));
+    acceptAmp.insert(pair<double, double>(de, exp(-de / T)));
   }
-
   return acceptAmp;
 }
 
-// Flipps a random spin according to acceptence requirements
-void tryflip(Mat<int> &spin, int n, int Delta_E, map<double, double> W, int rx,
-             int ry, double &E, double &M, mt19937_64 &generator) {
-  // int count;
+// Flipps a random spin according to the Metropolis selction rule
+void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
+             int ry, double &E, double &M, mt19937 &generator) {
+
   uniform_real_distribution<float> dist(0, 1);
   double r = dist(generator);
-  cout << r << endl;
-  cout << Delta_E << endl;
+  // Metropolis test
   if (r <= W.find(Delta_E)->second) {
     spin(rx, ry) *= -1;
-    // cout << "Flipp" << endl;
+
     M += (double)2 * spin(rx, ry);
     E += (double)Delta_E;
-    // count++;
   }
-  // else {
-  // cout << "No flipp" << endl;
-  // }
 }
 
 // Metropolis algorithm
-void Metropolis(Mat<int> &spin, double T, int L, map<double, double> W,
-                double &E, double &M, mt19937_64 &generator) {
+void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
+                double &M, mt19937 &generator) {
   uniform_int_distribution<int> rand_spin(0, L - 1);
   for (int x = 0; x < L; x++) {
     for (int y = 0; y < L; y++) {
@@ -94,57 +99,77 @@ void Metropolis(Mat<int> &spin, double T, int L, map<double, double> W,
   return;
 }
 
-// Writing array to binary file
-// void writebinary(int E) {
-//   // streampos size;
-//   ofstream outfile;
-//   outfile.open("mean_energy.dat", ios::out | ios::app | ios::binary);
-//   // outfile.write((char *)&E, sizeof(double));
-//   outfile.write(reinterpret_cast<const char *>(E), sizeof(E));
-//   outfile.close();
-//   return;
-// }
-
 // Monte Carlo simulation
-void MC(Mat<int> &spin, double T, int L, double &E, double &M, int mcs) {
-  int *averages = new int[mcs];
+void MC(mat &spin, double T, int L, double &E, double &M, int mcs, int GS,
+        int *averages, int numprocs, int my_rank) {
+
+  int no_intervalls = mcs / numprocs;
+  int myloop_begin = my_rank * no_intervalls + 1;
+  int myloop_end = (my_rank + 1) * no_intervalls;
+  initialize(spin, L, E, M, GS);
+
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-  mt19937_64 generator(seed);
-  // vec averages(4);
-  for (int cycle = 0; cycle < mcs; cycle++) {
+  mt19937 generator(seed);
+
+  for (int cycle = myloop_begin; cycle < myloop_end; cycle++) {
     map<double, double> W = transitions(T);
     Metropolis(spin, T, L, W, E, M, generator);
     averages[cycle] = E;
-    // cout << averages[cycle] << endl;
   }
-  ofstream outfile;
-  outfile.open("mean_energy.dat", ios::out | ios::app | ios::binary);
-  // outfile.write((char *)&E, sizeof(double));
-  outfile.write(reinterpret_cast<const char *>(averages), mcs * sizeof(int));
-  outfile.close();
   return;
 }
 
-int main(int argc, char const *argv[]) {
-  int temp_start = atoi(argv[1]);
-  int temp_stop = atoi(argv[2]);
-  int temp_step = atoi(argv[3]);
-  int mcs = atoi(argv[4]);
-  int L = atoi(argv[5]);
-  // srand(time(NULL));
+int main(int argc, char *argv[]) {
+  char *outfilename = argv[1];
+  int initial_temp = atoi(argv[2]);
+  int final_temp = atoi(argv[3]);
+  int temp_step = atoi(argv[4]);
+  int mcs = atoi(argv[5]);
+  int L = atoi(argv[6]);
 
-  // int L = 2;
-  Mat<int> spin = zeros<Mat<int>>(L, L);
+  int numprocs, my_rank;
+  mat spin = zeros(L, L);
   double E, M;
-  double T = 2.0;
   E = 0;
   M = 0;
-  initialize(spin, L, E, M);
+  int GS = 1;
 
-  // for (int T = temp_start; T < temp_stop; T += temp_step) {
-  MC(spin, T, L, E, M, mcs);
+  ofstream outfile;
+  MPI_Init(&argc, &argv);
+  MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
+  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+
+  // broadcast to all nodes common variables
+  // MPI_Bcast(&L, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  // MPI_Bcast(&initial_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  // MPI_Bcast(&final_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  // MPI_Bcast(&temp_step, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+  // for (int T = initial_temp; T < final_temp; T += temp_step) {
+  double T = 1.0;
+  int *averages;
+  averages = new int[mcs];
+  MC(spin, T, L, E, M, mcs, GS, averages, numprocs, my_rank);
+  if (my_rank == 0) {
+    MPI_Status status;
+    outfile.open(outfilename, ios::binary);
+    outfile.write(reinterpret_cast<const char *>(averages), mcs * sizeof(int));
+
+    for (int i = 1; i < numprocs; i++) {
+      MPI_Recv(averages, mcs, MPI_INT, MPI_ANY_SOURCE, 500, MPI_COMM_WORLD,
+               &status);
+      outfile.write(reinterpret_cast<const char *>(averages),
+                    mcs * sizeof(int));
+    }
+
+    outfile.close();
+  } else {
+    MPI_Send(averages, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
+  }
+  MPI_Finalize();
+  // delete averages;
+  // delete[] averages;
   // }
-  // writebinary(averages);
 
   return 0;
 }
