@@ -103,7 +103,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 void MC(mat &spin, double T, int L, double &E, double &M, int mcs, int GS,
         int *averages) {
 
-  initialize(spin, L, E, M, GS);
+  // initialize(spin, L, E, M, GS);
 
   // Setting up the RNG with a seed determined from the machine clock
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -125,17 +125,19 @@ int main(int argc, char *argv[]) {
   // int mcs = atoi(argv[5]);
   int L = atoi(argv[6]);
   // cout << mcs << endl;
+  char *outfilename2;
 
   int numprocs, my_rank;
 
   mat spin = zeros(L, L);
-  double E, M;
+  double E, M, total_E, total_M;
   E = 0;
   M = 0;
-  int GS = 1;
-  double T = 1.0;
+  int GS = 0;
+  double T = 100.0;
 
   ofstream outfile;
+  initialize(spin, L, E, M, GS);
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
@@ -161,6 +163,9 @@ int main(int argc, char *argv[]) {
 
   MC(spin, T, L, E, M, mcs, GS, averages);
   if (my_rank == 0) {
+    outfilename2 = "mean_energy.txt";
+    ofstream efile;
+    efile.open(outfilename2);
     MPI_Status status;
     outfile.open(outfilename, ios::binary);
     outfile.write(reinterpret_cast<const char *>(averages), mcs * sizeof(int));
@@ -178,9 +183,18 @@ int main(int argc, char *argv[]) {
     // MPI_Finalize();
   }
 
+  MPI_Reduce(&E, &total_E, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
+  if (rank == 0) {
+
+    efile << total_E;
+    efile.close();
+  }
   // delete averages;
   // delete[] averages;
   // }
   MPI_Finalize();
+  // cout << total_E / totcycles << endl;
+
   return 0;
 }
