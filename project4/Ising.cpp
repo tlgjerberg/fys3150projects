@@ -101,18 +101,15 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 
 // Monte Carlo simulation
 void MC(mat &spin, double T, int L, double &E, double &M, int mcs, int GS,
-        int *averages, int numprocs, int my_rank) {
+        int *averages) {
 
-  int no_intervalls = mcs / numprocs;
-  int myloop_begin = my_rank * no_intervalls + 1;
-  int myloop_end = (my_rank + 1) * no_intervalls;
   initialize(spin, L, E, M, GS);
 
+  // Setting up the RNG with a seed determined from the machine clock
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   mt19937 generator(seed);
-
-  for (int cycle = myloop_begin; cycle < myloop_end; cycle++) {
-    map<double, double> W = transitions(T);
+  map<double, double> W = transitions(T);
+  for (int cycle = 1; cycle < mcs; cycle++) {
     Metropolis(spin, T, L, W, E, M, generator);
     averages[cycle] = E;
   }
@@ -124,20 +121,35 @@ int main(int argc, char *argv[]) {
   int initial_temp = atoi(argv[2]);
   int final_temp = atoi(argv[3]);
   int temp_step = atoi(argv[4]);
-  int mcs = atoi(argv[5]);
+  int totcycles = atoi(argv[5]);
+  // int mcs = atoi(argv[5]);
   int L = atoi(argv[6]);
+  // cout << mcs << endl;
 
   int numprocs, my_rank;
+
   mat spin = zeros(L, L);
   double E, M;
   E = 0;
   M = 0;
   int GS = 1;
+  double T = 1.0;
 
   ofstream outfile;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+
+  int mcs = totcycles / numprocs;
+  int *averages;
+  averages = new int[mcs];
+
+  // int no_intervalls = mcs / numprocs;
+  // int myloop_begin = my_rank * no_intervalls + 1;
+  // int myloop_end = (my_rank + 1) * no_intervalls;
+  // if ((my_rank == numprocs - 1) && (myloop_end < mcs)) {
+  //   myloop_end = mcs;
+  // }
 
   // broadcast to all nodes common variables
   // MPI_Bcast(&L, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -146,10 +158,8 @@ int main(int argc, char *argv[]) {
   // MPI_Bcast(&temp_step, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
   // for (int T = initial_temp; T < final_temp; T += temp_step) {
-  double T = 1.0;
-  int *averages;
-  averages = new int[mcs];
-  MC(spin, T, L, E, M, mcs, GS, averages, numprocs, my_rank);
+
+  MC(spin, T, L, E, M, mcs, GS, averages);
   if (my_rank == 0) {
     MPI_Status status;
     outfile.open(outfilename, ios::binary);
@@ -165,11 +175,12 @@ int main(int argc, char *argv[]) {
     outfile.close();
   } else {
     MPI_Send(averages, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
+    // MPI_Finalize();
   }
-  MPI_Finalize();
+
   // delete averages;
   // delete[] averages;
   // }
-
+  MPI_Finalize();
   return 0;
 }
