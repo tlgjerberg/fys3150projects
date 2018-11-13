@@ -92,9 +92,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
       int Delta_E = 2 * spin(rx, ry) *
                     (spin(rx, PBC(ry, L, -1)) + spin(PBC(rx, L, -1), ry) +
                      spin(rx, PBC(ry, L, 1)) + spin(PBC(rx, L, 1), ry));
-      // cout << "Before flip" << E << endl;
       tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
-      // cout << "After flip" << E << endl;
     }
   }
   return;
@@ -139,7 +137,7 @@ int main(int argc, char *argv[]) {
   ofstream outfile;
 
   // for (int T = initial_temp; T < final_temp; T += temp_step) {
-  double T = 1.0;
+  double T = 100.0;
   int *averages;
   averages = new int[mcs];
   cout << averages << endl;
