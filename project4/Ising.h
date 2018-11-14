@@ -24,6 +24,9 @@ void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
              int ry, double &E, double &M, mt19937 &generator);
 void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
                 double &M, mt19937 &generator);
-void MC(mat &spin, double T, int L, double &E, double &M, int mcs, int GS,
-        int *averages);
+void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
+        vec &ExpectVals);
+
+void addexpect(vec &ExpectVals, double &E, double &M);
+void printexpect(vec &TotalExpectVals, double T, int mcs);
 #endif // ISING_H
