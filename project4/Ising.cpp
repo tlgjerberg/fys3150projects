@@ -132,7 +132,7 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
   return;
 }
 
-void printexpect(vec &TotalExpectVals, double T, int mcs) {
+void printexpect(vec &TotalExpectVals, double T, int totcycles) {
   double norm = 1 / ((double)(mcs));
   TotalExpectVals *= norm;
   cout << "<E>: " << TotalExpectVals(0) << " ";

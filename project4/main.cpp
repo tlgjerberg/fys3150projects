@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
   mat spin = zeros(L, L);
 
-  int GS = 1;
+  int GS = 0;
   double T = initial_temp;
 
   ofstream outfile;
@@ -45,6 +45,8 @@ int main(int argc, char *argv[]) {
   if (numprocs == 1) {
     if (my_rank == 0) {
 
+      /* MPI process for writing all energies to a file specified as argv[1] */
+
       MPI_Status status;
       outfile.open(outfilename, ios::binary);
       outfile.write(reinterpret_cast<const char *>(energies),
@@ -59,6 +61,7 @@ int main(int argc, char *argv[]) {
 
       outfile.close();
     } else {
+      // Processes of rank 1-numprocs sends results to the process of rank 0
       MPI_Send(energies, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
     }
   }
@@ -69,6 +72,7 @@ int main(int argc, char *argv[]) {
 
   Timeend = MPI_Wtime();
   Totaltime = Timeend - Timestart;
+  // Retrieving information from the master(rank 0) process
   if (my_rank == 0) {
     cout << "Time = " << Totaltime << " on number of processors: " << numprocs
          << endl;
@@ -79,9 +83,7 @@ int main(int argc, char *argv[]) {
     // // meanfile.close();
     printexpect(TotalExpectVals, T, totcycles);
   }
-  // if (rank == 0) {
 
-  // }
   // delete energies;
   // delete[] energies;
   // }
