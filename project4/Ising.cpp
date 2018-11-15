@@ -3,12 +3,13 @@
 //==============================================================================
 // Gives a random number either -1 or 1
 //==============================================================================
-int gen_random() {
-  int ran_num = rand() % 2;
-  if (ran_num == 0) {
-    ran_num = -1;
+int gen_random(mt19937 &generator) {
+  uniform_int_distribution<int> rand_dist(0, 1);
+  int rand_num = rand_dist(generator);
+  if (rand_num == 0) {
+    rand_num = -1;
   }
-  return ran_num;
+  return rand_num;
 }
 //==============================================================================
 // Periodic boundry conditions
@@ -18,7 +19,8 @@ int PBC(int i, int limit, int add) { return (i + limit + add) % (limit); }
 //==============================================================================
 // Setting up the initial spin state
 //==============================================================================
-void initialize(mat &spin, int n, double &E, double &M, int GS) {
+void initialize(mat &spin, int n, double &E, double &M, int GS,
+                mt19937 &generator) {
   // Setting up the ground state
   if (GS == 1) {
     spin.fill(1);
@@ -27,7 +29,7 @@ void initialize(mat &spin, int n, double &E, double &M, int GS) {
     // Setting up a state with randomly pointing spins
     for (int x = 0; x < n; x++) {
       for (int y = 0; y < n; y++) {
-        spin(x, y) = gen_random();
+        spin(x, y) = gen_random(generator);
       }
     }
   }
@@ -104,11 +106,13 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
         vec &ExpectVals) {
   double E, M;
   E = M = 0;
-  initialize(spin, L, E, M, GS);
 
   // Setting up the RNG with a seed determined from the machine clock
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   mt19937 generator(seed);
+  // mt19937 generator(1234);
+
+  initialize(spin, L, E, M, GS, generator);
 
   map<double, double> W = transitions(T); // Allowed transitions for
 
@@ -144,4 +148,20 @@ void printexpect(vec &TotalExpectVals, double T, int totcycles) {
        << " " << endl;
 
   return;
+}
+
+void writetofile(vec &TotalExpectVals, double T) {
+  char *outfilename2;
+  outfilename2 = "means.txt";
+  ofstream meanfile;
+  meanfile.open(outfilename2, ofstream::app);
+  meanfile << "<E>: " << TotalExpectVals(0) << " "
+           << "T: " << T << " "
+           << "<|M|>: " << TotalExpectVals(4) << " "
+           << "C_V: "
+           << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))
+           << " "
+           << "chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T
+           << endl;
+  meanfile.close();
 }

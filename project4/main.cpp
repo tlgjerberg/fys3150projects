@@ -2,19 +2,18 @@
 
 int main(int argc, char *argv[]) {
   char *outfilename = argv[1];
-  int initial_temp = atof(argv[2]);
-  int final_temp = atof(argv[3]);
-  int temp_step = atoi(argv[4]);
+  double initial_temp = atof(argv[2]);
+  double final_temp = atof(argv[3]);
+  double temp_step = atof(argv[4]);
   int totcycles = atoi(argv[5]);
   int L = atoi(argv[6]);
-  char *outfilename2;
 
   int numprocs, my_rank;
 
   mat spin = zeros(L, L);
 
   int GS = 0;
-  double T = initial_temp;
+  // double T = initial_temp;
 
   ofstream outfile;
 
@@ -40,53 +39,51 @@ int main(int argc, char *argv[]) {
   double Timestart, Timeend, Totaltime;
   Timestart = MPI_Wtime();
 
-  // for (int T = initial_temp; T < final_temp; T += temp_step) {
-  MC(spin, T, L, mcs, GS, energies, ExpectVals);
-  if (numprocs == 1) {
-    if (my_rank == 0) {
+  for (double T = initial_temp; T < final_temp; T += temp_step) {
+    MC(spin, T, L, mcs, GS, energies, ExpectVals);
+    if (numprocs == 1) {
+      if (my_rank == 0) {
 
-      /* MPI process for writing all energies to a file specified as argv[1] */
+        /* MPI process for writing all energies to a file specified as argv[1]
+         */
 
-      MPI_Status status;
-      outfile.open(outfilename, ios::binary);
-      outfile.write(reinterpret_cast<const char *>(energies),
-                    mcs * sizeof(int));
-
-      for (int i = 1; i < numprocs; i++) {
-        MPI_Recv(energies, mcs, MPI_INT, MPI_ANY_SOURCE, 500, MPI_COMM_WORLD,
-                 &status);
+        MPI_Status status;
+        outfile.open(outfilename, ios::binary);
         outfile.write(reinterpret_cast<const char *>(energies),
                       mcs * sizeof(int));
+
+        for (int i = 1; i < numprocs; i++) {
+          MPI_Recv(energies, mcs, MPI_INT, MPI_ANY_SOURCE, 500, MPI_COMM_WORLD,
+                   &status);
+          outfile.write(reinterpret_cast<const char *>(energies),
+                        mcs * sizeof(int));
+        }
+
+        outfile.close();
+      } else {
+        // Processes of rank 1-numprocs sends results to the process of rank 0
+        MPI_Send(energies, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
       }
-
-      outfile.close();
-    } else {
-      // Processes of rank 1-numprocs sends results to the process of rank 0
-      MPI_Send(energies, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
     }
-  }
-  for (int i = 0; i < 5; i++) {
-    MPI_Reduce(&ExpectVals[i], &TotalExpectVals[i], 1, MPI_DOUBLE, MPI_SUM, 0,
-               MPI_COMM_WORLD);
-  }
+    for (int i = 0; i < 5; i++) {
+      MPI_Reduce(&ExpectVals[i], &TotalExpectVals[i], 1, MPI_DOUBLE, MPI_SUM, 0,
+                 MPI_COMM_WORLD);
+    }
 
-  Timeend = MPI_Wtime();
-  Totaltime = Timeend - Timestart;
-  // Retrieving information from the master(rank 0) process
-  if (my_rank == 0) {
-    cout << "Time = " << Totaltime << " on number of processors: " << numprocs
-         << endl;
-    // outfilename2 = "mean_energy.txt";
-    // ofstream meanfile;
-    // // meanfile.open(outfilename2);
-    // // meanfile << total_E / mcs << " " << total_M / mcs << endl;
-    // // meanfile.close();
-    printexpect(TotalExpectVals, T, totcycles);
-  }
+    Timeend = MPI_Wtime();
+    Totaltime = Timeend - Timestart;
+    // Retrieving information from the master(rank 0) process
+    if (my_rank == 0) {
+      cout << "Time = " << Totaltime << " on number of processors: " << numprocs
+           << endl;
 
-  // delete energies;
-  // delete[] energies;
-  // }
+      // printexpect(TotalExpectVals, T, totcycles);
+      writetofile(ExpectVals, T);
+    }
+
+    // delete energies;
+    // delete[] energies;
+  }
   MPI_Finalize();
 
   return 0;

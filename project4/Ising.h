@@ -15,9 +15,10 @@
 using namespace std;
 using namespace arma;
 
-int gen_random();
+int gen_random(mt19937 &generator);
 int PBC(int i, int limit, int add);
-void initialize(mat &spin, int n, double &E, double &M, int GS);
+void initialize(mat &spin, int n, double &E, double &M, int GS,
+                mt19937 &generator);
 void flip_one(mat &spin, int xf, int yf);
 map<double, double> transitions(double T);
 void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
@@ -29,4 +30,5 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
 
 void addexpect(vec &ExpectVals, double &E, double &M);
 void printexpect(vec &TotalExpectVals, double T, int totcycles);
+void writetofile(vec &ExpectVals, double T);
 #endif // ISING_H
