@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
       }
     }
     for (int i = 0; i < 5; i++) {
-      MPI_Reduce(&ExpectVals(i), &TotalExpectVals[i], 1, MPI_DOUBLE, MPI_SUM, 0,
+      MPI_Reduce(&ExpectVals(i), &TotalExpectVals(i), 1, MPI_DOUBLE, MPI_SUM, 0,
                  MPI_COMM_WORLD);
     }
 

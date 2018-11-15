@@ -6,6 +6,8 @@ E = np.loadtxt("means.txt", usecols=3)
 M = np.loadtxt("means.txt", usecols=5)
 C_V = np.loadtxt("means.txt", usecols=7)
 chi = np.loadtxt("means.txt", usecols=9)
+# print(T)
+# print(E)
 
 
 file = "energy.dat"

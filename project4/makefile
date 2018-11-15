@@ -8,10 +8,10 @@ LIB = -DARMA_DONT_USE_WRAPPER -llapack -lblas
 final: $()
 
 ising_reg.o: Ising.cpp main.cpp
-			${MPI_CXX} ${CPPflags_r} main.cpp Ising.cpp  ${LIB} -o ising.o
+			${MPI_CXX} ${CPPflags_r} main.cpp Ising.cpp  ${LIB} -c ising.o
 
 ising_opt.o :Ising.cpp main.cpp
-						${MPI_CXX} ${CPPflags_o} main.cpp Ising.cpp  ${LIB} -o ising.o
+						${MPI_CXX} ${CPPflags_o}  ${LIB} -c ising.o
 
 
 clean:
