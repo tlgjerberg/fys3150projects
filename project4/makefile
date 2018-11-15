@@ -5,12 +5,12 @@ CPPflags_o =  -O3
 
 LIB = -DARMA_DONT_USE_WRAPPER -llapack -lblas
 
+final: $()
 
-
-ising.o: ising.o
+ising_reg.o: Ising.cpp main.cpp
 			${MPI_CXX} ${CPPflags_r} main.cpp Ising.cpp  ${LIB} -o ising.o
 
-ising_opt.o :ising.cpp main.cpp
+ising_opt.o :Ising.cpp main.cpp
 						${MPI_CXX} ${CPPflags_o} main.cpp Ising.cpp  ${LIB} -o ising.o
 
 

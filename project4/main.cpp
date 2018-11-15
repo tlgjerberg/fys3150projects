@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
   mat spin = zeros(L, L);
 
-  int GS = 0;
+  int GS = 1;
   // double T = initial_temp;
 
   ofstream outfile;
@@ -23,23 +23,22 @@ int main(int argc, char *argv[]) {
 
   int mcs = totcycles / numprocs;
   int *energies;
-  int *mag_mom;
+  // int *mag_mom;
   energies = new int[mcs];
-  mag_mom = new int[mcs];
-  // double ExpectVals[5], TotalExpectVals[5];
+  // mag_mom = new int[mcs];
 
-  vec ExpectVals = zeros<vec>(5);
-  vec TotalExpectVals = zeros<vec>(5);
   // broadcast to all nodes common variables
-  // MPI_Bcast(&L, 1, MPI_INT, 0, MPI_COMM_WORLD);
-  // MPI_Bcast(&initial_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  // MPI_Bcast(&final_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  // MPI_Bcast(&temp_step, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&L, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&initial_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&final_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&temp_step, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
   double Timestart, Timeend, Totaltime;
   Timestart = MPI_Wtime();
 
   for (double T = initial_temp; T < final_temp; T += temp_step) {
+    vec ExpectVals = zeros<vec>(5);
+    vec TotalExpectVals = zeros<vec>(5);
     MC(spin, T, L, mcs, GS, energies, ExpectVals);
     if (numprocs == 1) {
       if (my_rank == 0) {
@@ -66,7 +65,7 @@ int main(int argc, char *argv[]) {
       }
     }
     for (int i = 0; i < 5; i++) {
-      MPI_Reduce(&ExpectVals[i], &TotalExpectVals[i], 1, MPI_DOUBLE, MPI_SUM, 0,
+      MPI_Reduce(&ExpectVals(i), &TotalExpectVals[i], 1, MPI_DOUBLE, MPI_SUM, 0,
                  MPI_COMM_WORLD);
     }
 
@@ -78,7 +77,7 @@ int main(int argc, char *argv[]) {
            << endl;
 
       // printexpect(TotalExpectVals, T, totcycles);
-      writetofile(ExpectVals, T);
+      writetofile(TotalExpectVals, T, totcycles, L);
     }
 
     // delete energies;

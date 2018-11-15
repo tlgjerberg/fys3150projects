@@ -30,5 +30,5 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
 
 void addexpect(vec &ExpectVals, double &E, double &M);
 void printexpect(vec &TotalExpectVals, double T, int totcycles);
-void writetofile(vec &ExpectVals, double T);
+void writetofile(vec &TotalExpectVals, double T, int totcycles, int L);
 #endif // ISING_H

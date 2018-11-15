@@ -29,7 +29,8 @@ void initialize(mat &spin, int n, double &E, double &M, int GS,
     // Setting up a state with randomly pointing spins
     for (int x = 0; x < n; x++) {
       for (int y = 0; y < n; y++) {
-        spin(x, y) = gen_random(generator);
+        // spin(x, y) = gen_random(generator);
+        spin(x, y) = 1;
       }
     }
   }
@@ -136,6 +137,39 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
   return;
 }
 
+void writetofile(vec &TotalExpectVals, double T, int totcycles, int L) {
+  double norm = 1 / ((double)(totcycles));
+  TotalExpectVals *= norm;
+  double L2 = (double)L * (double)L;
+  char *outfilename2;
+  // char *outfilename3;
+  outfilename2 = "means.txt";
+  // outfilename3 = "var.txt";
+  ofstream meanfile;
+  meanfile.open(outfilename2, ofstream::app);
+  meanfile
+      << "T: " << T << " "
+      << "<E>: " << TotalExpectVals(0) / L2 << " "
+      << "<|M|>: " << TotalExpectVals(4) / L2 << " "
+      << "C_V: "
+      << ((TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))) / L2
+      << " "
+      << "chi: " << ((TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T) / L2
+      << endl;
+  meanfile.close();
+  // ofstream varfile;
+  // varfile.open(outfilename3, ofstream::app);
+  // varfile << "T: " << T << " "
+  //         << "<E>: " << TotalExpectVals(0) << " "
+  //         << "<|M|>: " << TotalExpectVals(4) << " "
+  //         << "C_V: "
+  //         << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))
+  //         << " "
+  //         << "chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T
+  //         << endl;
+  // varfile.close();
+}
+
 void printexpect(vec &TotalExpectVals, double T, int totcycles) {
   double norm = 1 / ((double)(totcycles));
   TotalExpectVals *= norm;
@@ -148,20 +182,4 @@ void printexpect(vec &TotalExpectVals, double T, int totcycles) {
        << " " << endl;
 
   return;
-}
-
-void writetofile(vec &TotalExpectVals, double T) {
-  char *outfilename2;
-  outfilename2 = "means.txt";
-  ofstream meanfile;
-  meanfile.open(outfilename2, ofstream::app);
-  meanfile << "<E>: " << TotalExpectVals(0) << " "
-           << "T: " << T << " "
-           << "<|M|>: " << TotalExpectVals(4) << " "
-           << "C_V: "
-           << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))
-           << " "
-           << "chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T
-           << endl;
-  meanfile.close();
 }
