@@ -22,11 +22,11 @@ void initialize(mat &spin, int n, double &E, double &M, int GS,
 void flip_one(mat &spin, int xf, int yf);
 map<double, double> transitions(double T);
 void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
-             int ry, double &E, double &M, mt19937 &generator);
+             int ry, double &E, double &M, mt19937 &generator, int &Accepted);
 void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
-                double &M, mt19937 &generator);
+                double &M, mt19937 &generator, int &Accepted);
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
-        vec &ExpectVals);
+        vec &ExpectVals, int &Accepted);
 
 void addexpect(vec &ExpectVals, double &E, double &M);
 void printexpect(vec &TotalExpectVals, double T, int totcycles);

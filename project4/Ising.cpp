@@ -69,7 +69,7 @@ map<double, double> transitions(double T) {
 // Flipps a random spin according to the Metropolis selction rule
 //==============================================================================
 void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
-             int ry, double &E, double &M, mt19937 &generator) {
+             int ry, double &E, double &M, mt19937 &generator, int &Accepted) {
 
   uniform_real_distribution<float> uni_dist(0, 1);
   double r = uni_dist(generator);
@@ -79,13 +79,14 @@ void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
 
     M += (double)2 * spin(rx, ry);
     E += (double)Delta_E;
+    Accepted++;
   }
 }
 //==============================================================================
 // Metropolis algorithm
 //==============================================================================
 void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
-                double &M, mt19937 &generator) {
+                double &M, mt19937 &generator, int &Accepted) {
   uniform_int_distribution<int> rand_spin(0, L - 1);
   for (int x = 0; x < L; x++) {
     for (int y = 0; y < L; y++) {
@@ -94,7 +95,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
       int Delta_E = 2 * spin(rx, ry) *
                     (spin(rx, PBC(ry, L, -1)) + spin(PBC(rx, L, -1), ry) +
                      spin(rx, PBC(ry, L, 1)) + spin(PBC(rx, L, 1), ry));
-      tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
+      tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator, Accepted);
     }
   }
   return;
@@ -103,9 +104,11 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 // Monte Carlo simulation
 //==============================================================================
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
-        vec &ExpectVals) {
+        vec &ExpectVals, int &Accepted) {
   double E, M;
+  int cut_off;
   E = M = 0;
+  cut_off = mcs * 0.05; // 5% cutoff
 
   // Setting up the RNG with a seed determined from the machine clock
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -116,10 +119,13 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
 
   map<double, double> W = transitions(T); // Allowed transitions for
 
-  for (int cycle = 1; cycle < mcs; cycle++) {
-    Metropolis(spin, T, L, W, E, M, generator);
+  for (int cycle = 0; cycle < mcs; cycle++) {
+    Metropolis(spin, T, L, W, E, M, generator, Accepted);
     energies[cycle] = E;
-    addexpect(ExpectVals, E, M);
+    // Adding values after the initial cutoff
+    if (cycle > cut_off) {
+      addexpect(ExpectVals, E, M);
+    }
   }
   return;
 }
@@ -135,6 +141,10 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
   ExpectVals(4) += fabs(M);
   return;
 }
+
+//==============================================================================
+// Write results to a file
+//==============================================================================
 
 void writetofile(vec &TotalExpectVals, double T, int totcycles, int L) {
   double norm = 1 / ((double)(totcycles));

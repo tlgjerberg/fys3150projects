@@ -9,10 +9,11 @@ int main(int argc, char *argv[]) {
   int L = atoi(argv[6]);
   int GS = atoi(argv[7]);
   int numprocs, my_rank;
+  int Accepted = 0;
 
   mat spin = zeros(L, L);
 
-  double T = initial_temp;
+  // double T = initial_temp;
 
   ofstream outfile;
 
@@ -38,7 +39,8 @@ int main(int argc, char *argv[]) {
   for (double T = initial_temp; T < final_temp; T += temp_step) {
     vec ExpectVals = zeros<vec>(5);
     vec TotalExpectVals = zeros<vec>(5);
-    MC(spin, T, L, mcs, GS, energies, ExpectVals);
+
+    MC(spin, T, L, mcs, GS, energies, ExpectVals, Accepted);
     if (numprocs == 1) {
       if (my_rank == 0) {
 
