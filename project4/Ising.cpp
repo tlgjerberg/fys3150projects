@@ -163,7 +163,7 @@ void writetofile(vec &TotalExpectVals, double T, int totcycles, int L) {
       << "C_V: "
       << ((TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))) / L2
       << " "
-      << "chi: " << ((TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T) / L2
+      << "chi: " << ((TotalExpectVals(3) - pow(TotalExpectVals(4), 2)) / T) / L2
       << endl;
   meanfile.close();
   // ofstream varfile;
