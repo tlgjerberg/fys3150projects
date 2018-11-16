@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-T = np.loadtxt("means.txt", usecols=1)
-E = np.loadtxt("means.txt", usecols=3)
-M = np.loadtxt("means.txt", usecols=5)
-C_V = np.loadtxt("means.txt", usecols=7)
-chi = np.loadtxt("means.txt", usecols=9)
+T = np.loadtxt("means40.txt", usecols=1)
+E = np.loadtxt("means40.txt", usecols=3)
+M = np.loadtxt("means40.txt", usecols=5)
+C_V = np.loadtxt("means40.txt", usecols=7)
+chi = np.loadtxt("means40.txt", usecols=9)
 # print(T)
 # print(E)
 
