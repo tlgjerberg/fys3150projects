@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
   int mcs = totcycles / numprocs;
+  int cut_off = mcs * 0.05; // 5% cutoff
   int *energies;
   // int *mag_mom;
   energies = new int[mcs];
@@ -40,7 +41,7 @@ int main(int argc, char *argv[]) {
     vec ExpectVals = zeros<vec>(5);
     vec TotalExpectVals = zeros<vec>(5);
 
-    MC(spin, T, L, mcs, GS, energies, ExpectVals, Accepted);
+    MC(spin, T, L, mcs, GS, energies, ExpectVals, Accepted, cut_off);
     if (numprocs == 1) {
       if (my_rank == 0) {
 
@@ -78,7 +79,7 @@ int main(int argc, char *argv[]) {
            << endl;
 
       // printexpect(TotalExpectVals, T, totcycles);
-      writetofile(TotalExpectVals, T, totcycles, L);
+      writetofile(TotalExpectVals, T, totcycles, L, cut_off);
     }
 
     // delete energies;

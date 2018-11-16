@@ -104,11 +104,10 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 // Monte Carlo simulation
 //==============================================================================
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
-        vec &ExpectVals, int &Accepted) {
+        vec &ExpectVals, int &Accepted, int cut_off) {
   double E, M;
-  int cut_off;
+
   E = M = 0;
-  cut_off = mcs * 0.05; // 5% cutoff
 
   // Setting up the RNG with a seed determined from the machine clock
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -146,8 +145,9 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
 // Write results to a file
 //==============================================================================
 
-void writetofile(vec &TotalExpectVals, double T, int totcycles, int L) {
-  double norm = 1 / ((double)(totcycles));
+void writetofile(vec &TotalExpectVals, double T, int totcycles, int L,
+                 int cut_off) {
+  double norm = 1 / ((double)(totcycles - 8 * cut_off));
   TotalExpectVals *= norm;
   double L2 = (double)L * (double)L;
   char *outfilename2;
