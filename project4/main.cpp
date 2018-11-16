@@ -7,13 +7,12 @@ int main(int argc, char *argv[]) {
   double temp_step = atof(argv[4]);
   int totcycles = atoi(argv[5]);
   int L = atoi(argv[6]);
-
+  int GS = atoi(argv[7]);
   int numprocs, my_rank;
 
   mat spin = zeros(L, L);
 
-  int GS = 1;
-  // double T = initial_temp;
+  double T = initial_temp;
 
   ofstream outfile;
 

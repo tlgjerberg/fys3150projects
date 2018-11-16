@@ -29,8 +29,7 @@ void initialize(mat &spin, int n, double &E, double &M, int GS,
     // Setting up a state with randomly pointing spins
     for (int x = 0; x < n; x++) {
       for (int y = 0; y < n; y++) {
-        // spin(x, y) = gen_random(generator);
-        spin(x, y) = 1;
+        spin(x, y) = gen_random(generator);
       }
     }
   }
