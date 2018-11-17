@@ -29,7 +29,8 @@ void initialize(mat &spin, int n, double &E, double &M, int GS,
     // Setting up a state with randomly pointing spins
     for (int x = 0; x < n; x++) {
       for (int y = 0; y < n; y++) {
-        spin(x, y) = gen_random(generator);
+        // spin(x, y) = gen_random(generator);
+        spin(x, y) = 1;
       }
     }
   }
@@ -69,7 +70,7 @@ map<double, double> transitions(double T) {
 // Flipps a random spin according to the Metropolis selction rule
 //==============================================================================
 void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
-             int ry, double &E, double &M, mt19937 &generator, int &Accepted) {
+             int ry, double &E, double &M, mt19937 &generator) {
 
   uniform_real_distribution<float> uni_dist(0, 1);
   double r = uni_dist(generator);
@@ -79,14 +80,13 @@ void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
 
     M += (double)2 * spin(rx, ry);
     E += (double)Delta_E;
-    Accepted++;
   }
 }
 //==============================================================================
 // Metropolis algorithm
 //==============================================================================
 void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
-                double &M, mt19937 &generator, int &Accepted) {
+                double &M, mt19937 &generator) {
   uniform_int_distribution<int> rand_spin(0, L - 1);
   for (int x = 0; x < L; x++) {
     for (int y = 0; y < L; y++) {
@@ -95,7 +95,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
       int Delta_E = 2 * spin(rx, ry) *
                     (spin(rx, PBC(ry, L, -1)) + spin(PBC(rx, L, -1), ry) +
                      spin(rx, PBC(ry, L, 1)) + spin(PBC(rx, L, 1), ry));
-      tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator, Accepted);
+      tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
     }
   }
   return;
@@ -104,9 +104,8 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 // Monte Carlo simulation
 //==============================================================================
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
-        vec &ExpectVals, int &Accepted, int cut_off) {
+        vec &ExpectVals) {
   double E, M;
-
   E = M = 0;
 
   // Setting up the RNG with a seed determined from the machine clock
@@ -118,13 +117,10 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
 
   map<double, double> W = transitions(T); // Allowed transitions for
 
-  for (int cycle = 0; cycle < mcs; cycle++) {
-    Metropolis(spin, T, L, W, E, M, generator, Accepted);
+  for (int cycle = 1; cycle < mcs; cycle++) {
+    Metropolis(spin, T, L, W, E, M, generator);
     energies[cycle] = E;
-    // Adding values after the initial cutoff
-    if (cycle > cut_off) {
-      addexpect(ExpectVals, E, M);
-    }
+    addexpect(ExpectVals, E, M);
   }
   return;
 }
@@ -141,13 +137,8 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
   return;
 }
 
-//==============================================================================
-// Write results to a file
-//==============================================================================
-
-void writetofile(vec &TotalExpectVals, double T, int totcycles, int L,
-                 int cut_off) {
-  double norm = 1 / ((double)(totcycles - 8 * cut_off));
+void writetofile(vec &TotalExpectVals, double T, int totcycles, int L) {
+  double norm = 1 / ((double)(totcycles));
   TotalExpectVals *= norm;
   double L2 = (double)L * (double)L;
   char *outfilename2;
@@ -163,7 +154,7 @@ void writetofile(vec &TotalExpectVals, double T, int totcycles, int L,
       << "C_V: "
       << ((TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))) / L2
       << " "
-      << "chi: " << ((TotalExpectVals(3) - pow(TotalExpectVals(4), 2)) / T) / L2
+      << "chi: " << ((TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T) / L2
       << endl;
   meanfile.close();
   // ofstream varfile;
