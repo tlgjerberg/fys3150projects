@@ -107,99 +107,98 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
         E += (double)Delta_E;
       }
     }
-    return;
   }
-  //==============================================================================
-  // Monte Carlo simulation
-  //==============================================================================
-  void MC(mat & spin, double T, int L, int mcs, int GS, int *energies,
-          vec &ExpectVals, int &Accepted, int cut_off) {
-    double E, M;
-    E = M = 0;
+  return;
+}
+//==============================================================================
+// Monte Carlo simulation
+//==============================================================================
+void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
+        vec &ExpectVals, int &Accepted, int cut_off) {
+  double E, M;
+  E = M = 0;
 
-    // Setting up the RNG with a seed determined from the machine clock
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    mt19937 generator(seed);
-    // mt19937 generator(1234);
+  // Setting up the RNG with a seed determined from the machine clock
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  mt19937 generator(seed);
+  // mt19937 generator(1234);
 
-    initialize(spin, L, E, M, GS, generator);
+  initialize(spin, L, E, M, GS, generator);
 
-    map<double, double> W = transitions(T); // Allowed transitions for
+  map<double, double> W = transitions(T); // Allowed transitions for
 
-    for (int cycle = 1; cycle < mcs; cycle++) {
-      Metropolis(spin, T, L, W, E, M, generator);
-      energies[cycle] = E;
+  for (int cycle = 1; cycle < mcs; cycle++) {
+    Metropolis(spin, T, L, W, E, M, generator);
+    energies[cycle] = E;
 
+    addexpect(ExpectVals, E, M);
+
+    // Adding values after the initial cutoff
+    if (cycle > cut_off) {
       addexpect(ExpectVals, E, M);
-
-      // Adding values after the initial cutoff
-      if (cycle > cut_off) {
-        addexpect(ExpectVals, E, M);
-      }
     }
-    return;
   }
-  //==============================================================================
-  // Adding up all values of energy and momentum to their respective expectation
-  // values
-  //==============================================================================
-  void addexpect(vec & ExpectVals, double &E, double &M) {
-    ExpectVals(0) += E;
-    ExpectVals(1) += E * E;
-    ExpectVals(2) += M;
-    ExpectVals(3) += M * M;
-    ExpectVals(4) += fabs(M);
-    return;
-  }
+  return;
+}
+//==============================================================================
+// Adding up all values of energy and momentum to their respective expectation
+// values
+//==============================================================================
+void addexpect(vec &ExpectVals, double &E, double &M) {
+  ExpectVals(0) += E;
+  ExpectVals(1) += E * E;
+  ExpectVals(2) += M;
+  ExpectVals(3) += M * M;
+  ExpectVals(4) += fabs(M);
+  return;
+}
 
-  void writetofile(vec & TotalExpectVals, double T, int totcycles, int L,
-                   int cut_off) {
-    double norm = 1 / ((double)(totcycles));
-    TotalExpectVals *= norm;
-    double L2 = (double)L * (double)L;
-    char *outfilename2;
-    // char *outfilename3;
-    outfilename2 = "means.txt";
-    // outfilename3 = "var.txt";
-    ofstream meanfile;
-    meanfile.open(outfilename2, ofstream::app);
-    meanfile << "T: " << T << " "
-             << "<E>: " << TotalExpectVals(0) / L2 << " "
-             << "<|M|>: " << TotalExpectVals(4) / L2 << " "
-             << "C_V: "
-             << ((TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) /
-                 (pow(T, 2))) /
-                    L2
-             << " "
-             << "chi: "
-             << ((TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T) / L2
-             << endl;
-    meanfile.close();
-    // ofstream varfile;
-    // varfile.open(outfilename3, ofstream::app);
-    // varfile << "T: " << T << " "
-    //         << "<E>: " << TotalExpectVals(0) << " "
-    //         << "<|M|>: " << TotalExpectVals(4) << " "
-    //         << "C_V: "
-    //         << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T,
-    //         2))
-    //         << " "
-    //         << "chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) /
-    //         T
-    //         << endl;
-    // varfile.close();
-  }
+void writetofile(vec &TotalExpectVals, double T, int totcycles, int L,
+                 int cut_off) {
+  double norm = 1 / ((double)(totcycles));
+  TotalExpectVals *= norm;
+  double L2 = (double)L * (double)L;
+  char *outfilename2;
+  // char *outfilename3;
+  outfilename2 = "means.txt";
+  // outfilename3 = "var.txt";
+  ofstream meanfile;
+  meanfile.open(outfilename2, ofstream::app);
+  meanfile
+      << "T: " << T << " "
+      << "<E>: " << TotalExpectVals(0) / L2 << " "
+      << "<|M|>: " << TotalExpectVals(4) / L2 << " "
+      << "C_V: "
+      << ((TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))) / L2
+      << " "
+      << "chi: " << ((TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T) / L2
+      << endl;
+  meanfile.close();
+  // ofstream varfile;
+  // varfile.open(outfilename3, ofstream::app);
+  // varfile << "T: " << T << " "
+  //         << "<E>: " << TotalExpectVals(0) << " "
+  //         << "<|M|>: " << TotalExpectVals(4) << " "
+  //         << "C_V: "
+  //         << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T,
+  //         2))
+  //         << " "
+  //         << "chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) /
+  //         T
+  //         << endl;
+  // varfile.close();
+}
 
-  void printexpect(vec & TotalExpectVals, double T, int totcycles) {
-    double norm = 1 / ((double)(totcycles));
-    TotalExpectVals *= norm;
-    cout << "<E>: " << TotalExpectVals(0) << " ";
-    cout << "<M>: " << TotalExpectVals(4) << " ";
-    cout << "C_V: "
-         << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))
-         << " ";
-    cout << "Chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T
-         << " " << endl;
+void printexpect(vec &TotalExpectVals, double T, int totcycles) {
+  double norm = 1 / ((double)(totcycles));
+  TotalExpectVals *= norm;
+  cout << "<E>: " << TotalExpectVals(0) << " ";
+  cout << "<M>: " << TotalExpectVals(4) << " ";
+  cout << "C_V: "
+       << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))
+       << " ";
+  cout << "Chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) / T
+       << " " << endl;
 
-    return;
-  }
+  return;
+}
