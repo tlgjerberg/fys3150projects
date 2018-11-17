@@ -122,9 +122,9 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
     Metropolis(spin, T, L, W, E, M, generator, Accepted);
     energies[cycle] = E;
     // Adding values after the initial cutoff
-    if (cycle > cut_off) {
-      addexpect(ExpectVals, E, M);
-    }
+    // if (cycle > cut_off) {
+    addexpect(ExpectVals, E, M);
+    // }
   }
   return;
 }

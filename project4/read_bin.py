@@ -12,16 +12,25 @@ T80, E80, M80, C_V80, chi80 = np.loadtxt(
 # T100, E100, M100, C_V100, chi100 = np.loadtxt(
 #     "results/means100.txt", usecols=(1, 3, 5, 7, 9), unpack=True)
 
+#===============================================================================
+# Plots 4b)
+#===============================================================================
+
 
 #===============================================================================
 # Plots 4c)
 #===============================================================================
 
-# file = "energy.dat"
-# array = np.fromfile(file, dtype="int32", count=-1)
-#
-#
-# mcs = np.linspace(0, len(array), len(array))
+file = "energy1_20_u.dat"
+array = np.fromfile(file, dtype="int32", count=-1)
+
+
+mcs = np.linspace(0, len(array), len(array))
+
+plt.figure()
+plt.plot(mcs, array)
+plt.xlabel('Monte Carlo cycles')
+plt.ylabel('E')
 
 #===============================================================================
 # Plots 4d)
@@ -30,16 +39,13 @@ T80, E80, M80, C_V80, chi80 = np.loadtxt(
 # plt.figure('Probability')
 # plt.hist(array[100:], bins=48)
 # plt.xlabel('Monte Carlo cycles')
-# plt.figure()
-# plt.plot(mcs, array)
-# plt.xlabel('Monte Carlo cycles')
-# plt.ylabel('E')
+
 
 #===============================================================================
 # Plots 4e)
 #===============================================================================
-plt.figure("Testplot")
-plt.plot(T, chi)
+# plt.figure("Testplot")
+# plt.plot(T, chi)
 
 # plt.figure('Mean energy')
 # plt.plot(T40, E40)

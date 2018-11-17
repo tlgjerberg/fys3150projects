@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
   mat spin = zeros(L, L);
 
-  // double T = initial_temp;
+  double T = initial_temp;
 
   ofstream outfile;
 
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
       cout << "Time = " << Totaltime << " on number of processors: " << numprocs
            << endl;
 
-      // printexpect(TotalExpectVals, T, totcycles);
+      printexpect(TotalExpectVals, T, totcycles);
       writetofile(TotalExpectVals, T, totcycles, L, cut_off);
     }
 
