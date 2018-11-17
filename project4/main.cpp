@@ -42,55 +42,31 @@ int main(int argc, char *argv[]) {
 
     MC(spin, T, L, mcs, GS, energies, ExpectVals, Accepted, cut_off);
     // if (numprocs == 1) {
-    // if (my_rank == 0) {
-
-    /* MPI process for writing all energies to a file specified as argv[1]
-     */
-
-    //   MPI_Status status;
-    //   outfile.open(outfilename, ios::binary);
-    //   outfile.write(reinterpret_cast<const char *>(energies),
-    //                 mcs * sizeof(int));
+    //   if (my_rank == 0) {
     //
-    //   for (int i = 1; i < numprocs; i++) {
-    //     MPI_Recv(energies, mcs, MPI_INT, MPI_ANY_SOURCE, 500, MPI_COMM_WORLD,
-    //              &status);
+    //     /* MPI process for writing all energies to a file specified as
+    //     argv[1]
+    //      */
+    //
+    //     MPI_Status status;
+    //     outfile.open(outfilename, ios::binary);
     //     outfile.write(reinterpret_cast<const char *>(energies),
     //                   mcs * sizeof(int));
-    //   }
     //
-    //   outfile.close();
-    // } else {
-    //   // Processes of rank 1-numprocs sends results to the process of rank 0
-    //   MPI_Send(energies, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
+    //     for (int i = 1; i < numprocs; i++) {
+    //       MPI_Recv(energies, mcs, MPI_INT, MPI_ANY_SOURCE, 500,
+    //       MPI_COMM_WORLD,
+    //                &status);
+    //       outfile.write(reinterpret_cast<const char *>(energies),
+    //                     mcs * sizeof(int));
+    //     }
+    //
+    //     outfile.close();
+    //   } else {
+    //     // Processes of rank 1-numprocs sends results to the process of rank
+    //     0 MPI_Send(energies, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
+    //   }
     // }
-    // }
-
-    MC(spin, T, L, mcs, GS, energies, ExpectVals, Accepted, cut_off);
-    if (numprocs == 1) {
-      if (my_rank == 0) {
-
-        /* MPI process for writing all energies to a file specified as argv[1]
-         */
-
-        MPI_Status status;
-        outfile.open(outfilename, ios::binary);
-        outfile.write(reinterpret_cast<const char *>(energies),
-                      mcs * sizeof(int));
-
-        for (int i = 1; i < numprocs; i++) {
-          MPI_Recv(energies, mcs, MPI_INT, MPI_ANY_SOURCE, 500, MPI_COMM_WORLD,
-                   &status);
-          outfile.write(reinterpret_cast<const char *>(energies),
-                        mcs * sizeof(int));
-        }
-
-        outfile.close();
-      } else {
-        // Processes of rank 1-numprocs sends results to the process of rank 0
-        MPI_Send(energies, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
-      }
-    }
 
     for (int i = 0; i < 5; i++) {
       MPI_Reduce(&ExpectVals(i), &TotalExpectVals(i), 1, MPI_DOUBLE, MPI_SUM, 0,
