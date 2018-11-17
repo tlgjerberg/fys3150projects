@@ -155,7 +155,7 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
 
 void writetofile(vec &TotalExpectVals, double T, int totcycles, int L,
                  int cut_off) {
-  double norm = 1 / ((double)(totcycles - 8 * cut_off);
+  double norm = 1 / ((double)(totcycles - 8 * cut_off));
   TotalExpectVals *= norm;
   double L2 = (double)L * (double)L;
   char *outfilename2;
