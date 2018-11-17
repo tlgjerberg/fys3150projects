@@ -21,16 +21,16 @@ T80, E80, M80, C_V80, chi80 = np.loadtxt(
 # Plots 4c)
 #===============================================================================
 
-file = "energy1_20_u.dat"
-array = np.fromfile(file, dtype="int32", count=-1)
-
-
-mcs = np.linspace(0, len(array), len(array))
-
-plt.figure()
-plt.plot(mcs, array)
-plt.xlabel('Monte Carlo cycles')
-plt.ylabel('E')
+# file = "energy1_20_u.dat"
+# array = np.fromfile(file, dtype="int32", count=-1)
+#
+#
+# mcs = np.linspace(0, len(array), len(array))
+#
+# plt.figure()
+# plt.plot(mcs, array)
+# plt.xlabel('Monte Carlo cycles')
+# plt.ylabel('E')
 
 #===============================================================================
 # Plots 4d)
