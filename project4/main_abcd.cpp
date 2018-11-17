@@ -2,18 +2,17 @@
 
 int main(int argc, char *argv[]) {
   char *outfilename = argv[1];
-  double initial_temp = atof(argv[2]);
-  double final_temp = atof(argv[3]);
-  double temp_step = atof(argv[4]);
-  int totcycles = atoi(argv[5]);
-  int L = atoi(argv[6]);
-  int GS = atoi(argv[7]);
+  double T = atof(argv[2]);
+  // double initial_temp = atof(argv[2]);
+  // double final_temp = atof(argv[3]);
+  // double temp_step = atof(argv[4]);
+  int totcycles = atoi(argv[3]);
+  int L = atoi(argv[4]);
+  int GS = atoi(argv[5]);
   int numprocs, my_rank;
   int Accepted = 0;
 
   mat spin = zeros(L, L);
-
-  double T = initial_temp;
 
   ofstream outfile;
 
@@ -30,9 +29,9 @@ int main(int argc, char *argv[]) {
 
   // broadcast to all nodes common variables
   MPI_Bcast(&L, 1, MPI_INT, 0, MPI_COMM_WORLD);
-  MPI_Bcast(&initial_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Bcast(&final_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Bcast(&temp_step, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  // MPI_Bcast(&initial_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  // MPI_Bcast(&final_temp, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  // MPI_Bcast(&temp_step, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
   double Timestart, Timeend, Totaltime;
   Timestart = MPI_Wtime();
@@ -78,7 +77,7 @@ int main(int argc, char *argv[]) {
          << endl;
 
     // printexpect(TotalExpectVals, T, totcycles);
-    writetofile(TotalExpectVals, T, totcycles, L, cut_off);
+    writetofile(TotalExpectVals, T, totcycles - cut_off, L);
   }
 
   // delete energies;

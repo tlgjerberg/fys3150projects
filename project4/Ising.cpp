@@ -66,7 +66,8 @@ map<double, double> transitions(double T) {
   return acceptAmp;
 }
 //==============================================================================
-// Flipps a random spin according to the Metropolis selction rule
+// Flipps a random spin according to the Metropolis selction rule (Redundant in
+// current version)
 //==============================================================================
 void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
              int ry, double &E, double &M, mt19937 &generator) {
@@ -85,10 +86,9 @@ void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
 // Metropolis algorithm
 //==============================================================================
 void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
-                double &M, mt19937 &generator) {
-  uniform_int_distribution<int> rand_spin(0, L - 1);
-  uniform_real_distribution<float> uni_dist(0, 1);
-
+                double &M, mt19937 &generator,
+                uniform_int_distribution<int> rand_spin,
+                uniform_real_distribution<float> uni_dist) {
   for (int x = 0; x < L; x++) {
     for (int y = 0; y < L; y++) {
       int rx = rand_spin(generator);
@@ -122,13 +122,15 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   mt19937 generator(seed);
   // mt19937 generator(1234);
+  uniform_int_distribution<int> rand_spin(0, L - 1);
+  uniform_real_distribution<float> uni_dist(0, 1);
 
   initialize(spin, L, E, M, GS, generator);
 
   map<double, double> W = transitions(T); // Allowed transitions for
 
   for (int cycle = 1; cycle < mcs; cycle++) {
-    Metropolis(spin, T, L, W, E, M, generator);
+    Metropolis(spin, T, L, W, E, M, generator, rand_spin, uni_dist);
     energies[cycle] = E;
 
     // Adding values after the initial cutoff
