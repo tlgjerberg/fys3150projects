@@ -20,7 +20,8 @@ int main(int argc, char *argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
   int mcs = totcycles / numprocs;
-  int cut_off = mcs * 0.05; // 5% cutof
+  int cut_off = mcs * 0.08; // 8% cutof
+  // cout << cut_off << endl;
   int Accepted = 0;
   int *energies;
   // int *mag_mom;
@@ -81,7 +82,7 @@ int main(int argc, char *argv[]) {
            << endl;
 
       // printexpect(TotalExpectVals, T, totcycles);
-      writetofile(TotalExpectVals, T, totcycles, L, cut_off);
+      writetofile(TotalExpectVals, T, totcycles - numprocs * cut_off, L);
     }
 
     // delete energies;

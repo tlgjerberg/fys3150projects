@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # T, E, M, C_V, chi = np.loadtxt(
 #     "means.txt", usecols=(1, 3, 5, 7, 9), unpack=True)
 T40, E40, M40, C_V40, chi40 = np.loadtxt(
-    "means40.txt", usecols=(1, 3, 5, 7, 9), unpack=True)
+    "means.txt", usecols=(1, 3, 5, 7, 9), unpack=True)
 # T60, E60, M60, C_V60, chi60 = np.loadtxt(
 #     "results/means60.txt", usecols=(1, 3, 5, 7, 9), unpack=True)
 # T80, E80, M80, C_V80, chi80 = np.loadtxt(

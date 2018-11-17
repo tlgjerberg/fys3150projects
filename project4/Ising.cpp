@@ -29,8 +29,7 @@ void initialize(mat &spin, int n, double &E, double &M, int GS,
     // Setting up a state with randomly pointing spins
     for (int x = 0; x < n; x++) {
       for (int y = 0; y < n; y++) {
-        // spin(x, y) = gen_random(generator);
-        spin(x, y) = 1;
+        spin(x, y) = gen_random(generator);
       }
     }
   }
@@ -89,7 +88,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
                 double &M, mt19937 &generator) {
   uniform_int_distribution<int> rand_spin(0, L - 1);
   uniform_real_distribution<float> uni_dist(0, 1);
-  double r = uni_dist(generator);
+
   for (int x = 0; x < L; x++) {
     for (int y = 0; y < L; y++) {
       int rx = rand_spin(generator);
@@ -100,7 +99,8 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
       // tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
 
       // Metropolis test
-      if (r <= W.find(Delta_E)->second) {
+      // double r = uni_dist(generator);
+      if (uni_dist(generator) <= W.find(Delta_E)->second) {
         spin(rx, ry) *= -1;
 
         M += (double)2 * spin(rx, ry);
@@ -131,10 +131,8 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
     Metropolis(spin, T, L, W, E, M, generator);
     energies[cycle] = E;
 
-    addexpect(ExpectVals, E, M);
-
     // Adding values after the initial cutoff
-    if (cycle > cut_off) {
+    if (cycle >= cut_off) {
       addexpect(ExpectVals, E, M);
     }
   }
@@ -153,9 +151,8 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
   return;
 }
 
-void writetofile(vec &TotalExpectVals, double T, int totcycles, int L,
-                 int cut_off) {
-  double norm = 1 / ((double)(totcycles - 8 * cut_off));
+void writetofile(vec &TotalExpectVals, double T, int mc_cut, int L) {
+  double norm = 1 / ((double)(mc_cut));
   TotalExpectVals *= norm;
   double L2 = (double)L * (double)L;
   char *outfilename2;
