@@ -104,7 +104,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 // Monte Carlo simulation
 //==============================================================================
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
-        vec &ExpectVals) {
+        vec &ExpectVals, int &Accepted, int cut_off) {
   double E, M;
   E = M = 0;
 
@@ -120,14 +120,13 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
   for (int cycle = 1; cycle < mcs; cycle++) {
     Metropolis(spin, T, L, W, E, M, generator);
     energies[cycle] = E;
-<<<<<<< HEAD
+
     addexpect(ExpectVals, E, M);
-=======
+
     // Adding values after the initial cutoff
-    // if (cycle > cut_off) {
-    addexpect(ExpectVals, E, M);
-    // }
->>>>>>> c326098d11282149d8cf0a053892404231560b21
+    if (cycle > cut_off) {
+      addexpect(ExpectVals, E, M);
+    }
   }
   return;
 }
@@ -144,7 +143,8 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
   return;
 }
 
-void writetofile(vec &TotalExpectVals, double T, int totcycles, int L) {
+void writetofile(vec &TotalExpectVals, double T, int totcycles, int L,
+                 int cut_off) {
   double norm = 1 / ((double)(totcycles));
   TotalExpectVals *= norm;
   double L2 = (double)L * (double)L;
