@@ -106,9 +106,6 @@ int main(int argc, char *argv[]) {
 
       // printexpect(TotalExpectVals, T, totcycles);
       writetofile(TotalExpectVals, T, totcycles, L, cut_off);
-
-      printexpect(TotalExpectVals, T, totcycles);
-      writetofile(TotalExpectVals, T, totcycles, L, cut_off);
     }
 
     // delete energies;
