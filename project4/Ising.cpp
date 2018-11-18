@@ -104,6 +104,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
 
       M += (double)2 * spin(rx, ry);
       E += (double)Delta_E;
+      Accepted++;
     }
   }
   return;
@@ -128,7 +129,7 @@ void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
   map<double, double> W = transitions(T); // Allowed transitions for
 
   for (int cycle = 1; cycle < mcs; cycle++) {
-    Metropolis(spin, T, L, W, E, M, generator, rand_spin, uni_dist);
+    Metropolis(spin, T, L, W, E, M, generator, rand_spin, uni_dist, Accepted);
     energies[cycle] = E;
 
     // Adding values after the initial cutoff
@@ -156,7 +157,6 @@ void writetofile(vec &TotalExpectVals, double T, int mc_cut, int L) {
   TotalExpectVals *= norm;
   double L2 = (double)L * (double)L;
   char *outfilename2;
-  // char *outfilename3;
   outfilename2 = "means.txt";
   // outfilename3 = "var.txt";
   ofstream meanfile;
@@ -169,27 +169,16 @@ void writetofile(vec &TotalExpectVals, double T, int mc_cut, int L) {
       << ((TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T, 2))) / L2
       << " "
       << "chi: " << ((TotalExpectVals(3) - pow(TotalExpectVals(4), 2)) / T) / L2
-      << endl;
+      << " "
+      << "Var_E: " << TotalExpectVals(1) - pow(TotalExpectVals(0), 2) << endl;
   meanfile.close();
-  // ofstream varfile;
-  // varfile.open(outfilename3, ofstream::app);
-  // varfile << "T: " << T << " "
-  //         << "<E>: " << TotalExpectVals(0) << " "
-  //         << "<|M|>: " << TotalExpectVals(4) << " "
-  //         << "C_V: "
-  //         << (TotalExpectVals(1) - pow(TotalExpectVals(0), 2)) / (pow(T,
-  //         2))
-  //         << " "
-  //         << "chi: " << (TotalExpectVals(3) - pow(TotalExpectVals(2), 2)) /
-  //         T
-  //         << endl;
-  // varfile.close();
 }
 
 void writemeta(int &totcycles, int &Accepted) {
   ofstream metafile;
-  metafile.open('meta.txt', ofstream::app);
-  metafile << 'Accepted states: ' << Accepted << endl;
+  metafile.open("meta.txt", ofstream::app);
+  metafile << "Total Cycles: " << totcycles << " "
+           << "Accepted states: " << Accepted << endl;
   metafile.close();
 }
 

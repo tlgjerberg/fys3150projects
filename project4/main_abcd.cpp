@@ -21,7 +21,8 @@ int main(int argc, char *argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
   int mcs = totcycles / numprocs;
-  int cut_off = 0; // 5% cutof
+  int cut_off = 0;
+  // int cut_off = mcs * 0.05; // Cut off for part 4d
   int *energies;
   // int *mag_mom;
   energies = new int[mcs];
@@ -60,7 +61,7 @@ int main(int argc, char *argv[]) {
 
       outfile.close();
     } else {
-      // Processes of rank 1-numprocs sends results to the process of rank 0
+      // Processes of rank 1 to numprocs sends results to the process of rank 0
       MPI_Send(energies, mcs, MPI_INT, 0, 500, MPI_COMM_WORLD);
     }
   }
@@ -76,8 +77,8 @@ int main(int argc, char *argv[]) {
     cout << "Time = " << Totaltime << " on number of processors: " << numprocs
          << endl;
 
-    // printexpect(TotalExpectVals, T, totcycles);
-    writemeta(&Accepted);
+    printexpect(TotalExpectVals, T, totcycles);
+    writemeta(totcycles, Accepted);
     writetofile(TotalExpectVals, T, totcycles - cut_off, L);
   }
 
