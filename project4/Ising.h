@@ -24,13 +24,14 @@ map<double, double> transitions(double T);
 void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
              int ry, double &E, double &M, mt19937 &generator, int &Accepted);
 void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
-               double &M, mt19937 &generator,
-               uniform_int_distribution<int> rand_spin,
-               uniform_real_distribution<float> uni_dist);
+                double &M, mt19937 &generator,
+                uniform_int_distribution<int> rand_spin,
+                uniform_real_distribution<float> uni_dist, int &Accepted);
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
         vec &ExpectVals, int &Accepted, int cut_off);
 
 void addexpect(vec &ExpectVals, double &E, double &M);
 void printexpect(vec &TotalExpectVals, double T, int totcycles);
 void writetofile(vec &TotalExpectVals, double T, int mc_cut, int L);
+void writemeta(int &totcycles, int &Accepted);
 #endif // ISING_H

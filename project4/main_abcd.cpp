@@ -77,6 +77,7 @@ int main(int argc, char *argv[]) {
          << endl;
 
     // printexpect(TotalExpectVals, T, totcycles);
+    writemeta(&Accepted);
     writetofile(TotalExpectVals, T, totcycles - cut_off, L);
   }
 

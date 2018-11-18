@@ -88,24 +88,22 @@ void tryflip(mat &spin, int n, int Delta_E, map<double, double> W, int rx,
 void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
                 double &M, mt19937 &generator,
                 uniform_int_distribution<int> rand_spin,
-                uniform_real_distribution<float> uni_dist) {
-  for (int x = 0; x < L; x++) {
-    for (int y = 0; y < L; y++) {
-      int rx = rand_spin(generator);
-      int ry = rand_spin(generator);
-      int Delta_E = 2 * spin(rx, ry) *
-                    (spin(rx, PBC(ry, L, -1)) + spin(PBC(rx, L, -1), ry) +
-                     spin(rx, PBC(ry, L, 1)) + spin(PBC(rx, L, 1), ry));
-      // tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
+                uniform_real_distribution<float> uni_dist, int &Accepted) {
+  for (int x = 0; x < L * L; x++) {
+    int rx = rand_spin(generator);
+    int ry = rand_spin(generator);
+    int Delta_E = 2 * spin(rx, ry) *
+                  (spin(rx, PBC(ry, L, -1)) + spin(PBC(rx, L, -1), ry) +
+                   spin(rx, PBC(ry, L, 1)) + spin(PBC(rx, L, 1), ry));
+    // tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
 
-      // Metropolis test
-      // double r = uni_dist(generator);
-      if (uni_dist(generator) <= W.find(Delta_E)->second) {
-        spin(rx, ry) *= -1;
+    // Metropolis test
+    // double r = uni_dist(generator);
+    if (uni_dist(generator) <= W.find(Delta_E)->second) {
+      spin(rx, ry) *= -1;
 
-        M += (double)2 * spin(rx, ry);
-        E += (double)Delta_E;
-      }
+      M += (double)2 * spin(rx, ry);
+      E += (double)Delta_E;
     }
   }
   return;
@@ -186,6 +184,13 @@ void writetofile(vec &TotalExpectVals, double T, int mc_cut, int L) {
   //         T
   //         << endl;
   // varfile.close();
+}
+
+void writemeta(int &totcycles, int &Accepted) {
+  ofstream metafile;
+  metafile.open('meta.txt', ofstream::app);
+  metafile << 'Accepted states: ' << Accepted << endl;
+  metafile.close();
 }
 
 void printexpect(vec &TotalExpectVals, double T, int totcycles) {
