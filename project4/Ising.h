@@ -28,7 +28,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
                 uniform_int_distribution<int> rand_spin,
                 uniform_real_distribution<float> uni_dist, int &Accepted);
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
-        vec &ExpectVals, int &Accepted, int cut_off);
+        int *mag_mom, vec &ExpectVals, int &Accepted, int cut_off);
 
 void addexpect(vec &ExpectVals, double &E, double &M);
 void printexpect(vec &TotalExpectVals, double T, int totcycles);

@@ -1,9 +1,0 @@
-Total Cycles: 1000 Accepted states: 103738
-Total Cycles: 5000 Accepted states: 545782
-Total Cycles: 10000 Accepted states: 1071171
-Total Cycles: 15000 Accepted states: 1616904
-Total Cycles: 20000 Accepted states: 2144340
-Total Cycles: 25000 Accepted states: 2674567
-Total Cycles: 30000 Accepted states: 3228571
-Total Cycles: 35000 Accepted states: 3813504
-Total Cycles: 40000 Accepted states: 4272572
