@@ -1,18 +1,34 @@
 CXX = g++
 MPI_CXX = mpic++
-CPPflags_r =  -Wall
-CPPflags_o =  -O3
+CPPflags =  -g -Wall -std=c++11 -O3
 
-LIB = -DARMA_DONT_USE_WRAPPER -llapack -lblas
+UNAME := $(shell uname)
 
-final: $()
+ifeq ($(UNAME), Darwin)
+INCL := -I /usr/local/Cellar/armadillo/9.100.5/include
+LIB := -DARMA_DONT_USE_WRAPPER -framework Accelerate
+endif
 
-ising_reg.o: Ising.cpp main.cpp
-			${MPI_CXX} ${CPPflags_r} main.cpp Ising.cpp  ${LIB} -c ising.o
+ifeq ($(UNAME), Linux)
+INCL :=
+LIB := -DARMA_DONT_USE_WRAPPER -lblas -llapack
+endif
 
-ising_opt.o :Ising.cpp main.cpp
-						${MPI_CXX} ${CPPflags_o}  ${LIB} -c ising.o
+
+ising.x: ising.o main.o
+					${MPI_CXX} ${CPPflags} -o $@ $^ ${INCL} ${LIB}
+
+ising_abcd.x: ising.o main_abcd.o
+							${MPI_CXX} ${CPPflags} -o $@ $^ ${INCL} ${LIB}
+ising.o :Ising.cpp
+						${MPI_CXX} ${CPPflags} -c $@ $^ ${INCL} ${LIB}
+
+main.o: main.cpp
+				${MPI_CXX} ${CPPflags} -c $@ $^ ${INCL} ${LIB}
+
+main_abcd.o: main_abcd.cpp
+					${MPI_CXX} ${CPPflags} -c $@ $^ ${INCL} ${LIB}
 
 
 clean:
-			rm -f *.o *.dat *.txt
+			rm -f *.o *.dat 
