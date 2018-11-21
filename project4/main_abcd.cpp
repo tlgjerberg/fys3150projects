@@ -7,9 +7,10 @@ int main(int argc, char *argv[]) {
 
   int totcycles = atoi(argv[4]);
   int L = atoi(argv[5]);
-  int GS = atoi(argv[6]);
+  // Sets arguement for ordered or unordered initial state
+  int OS = atoi(argv[6]);
   int numprocs, my_rank;
-  int Accepted = 0;
+  int Accepted = 0; // Accepted states of our simulation
 
   mat spin = zeros(L, L);
 
@@ -20,9 +21,11 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-  int mcs = totcycles / numprocs;
-  // int cut_off = 0;
-  int cut_off = mcs * 0.05; // Cut off for part 4d
+  int mcs = totcycles / numprocs; // Number of cycles for each MPI process
+  int cut_off = 0;
+  // int cut_off = mcs * 0.05; // Cut off for part 4d
+
+  // Arrays  for storing energy and mangnetic moment
   int *energies;
   int *mag_mom;
   energies = new int[mcs];
@@ -37,7 +40,7 @@ int main(int argc, char *argv[]) {
   vec ExpectVals = zeros<vec>(5);
   vec TotalExpectVals = zeros<vec>(5);
 
-  MC(spin, T, L, mcs, GS, energies, mag_mom, ExpectVals, Accepted, cut_off);
+  MC(spin, T, L, mcs, OS, energies, mag_mom, ExpectVals, Accepted, cut_off);
   if (numprocs == 1) {
     if (my_rank == 0) {
 
@@ -53,6 +56,7 @@ int main(int argc, char *argv[]) {
                      mcs * sizeof(int));
 
       for (int i = 1; i < numprocs; i++) {
+        // Writing energies and magnetic momentum to our files of choice
         MPI_Recv(energies, mcs, MPI_INT, MPI_ANY_SOURCE, 500, MPI_COMM_WORLD,
                  &status);
         MPI_Recv(mag_mom, mcs, MPI_INT, MPI_ANY_SOURCE, 500, MPI_COMM_WORLD,
@@ -83,7 +87,7 @@ int main(int argc, char *argv[]) {
     cout << "Time = " << Totaltime << " on number of processors: " << numprocs
          << endl;
 
-    // printexpect(TotalExpectVals, T, totcycles);
+    printexpect(TotalExpectVals, T, totcycles);
     writemeta(totcycles, Accepted);
     writetofile(TotalExpectVals, T, totcycles - cut_off, L);
   }

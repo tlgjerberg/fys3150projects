@@ -17,7 +17,7 @@ using namespace arma;
 
 int gen_random(mt19937 &generator);
 int PBC(int i, int limit, int add);
-void initialize(mat &spin, int n, double &E, double &M, int GS,
+void initialize(mat &spin, int n, double &E, double &M, int OS,
                 mt19937 &generator);
 void flip_one(mat &spin, int xf, int yf);
 map<double, double> transitions(double T);

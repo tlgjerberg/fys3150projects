@@ -17,12 +17,12 @@ int gen_random(mt19937 &generator) {
 int PBC(int i, int limit, int add) { return (i + limit + add) % (limit); }
 
 //==============================================================================
-// Setting up the initial spin state
+// Setting up the initial spin state matrix
 //==============================================================================
-void initialize(mat &spin, int n, double &E, double &M, int GS,
+void initialize(mat &spin, int n, double &E, double &M, int OS,
                 mt19937 &generator) {
   // Setting up the ground state
-  if (GS == 1) {
+  if (OS == 1) {
     spin.fill(1);
 
   } else {
@@ -98,7 +98,6 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
     // tryflip(spin, L, Delta_E, W, rx, ry, E, M, generator);
 
     // Metropolis test
-    // double r = uni_dist(generator);
     if (uni_dist(generator) <= W.find(Delta_E)->second) {
       spin(rx, ry) *= -1;
 
@@ -110,7 +109,7 @@ void Metropolis(mat &spin, double T, int L, map<double, double> W, double &E,
   return;
 }
 //==============================================================================
-// Monte Carlo simulation
+// Monte Carlo simulation using the Metropolis algorithm
 //==============================================================================
 void MC(mat &spin, double T, int L, int mcs, int GS, int *energies,
         int *mag_mom, vec &ExpectVals, int &Accepted, int cut_off) {
@@ -153,10 +152,13 @@ void addexpect(vec &ExpectVals, double &E, double &M) {
   return;
 }
 
+//==============================================================================
+// Writes expectation values and variance of the energy to a file
+//==============================================================================
 void writetofile(vec &TotalExpectVals, double T, int mc_cut, int L) {
   double norm = 1 / ((double)(mc_cut));
   TotalExpectVals *= norm;
-  double L2 = (double)L * (double)L;
+  double L2 = (double)L * (double)L; // Scaling expectation to per spin
   char *outfilename2;
   outfilename2 = "means.txt";
   // outfilename3 = "var.txt";
@@ -176,6 +178,9 @@ void writetofile(vec &TotalExpectVals, double T, int mc_cut, int L) {
   meanfile.close();
 }
 
+//==============================================================================
+// Writes a file with meta data (total # of states, # of accepted states)
+//==============================================================================
 void writemeta(int &totcycles, int &Accepted) {
   ofstream metafile;
   metafile.open("meta.txt", ofstream::app);
