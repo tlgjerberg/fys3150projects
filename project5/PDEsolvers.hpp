@@ -8,10 +8,17 @@
 class PDEsolvers {
 
 private:
+  double u_0 = init1;
+  double u_n = init2;
+  double b_0 = bound1;
+  double b_L = bound2;
+
 public:
-  Explicit_Euler();
-  Implicit_Euler();
-  Crank_Nicolson();
+  PDEsolvers PDEsolvers(double init1, double init2, double bound1,
+                        double bound2);
+  void Explicit_Euler();
+  void Implicit_Euler();
+  void Crank_Nicolson();
 };
 
 // Main for testing
