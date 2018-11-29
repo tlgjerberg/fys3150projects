@@ -10,11 +10,12 @@ using namespace arma;
 class Tridiag {
 private:
   double diag, sub, super, temp;
-  double *d, *u, *upper, *lower;
+  double *d, *b, *upper, *lower;
 
 public:
-  Tridiag Tridiag(double diagonal, double sub, double super);
-  void Gauss_Seidel();
+  Tridiag(double diagonal, double sub, double super);
+  void initialize(int n, double hh);
+  void Gauss_Seidel(int n);
 };
 
 #endif /* Tridiag_H */

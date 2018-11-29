@@ -6,8 +6,8 @@ Tridiag::Tridiag(double diagonal, double subdiagonal, double superdiagonal) {
   super = superdiagonal;
 }
 
-mat Tridiag::initialize(int n, double hh) {
-  u[0] = u[1] = 0.0;
+void Tridiag::initialize(int n, double hh) {
+  // u[0] = u[1] = 0.0;
   for (int i = 1; i < n; i++) {
     d[i] = diag;
     lower[i] = sub;
@@ -15,7 +15,7 @@ mat Tridiag::initialize(int n, double hh) {
   }
 }
 
-void Tridiag::Gauss_Seidel() {
+void Tridiag::Gauss_Seidel(int n) {
 
   for (int i = 1; i < n; i++) {
     temp = lower[i - 1] / d[i - 1];
@@ -23,5 +23,5 @@ void Tridiag::Gauss_Seidel() {
     b[i] -= b[i - 1] * temp;
   }
 
-  return 0;
+  return;
 }
