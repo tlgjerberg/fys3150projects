@@ -8,10 +8,10 @@
 class PDEsolvers {
 
 private:
-  double u_0 = init1;
-  double u_n = init2;
-  double b_0 = bound1;
-  double b_L = bound2;
+  double u_0;
+  double u_n;
+  double b_0;
+  double b_L;
 
 public:
   PDEsolvers PDEsolvers(double init1, double init2, double bound1,
