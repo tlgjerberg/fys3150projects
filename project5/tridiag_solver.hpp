@@ -9,10 +9,8 @@ using namespace arma;
 
 class Tridiag {
 private:
-  double diagonal;
-  double subdiag;
-  double superdiag;
-  double temp;
+  double diag, sub, super, temp;
+  double *d, *u, *upper, *lower;
 
 public:
   Tridiag Tridiag(double diagonal, double sub, double super);

@@ -1,16 +1,27 @@
 #include "tridiag_solver.hpp"
 
-Tridiag::Tridiag(double diag, double sub, double super) {
-  diagonal = diag;
-  subdiag = sub;
-  superdiag = super;
+Tridiag::Tridiag(double diagonal, double subdiagonal, double superdiagonal) {
+  diag = diagonal;
+  sub = subdiagonal;
+  super = superdiagonal;
 }
 
 mat Tridiag::initialize(int n, double hh) {
-  mat A = zeros(n, n);
-  A.diag() += diagonal;
-  A.diag(1) += subdiag;
-  A.diag(-1) += superdiag;
+  u[0] = u[1] = 0.0;
+  for (int i = 1; i < n; i++) {
+    d[i] = diag;
+    lower[i] = sub;
+    upper[i] = super;
+  }
 }
 
-void Tridiag::Gauss_Seidel() { return 0; }
+void Tridiag::Gauss_Seidel() {
+
+  for (int i = 1; i < n; i++) {
+    temp = lower[i - 1] / d[i - 1];
+    d[i] -= upper[i - 1] * temp;
+    b[i] -= b[i - 1] * temp;
+  }
+
+  return 0;
+}
