@@ -1,10 +1,8 @@
 #include "PDEsolvers.hpp"
 
-PDEsolvers::PDEsolvers(double init1, double init2, double bound1,
-                       double bound2);
+PDEsolvers::PDEsolvers(double init1, double bound1, double bound2);
 {
   double u_0 = init1;
-  double u_n = init2;
   double b_0 = bound1;
   double b_L = bound2;
 }
