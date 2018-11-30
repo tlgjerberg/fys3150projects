@@ -15,9 +15,10 @@ private:
 public:
   double *u;
   PDEsolvers(double bound1, double bound2);
+  ~PDEsolvers();
   void init_cond(double init1, int n);
   void Explicit_Euler(int n, double *d, double *b, double *upper);
-  void Implicit_Euler();
+  void Implicit_Euler(int n, double *d, double *b, double *upper);
   void Crank_Nicolson();
 };
 
