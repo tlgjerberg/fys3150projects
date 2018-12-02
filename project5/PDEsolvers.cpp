@@ -22,10 +22,13 @@ void PDEsolvers::init_cond(double init1, int n) {
 // Explicit Euler algorithm
 void PDEsolvers::Explicit_Euler(int tsteps, int xsteps, double *d, double *b,
                                 double *upper) {
+
+  for (int l = 0; l < tsteps; l++) {
+  }
   // Loop over x
   u[0] = b_0;
   u[n] = b_L;
-  for (int i = n; i > 0; i--) {
+  for (int i = xsteps; i > 0; i--) {
     u[i] = (b[i] - upper[i] * u[i + 1]) / d[i];
   }
 
