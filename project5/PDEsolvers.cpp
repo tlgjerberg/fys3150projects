@@ -6,7 +6,7 @@ PDEsolvers::PDEsolvers(double bound1, double bound2) {
 }
 
 PDEsolvers::~PDEsolvers() {
-  delete[] u;
+  // delete[] u;
   // delete[] d;
 }
 
@@ -20,7 +20,9 @@ void PDEsolvers::init_cond(double init1, int n) {
 }
 
 // Explicit Euler algorithm
-void PDEsolvers::Explicit_Euler(int n, double *d, double *b, double *upper) {
+void PDEsolvers::Explicit_Euler(int tsteps, int xsteps, double *d, double *b,
+                                double *upper) {
+  // Loop over x
   u[0] = b_0;
   u[n] = b_L;
   for (int i = n; i > 0; i--) {
@@ -37,4 +39,10 @@ void PDEsolvers::Implicit_Euler(int n, double *d, double *b, double *upper) {
     u[i] = (b[i] - upper[i] * u[i + 1]) / d[i];
   }
   return;
+}
+
+void PDEsolvers::Crank_Nicolson() {
+  u[0] = b_0;
+  u[n] = b_L;
+  for (int i =)
 }

@@ -14,6 +14,7 @@ private:
 
 public:
   double *u;
+  double *r;
   PDEsolvers(double bound1, double bound2);
   ~PDEsolvers();
   void init_cond(double init1, int n);

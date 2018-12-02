@@ -7,9 +7,9 @@ Tridiag::Tridiag(double diagonal, double subdiagonal, double superdiagonal) {
 }
 
 Tridiag::~Tridiag() {
-  delete[] d;
-  delete[] lower;
-  delete[] upper;
+  // delete[] d;
+  // delete[] lower;
+  // delete[] upper;
 }
 
 // Initializes a tridiagonal matrix with arguements from the constructor
