@@ -19,19 +19,18 @@ private:
   // void binarywrite(char *outfilename, int n);
 
 public:
-  // double *u;
-  // double *r;
   vec u;
   vec r;
   Tridiag tridiag;
 
+  PDEsolvers();
   PDEsolvers(double bound1, double bound2, Tridiag tridiag);
   ~PDEsolvers();
   void init_cond(double init1, int n);
   void Explicit_Euler(int n, int tsteps, double alpha);
   void Implicit_Euler(int n, int tsteps, double diag, double subdiag,
                       double superdiag);
-  void Crank_Nicolson();
+  void Crank_Nicolson(int n, int tsteps, double alpha);
 };
 
 #endif /* PDEsolvers_H */

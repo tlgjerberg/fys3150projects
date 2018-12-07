@@ -17,9 +17,10 @@ public:
   int n;
   Tridiag();
   Tridiag(double diagonal, double subdiagonal, double superdiagonal);
-  ~Tridiag();
+  // ~Tridiag();
   void initialize(int totstep);
   void Gauss_Seidel();
+  void Gauss_Seidel(vec rhs);
 };
 
 #endif /* Tridiag_H */

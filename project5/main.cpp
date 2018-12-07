@@ -21,5 +21,7 @@ int main(int argc, char const *argv[]) {
 
   // pde.Implicit_Euler()
 
+  pde.Crank_Nicolson(n, tsteps, alpha);
+
   return 0;
 }
