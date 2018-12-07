@@ -15,7 +15,7 @@ public:
   // double *d, *b;
   vec d, b, u;
   int n;
-
+  Tridiag();
   Tridiag(double diagonal, double subdiagonal, double superdiagonal);
   ~Tridiag();
   void initialize(int totstep);

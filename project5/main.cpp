@@ -13,13 +13,13 @@ int main(int argc, char const *argv[]) {
 
   tridiag.initialize(n);
 
-  tridiag.Gauss_Seidel();
-
   PDEsolvers pde = PDEsolvers(0, 1, tridiag);
 
   pde.init_cond(0, n);
 
   pde.Explicit_Euler(n, tsteps, alpha);
+
+  // pde.Implicit_Euler()
 
   return 0;
 }
