@@ -8,44 +8,34 @@ Tridiag::Tridiag(double diagonal, double subdiagonal, double superdiagonal) {
 
 Tridiag::~Tridiag() {
   // delete[] d;
-  // delete[] lower;
-  // delete[] upper;
 }
 
 // Initializes a tridiagonal matrix with arguements from the constructor
-void Tridiag::initialize(int n, double hh) {
+void Tridiag::initialize(int totstep) {
   // d = new double[n];
-  // lower = new double[n - 1];
-  // upper = new double[n - 1];
   // d[0] = d[n] = diag;
+  n = totstep;
   d = zeros(n);
-  lower = zeros(n);
-  upper = zeros(n);
   d.fill(diag);
-  lower.fill(sub);
-  upper.fill(super);
 
-  // for (int i = 1; i < n; i++) {
-  //   d[i] = diag;
-  //   lower[i] = sub;
-  //   upper[i] = super;
-  // }
   return;
 }
 
 // Gauss-Seidel method for eliminating the lower diagonal
-void Tridiag::Gauss_Seidel(int n) {
+void Tridiag::Gauss_Seidel() {
   // b = new double[n];
   // for (int i = 0; i < n; i++) {
-  //   temp = lower[i - 1] / d[i - 1];
+  //   temp = sub / d[i - 1];
   //   d[i] -= upper[i - 1] * temp;
   //   b[i] -= b[i - 1] * temp;
   // }
   b = zeros(n);
-  for (int i = 0; i < n; i++) {
-    temp = lower(i - 1) / d(i - 1);
-    d(i) -= upper(i - 1) * temp;
+  for (int i = 1; i < n; i++) {
+    temp = super / d(i - 1);
+    d(i) -= super * temp;
     b(i) -= b(i - 1) * temp;
   }
+  b(0) = 0;
+  b(n - 1) = 1;
   return;
 }

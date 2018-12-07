@@ -12,16 +12,15 @@ private:
   double diag, sub, super, temp;
 
 public:
-  // double *d, *b, *upper, *lower;
+  // double *d, *b;
   vec d;
   vec b;
-  vec upper;
-  vec lower;
+  int n;
 
   Tridiag(double diagonal, double sub, double super);
   ~Tridiag();
-  void initialize(int n, double hh);
-  void Gauss_Seidel(int n);
+  void initialize(int totstep);
+  void Gauss_Seidel();
 };
 
 #endif /* Tridiag_H */
