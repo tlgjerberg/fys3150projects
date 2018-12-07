@@ -23,9 +23,9 @@ public:
   vec r;
   Tridiag tridiag;
 
-  PDEsolvers();
+  // PDEsolvers();
   PDEsolvers(double bound1, double bound2, Tridiag tridiag);
-  ~PDEsolvers();
+  // ~PDEsolvers();
   void init_cond(double init1, int n);
   void Explicit_Euler(int n, int tsteps, double alpha);
   void Implicit_Euler(int n, int tsteps, double diag, double subdiag,

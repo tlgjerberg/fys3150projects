@@ -18,8 +18,6 @@ Tridiag::Tridiag(double diagonal, double subdiagonal, double superdiagonal) {
 
 // Initializes a tridiagonal matrix with arguements from the constructor
 void Tridiag::initialize(int totstep) {
-  // d = new double[n];
-  // d[0] = d[n] = diag;
   n = totstep;
   d = zeros(n);
   d.fill(diag);
@@ -63,4 +61,9 @@ void Tridiag::Gauss_Seidel(vec rhs) {
   }
 
   return;
+}
+
+int main(int argc, char const *argv[]) {
+  /* code */
+  return 0;
 }

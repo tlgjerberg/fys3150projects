@@ -1,7 +1,7 @@
 #include "PDEsolvers.hpp"
 #include "tridiag_solver.hpp"
 
-PDEsolvers::PDEsolvers() {}
+// PDEsolvers::PDEsolvers() {}
 
 PDEsolvers::PDEsolvers(double bound1, double bound2, Tridiag tridiag) {
   double b_0 = bound1;
@@ -59,6 +59,11 @@ void PDEsolvers::Crank_Nicolson(int n, int tsteps, double alpha) {
 
     r = u;
   }
+}
+
+int main(int argc, char const *argv[]) {
+  /* code */
+  return 0;
 }
 
 // void PDEsolvers::binarywrite(char *outfilename, int n) {
