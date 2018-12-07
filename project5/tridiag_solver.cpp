@@ -30,6 +30,7 @@ void Tridiag::Gauss_Seidel() {
   //   b[i] -= b[i - 1] * temp;
   // }
   b = zeros(n);
+  u = zeros(n);
   for (int i = 1; i < n; i++) {
     temp = super / d(i - 1);
     d(i) -= super * temp;
@@ -37,5 +38,10 @@ void Tridiag::Gauss_Seidel() {
   }
   b(0) = 0;
   b(n - 1) = 1;
+
+  for (int i = n - 2; i > 0; i--) {
+    u(i) = (b(i) - super * u(i + 1)) / d(i);
+  }
+
   return;
 }

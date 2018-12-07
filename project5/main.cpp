@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
 
   tridiag.Gauss_Seidel();
 
-  PDEsolvers pde = PDEsolvers(0, 1);
+  PDEsolvers pde = PDEsolvers(0, 1, tridiag);
 
   pde.init_cond(0, n);
 

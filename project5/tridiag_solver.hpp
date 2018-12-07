@@ -13,11 +13,10 @@ private:
 
 public:
   // double *d, *b;
-  vec d;
-  vec b;
+  vec d, b, u;
   int n;
 
-  Tridiag(double diagonal, double sub, double super);
+  Tridiag(double diagonal, double subdiagonal, double superdiagonal);
   ~Tridiag();
   void initialize(int totstep);
   void Gauss_Seidel();
