@@ -12,7 +12,11 @@ private:
   double diag, sub, super, temp;
 
 public:
-  double *d, *b, *upper, *lower;
+  // double *d, *b, *upper, *lower;
+  vec d;
+  vec b;
+  vec upper;
+  vec lower;
 
   Tridiag(double diagonal, double sub, double super);
   ~Tridiag();
