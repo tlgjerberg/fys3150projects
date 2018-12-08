@@ -23,7 +23,7 @@ void PDEsolvers::init_cond(double init1, int n) {
 
 // Explicit Euler algorithm
 void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
-  // char *outfilename = "Ex_euler.dat";
+  char *outfilename = "Ex_euler.dat";
 
   for (int l = 1; l < tsteps; l++) {
     for (int i = 1; i < n - 1; i++) {
@@ -31,7 +31,7 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
     }
     u(0) = b_0;
     u(n - 1) = b_L;
-    // binarywrite(outfilename, n);
+    binarywrite(outfilename, n);
   }
   return;
 }
@@ -61,16 +61,11 @@ void PDEsolvers::Crank_Nicolson(int n, int tsteps, double alpha) {
   }
 }
 
-int main(int argc, char const *argv[]) {
-  /* code */
-  return 0;
+void PDEsolvers::binarywrite(char *outfilename, int n) {
+  typedef std::vector<double> stdvec;
+  stdvec x = conv_to<stdvec>::from(r);
+  outfile.open(outfilename, ios::binary);
+  outfile.write((char *)&x[0], x.size() * sizeof(double));
+  // outfile.write(reinterpret_cast<char *>(x), n * sizeof(double));
+  outfile.close();
 }
-
-// void PDEsolvers::binarywrite(char *outfilename, int n) {
-//   typedef std::vector<double> stdvec;
-//   stdvec x = conv_to<stdvec>::from(r);
-//   outfile.open(outfilename, ios::binary);
-//   outfile.write((char *)&x[0], x.size() * sizeof(double));
-//   // outfile.write(reinterpret_cast<char *>(x), n * sizeof(double));
-//   outfile.close();
-// }

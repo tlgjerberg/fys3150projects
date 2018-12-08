@@ -13,11 +13,11 @@ int main(int argc, char const *argv[]) {
 
   tridiag.initialize(n);
 
-  // PDEsolvers pde = PDEsolvers(0, 1, tridiag);
+  PDEsolvers pde = PDEsolvers(0, 1, tridiag);
   //
-  // pde.init_cond(0, 1);
+  pde.init_cond(0, 1);
   //
-  // pde.Explicit_Euler(n, tsteps, alpha);
+  pde.Explicit_Euler(n, tsteps, alpha);
 
   // pde.Implicit_Euler()
 

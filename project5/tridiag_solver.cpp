@@ -62,8 +62,3 @@ void Tridiag::Gauss_Seidel(vec rhs) {
 
   return;
 }
-
-int main(int argc, char const *argv[]) {
-  /* code */
-  return 0;
-}
