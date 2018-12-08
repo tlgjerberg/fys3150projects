@@ -16,7 +16,7 @@ private:
   double b_0;
   double b_L;
   ofstream outfile;
-  void binarywrite(char *outfilename, int n);
+  void binarywrite(char *outfilename);
 
 public:
   vec u;

@@ -31,8 +31,9 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
     }
     u(0) = b_0;
     u(n - 1) = b_L;
-    binarywrite(outfilename, n);
   }
+  cout << r << endl;
+  // binarywrite(outfilename);
   return;
 }
 
@@ -61,7 +62,7 @@ void PDEsolvers::Crank_Nicolson(int n, int tsteps, double alpha) {
   }
 }
 
-void PDEsolvers::binarywrite(char *outfilename, int n) {
+void PDEsolvers::binarywrite(char *outfilename) {
   typedef std::vector<double> stdvec;
   stdvec x = conv_to<stdvec>::from(r);
   outfile.open(outfilename, ios::binary);
