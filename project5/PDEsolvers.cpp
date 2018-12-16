@@ -23,16 +23,16 @@ void PDEsolvers::init_cond(double init1, int n) {
 
 // Explicit Euler algorithm
 void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
-  char *outfilename = "Ex_euler.dat";
-
+  // char *outfilename = "Ex_euler.dat";
+  u(0) = b_0;
+  u(n - 1) = b_L;
   for (int l = 1; l < tsteps; l++) {
     for (int i = 1; i < n - 1; i++) {
       u(i) = (1.0 - 2.0 * alpha) * u(i) + alpha * u(i + 1) + alpha * u(i - 1);
     }
     u(0) = b_0;
-    u(n - 1) = b_L;
+    u(n - 2) = b_L;
   }
-  cout << r << endl;
   // binarywrite(outfilename);
   return;
 }
@@ -40,7 +40,7 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
 void PDEsolvers::Implicit_Euler(int n, int tsteps, double diag, double subdiag,
                                 double superdiag) {
   for (int l = 1; l < tsteps; l++) {
-    tridiag.Gauss_Seidel();
+    tridiag.Gauss();
   }
   return;
 }

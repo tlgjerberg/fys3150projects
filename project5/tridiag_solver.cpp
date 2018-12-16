@@ -27,7 +27,7 @@ void Tridiag::initialize(int totstep) {
 
 // Gauss-Seidel method for eliminating the lower diagonal with no arguement for
 // rhs
-void Tridiag::Gauss_Seidel() {
+void Tridiag::Gauss() {
   b = zeros(n);
   u = zeros(n);
   for (int i = 1; i < n; i++) {
@@ -45,7 +45,7 @@ void Tridiag::Gauss_Seidel() {
   return;
 }
 
-void Tridiag::Gauss_Seidel(vec rhs) {
+void Tridiag::Gauss(vec rhs) {
   b = rhs;
   u = zeros(n);
   for (int i = 1; i < n; i++) {
