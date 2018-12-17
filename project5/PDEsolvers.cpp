@@ -30,8 +30,9 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
     for (int i = 1; i < n - 1; i++) {
       u(i) = (1.0 - 2.0 * alpha) * u(i) + alpha * u(i + 1) + alpha * u(i - 1);
     }
+    // Preserving boundary conditions
     u(0) = b_0;
-    u(n - 2) = b_L;
+    u(n - 1) = b_L;
   }
   // binarywrite(outfilename);
   return;
@@ -39,8 +40,16 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
 
 void PDEsolvers::Implicit_Euler(int n, int tsteps, double diag, double subdiag,
                                 double superdiag) {
+  r = zeros(n);
+  u(0) = b_0;
+  u(n - 1) = b_L;
   for (int l = 1; l < tsteps; l++) {
-    tridiag.Gauss();
+    tridiag.Gauss(r);
+    // Preserving boundary conditions
+    u(0) = b_0;
+    u(n - 1) = b_L;
+    r(0) = b_0;
+    r(n - 1) = b_L;
   }
   return;
 }
