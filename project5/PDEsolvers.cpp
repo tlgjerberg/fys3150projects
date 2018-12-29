@@ -38,8 +38,7 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
   return;
 }
 
-void PDEsolvers::Implicit_Euler(int n, int tsteps, double diag, double subdiag,
-                                double superdiag) {
+void PDEsolvers::Implicit_Euler(int n, int tsteps) {
   r = zeros(n);
   u(0) = b_0;
   u(n - 1) = b_L;
@@ -62,7 +61,7 @@ void PDEsolvers::Crank_Nicolson(int n, int tsteps, double alpha) {
     }
     r(0) = 0.0;
     r(n - 1) = 1.0;
-    tridiag.Gauss_Seidel(r);
+    tridiag.Gauss(r);
     // preserving boundary conditions
     u(0) = 0.0;
     u(n - 1) = 1.0;

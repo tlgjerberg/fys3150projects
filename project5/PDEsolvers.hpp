@@ -28,8 +28,7 @@ public:
   // ~PDEsolvers();
   void init_cond(double init1, int n);
   void Explicit_Euler(int n, int tsteps, double alpha);
-  void Implicit_Euler(int n, int tsteps, double diag, double subdiag,
-                      double superdiag);
+  void Implicit_Euler(int n, int tsteps);
   void Crank_Nicolson(int n, int tsteps, double alpha);
 };
 

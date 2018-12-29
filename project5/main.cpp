@@ -19,9 +19,9 @@ int main(int argc, char const *argv[]) {
 
   pde.Explicit_Euler(n, tsteps, alpha);
 
-  // pde.Implicit_Euler()
+  pde.Implicit_Euler(n, tsteps);
 
-  // pde.Crank_Nicolson(n, tsteps, alpha);
+  pde.Crank_Nicolson(n, tsteps, alpha);
 
   return 0;
 }

@@ -30,4 +30,4 @@ tridiag.o: tridiag_solver.cpp
 
 
 clean:
-			rm -f *.o *.dat
+			rm -f *.o  *.x *.dat
