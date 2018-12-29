@@ -7,7 +7,6 @@ PDEsolvers::PDEsolvers(double bound1, double bound2, Tridiag tridiag) {
   double b_0 = bound1;
   double b_L = bound2;
   this->tridiag = tridiag;
-  // int n;
 }
 
 // PDEsolvers::~PDEsolvers() {
@@ -23,7 +22,7 @@ void PDEsolvers::init_cond(double init1, int n) {
 
 // Explicit Euler algorithm
 void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
-  // char *outfilename = "Ex_euler.dat";
+  char *outfilename = "Ex_euler.dat";
   u(0) = b_0;
   u(n - 1) = b_L;
   for (int l = 1; l < tsteps; l++) {
@@ -33,8 +32,9 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
     // Preserving boundary conditions
     u(0) = b_0;
     u(n - 1) = b_L;
+    r = u;
   }
-  // binarywrite(outfilename);
+  binarywrite(outfilename);
   return;
 }
 
@@ -72,9 +72,8 @@ void PDEsolvers::Crank_Nicolson(int n, int tsteps, double alpha) {
 
 void PDEsolvers::binarywrite(char *outfilename) {
   typedef std::vector<double> stdvec;
-  stdvec x = conv_to<stdvec>::from(r);
+  stdvec x = conv_to<stdvec>::from(this->r);
   outfile.open(outfilename, ios::binary);
   outfile.write((char *)&x[0], x.size() * sizeof(double));
-  // outfile.write(reinterpret_cast<char *>(x), n * sizeof(double));
   outfile.close();
 }
