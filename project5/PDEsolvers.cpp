@@ -37,7 +37,7 @@ void PDEsolvers::Explicit_Euler(int n, int tsteps, double alpha) {
   binarywrite(outfilename);
   return;
 }
-
+// Backwards Euler method using Gaussian elimination (tridiag_solver.cpp)
 void PDEsolvers::Implicit_Euler(int n, int tsteps) {
   r = zeros(n);
   u(0) = b_0;
@@ -53,10 +53,12 @@ void PDEsolvers::Implicit_Euler(int n, int tsteps) {
   return;
 }
 
+// Crank-Nicolson method using Gaussian elimination (tridiag_solver.cpp)
 void PDEsolvers::Crank_Nicolson(int n, int tsteps, double alpha) {
   r = zeros(n);
   for (int l = 1; l < tsteps; l++) {
     for (int i = 1; i < n - 1; i++) {
+      // Right hand side of the equation Au = r
       r(i) = alpha * u(i - 1) + (2.0 - 2.0 * alpha) * u(i) + alpha * u(i + 1);
     }
     r(0) = 0.0;
@@ -69,6 +71,7 @@ void PDEsolvers::Crank_Nicolson(int n, int tsteps, double alpha) {
     r = u;
   }
 }
+
 
 void PDEsolvers::binarywrite(char *outfilename) {
   typedef std::vector<double> stdvec;

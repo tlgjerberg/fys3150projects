@@ -1,11 +1,13 @@
 #include "tridiag_solver.hpp"
 
+// Constructor assuming a standard tridiagonal toeplitz from the Taylor
+//expansion of the first derivative
 Tridiag::Tridiag() {
   diag = 2;
   sub = -1;
   super = -1;
 }
-
+// General constructor for tridiagonal toeplitz matrix
 Tridiag::Tridiag(double diagonal, double subdiagonal, double superdiagonal) {
   diag = diagonal;
   sub = subdiagonal;
